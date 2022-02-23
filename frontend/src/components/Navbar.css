@@ -1,0 +1,275 @@
+:root {
+    --title-font-size: 40px;
+    --white: #ffffff;
+}
+
+
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 2000px;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: #E8E8E8;
+    color: black;
+}
+
+.nav-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.nav-left {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.nav-logo {
+    width: 300px;
+    height: 100px;
+}
+
+.nav-login {
+    display: flex;
+    flex-direction: row;
+    background-color: lightgray;
+    justify-content: space-between;
+}
+
+.nav-search-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.nav-search {
+    width: 300px;
+    height: 30px;
+}
+
+.nav-search-select {
+    width: 100px;
+    height: 35px;
+}
+
+.nav-search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid black;
+    height: 33px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+
+.nav-right {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.nav-cart {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: flex-end;
+
+}
+
+
+.nav-dropdownMenu-container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-dropdownMenu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #E8E8E8;
+    color: black;
+    width: 120px;
+    height: 80px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.nav-button:hover {
+    font-size: 105%;
+}
+
+.nav-dropdownMenu-show {
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    min-width: 150px;
+    background-color: #E8E8E8;
+    margin-bottom: 60px;
+}
+
+.nav-dropdownMenu-link {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: black;
+    height: 40px;
+    border: none;
+    font-size: 15px;
+}
+
+.nav-dropdownMenu-link:hover {
+    font-size: 110%;
+    background-color: #cccbcba8;
+}
+
+.nav-dropdownMenu {
+    display: none;
+}
+
+.icons {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+.nav-categories-container {
+    border-top: 2px solid #979797;
+    /* border-bottom: 2px solid #979797; */
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;
+    justify-content: space-between;
+    background-color: #E8E8E8;
+}
+
+.nav-category {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-category:hover {
+    background-color: #fbfbfb;
+    border: 1px solid #fbfbfb;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 1250px) {
+    .nav-logo {
+        width: 250px;
+    }
+
+    .nav-search {
+        width: 200px;
+    }
+
+}
+
+
+@media only screen and (max-width: 1000px) {
+    :root {
+        --title-font-size: 15px;
+    }
+
+    .nav-container {
+        flex-direction: column;
+    }
+
+    .nav-left {
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    .nav-right {
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+
+    }
+
+    .nav-dropdownMenu-show {
+        left: 0;
+    }
+
+    .nav-logo {
+        width: 250px;
+    }
+
+    .nav-container {
+        justify-content: flex-start;
+    }
+    .nav-main{
+        flex-direction: column;
+    }
+
+
+    .nav-container {
+        margin-top: 15px;
+    }
+
+    .nav-categories-container {
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-category {
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+
+
+
+    .nav-search {
+        width: 100px;
+        height: 30px;
+    }
+
+    .nav-search-select {
+        width: 50px;
+        height: 35px;
+    }
+
+    .nav-logo {
+        width: 200px;
+        height: 75px;
+    }
+
+
+}

@@ -1,0 +1,37 @@
+.mycart-container{
+    /* background-color: blue; */
+    max-width: 1500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.mycart-product{
+    max-width: 1500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-style: solid;
+    border-radius: 15px;
+    border-color: #E8E8E8;
+    background-color: #E8E8E8;
+    
+}
+.mycart-product-link{
+    max-width: 1500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+    text-decoration: none;
+    /* background-color: red; */
+}
+.cart-img{
+    height: 100px;
+    width: 100px;
+}
+.mycart-price-label{
+    margin-right: 50px;
+}

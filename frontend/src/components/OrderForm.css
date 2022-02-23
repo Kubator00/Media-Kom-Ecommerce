@@ -1,0 +1,109 @@
+.orderform-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: space-between;
+    max-width: 2000px;
+    width: 100%;
+}
+
+
+
+.orderform-form-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.orderform-delivery {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.orderform-form-details label {
+    display: inline-flex;
+    width: 120px;
+    /* align-items: left; */
+}
+
+.orderform-form-details input {
+    width: 200px;
+    border-radius: 7px;
+    border-color: #c2c1c1;
+    border-style: solid;
+}
+
+.orderform-form-button-details-button-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orderform-form-details-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #29aa3a;
+    color: white;
+    width: 170px;
+    height: 60px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+}
+
+.orderform-form-details-button:hover {
+    font-size: 110%;
+    background-color: rgb(7, 160, 109);
+}
+
+
+.orderform-cart-container {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #c2c1c1;
+    border-radius: 10px;
+}
+
+.orderform-cart-product-link {
+    display: inline-flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #c2c1c1;
+}
+
+.orderform-cart-product-link label {
+    width: 200px;
+}
+
+.orderform-img {
+    height: 50px;
+    width: 50px;
+}
+
+
+@media only screen and (max-width: 750px) {
+    .orderform-container {
+        flex-direction: column;
+    }
+
+    .orderform-form-container {
+        width: 100%;
+    }
+
+    .orderform-cart-container {
+        margin-top: 30px;
+        width: 100%;
+    }
+}

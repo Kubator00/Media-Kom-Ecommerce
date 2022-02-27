@@ -20,7 +20,7 @@ export const newOrderInProgress = () => {
 export const newOrderSuccess = (msg) => {
     return {
         type: NEW_ORDER_SUCCESS,
-        msg: '',
+        msg: msg,
     };
 }
 
@@ -39,7 +39,6 @@ export const userOrdersInProgress = () => {
 }
 
 export const userOrdersSuccess = (orders, rowsFound) => {
-    console.log(orders);
     return {
         type: USER_ORDERS_SUCCESS,
         orders: orders,

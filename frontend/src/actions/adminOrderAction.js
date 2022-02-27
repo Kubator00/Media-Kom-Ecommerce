@@ -5,6 +5,7 @@ import {
     ADMIN_ORDER_DETAILS_IN_PROGRESS,
     ADMIN_ORDER_DETAILS_SUCCESS,
     ADMIN_ORDER_DETAILS_ERROR,
+    ADMIN_ORDERS_RESET
 } from './adminOrderActionTypes'
 
 
@@ -27,6 +28,12 @@ export const adminOrdersError = (err) => {
         type: ADMIN_ORDERS_ERROR,
         error: err
     };
+}
+
+export const adminOrdersReset = () => {
+    return {
+        type: ADMIN_ORDERS_RESET,
+    }
 }
 
 

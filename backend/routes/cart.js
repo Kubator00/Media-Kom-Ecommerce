@@ -8,9 +8,8 @@ const getUserId = require('../components/getUserId');
 
 
 router.post('/add', async (req, res) => {
-    console.log('Dodanie do koszyka');
     if (!await verifyUserToken(req))
-        return res.send({ 'status': false });
+        return res.status(401).send('Unauthorized');
     let userId = await getUserId(req);
     connection.query(
         `IF (SELECT COUNT(*) FROM user_cart WHERE user_id = ${userId} AND product_id=${req.body.productId} > 0) THEN
@@ -18,11 +17,13 @@ router.post('/add', async (req, res) => {
         ELSE
             INSERT INTO user_cart (user_id, product_id, product_amount) VALUES (${userId}, ${req.body.productId}, ${req.body.amount});
         END IF;`,
-        (error, res) => {
+        (error) => {
             if (error)
-                return res.send({ 'status': false });
-            console.log(res);
-        });
+                return res.status(400).send('Błąd dodania do koszyka');
+            else
+                return res.send('Dodano do koszyka');
+        }
+    );
 })
 
 
@@ -30,7 +31,7 @@ router.post('/add', async (req, res) => {
 
 router.post('/editamount', async (req, res) => {
     if (!await verifyUserToken(req))
-        return res.send({ 'status': false });
+        return res.status(401).send('Unauthorized');
     let userId = await getUserId(req);
 
     const deleteProduct = async () => {
@@ -62,11 +63,15 @@ router.post('/editamount', async (req, res) => {
     };
 
     if (req.body.amount < 1)
-        await deleteProduct();
+        await deleteProduct().catch(() =>
+            res.status(400).send('Błąd')
+        );
     else
-        await updateAmount();
+        await updateAmount().catch(() =>
+            res.status(400).send('Błąd')
+        );
 
-    res.send({ status: 'ok' });
+    res.send('Zaktualizowano');
 });
 
 

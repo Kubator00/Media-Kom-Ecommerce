@@ -1,30 +1,47 @@
-import { FETCH_USER_SUCCESS, FETCH_USER_INPROGRESS, FETCH_USER_ERROR, USER_LOGOUT } from "../actions/usersActionType";
-import Axios from "axios"
-import { Redirect, Route } from "react-router-dom";
+import {
+    USER_LOGIN_IN_PROGRSS,
+    USER_LOGIN_SUCESS,
+    USER_LOGIN_FAILURE,
+    USER_LOGIN_ERROR,
+    VERIFY_TOKEN_IN_PROGRESS,
+    VERIFY_TOKEN_SUCESS,
+    VERIFY_TOKEN_FAILURE,
+    VERIFY_TOKEN_ERROR,
+    USER_LOGOUT
+} from "../actions/usersActionType";
+
 const initialState = {
     inprogress: false,
     error: null,
     user: {
         username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
-        isAuth: localStorage.getItem('isAuth') === 'true' ? true : false,
-        isAdmin: localStorage.getItem('isAdmin') === 'true' ? true : false,
-        token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
+        isAdmin: localStorage.getItem('isAdmin') ? parseInt(localStorage.getItem('isAdmin'), 10) : null,
+        token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
     }
 };
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_LOGOUT:
-            localStorage.setItem('isAuth', 'false');
             localStorage.removeItem('username');
             localStorage.removeItem('isAdmin');
             localStorage.removeItem('token');
-            return { ...state, inprogress: false, user: { username: null, isAuth: false, token: null, isAdmin: null } }
-        case FETCH_USER_INPROGRESS:
-            return { ...state, inprogress: true };
-        case FETCH_USER_SUCCESS:
-            return { ...state, inprogress: false, user: action.user };
-        case FETCH_USER_ERROR:
+            return { ...state, inprogress: false, user: { username: null, token: null, isAdmin: null } }
+        case USER_LOGIN_SUCESS:
+            return { ...state, user: action.user, inprogress: true, error: null };
+        case USER_LOGIN_IN_PROGRSS:
+            return { ...state, inprogress: false };
+        case USER_LOGIN_FAILURE:
+            return { ...state, inprogress: false, error: action.error };
+        case USER_LOGIN_ERROR:
+            return { ...state, inprogress: false, error: action.error };
+        case VERIFY_TOKEN_IN_PROGRESS:
+            return { ...state, inprogress: true, error: null };
+        case VERIFY_TOKEN_SUCESS:
+            return { ...state, inprogress: false };
+        case VERIFY_TOKEN_FAILURE:
+            return { ...state, inprogress: false, error: action.error };
+        case VERIFY_TOKEN_ERROR:
             return { ...state, inprogress: false, error: action.error };
         default:
             return state;

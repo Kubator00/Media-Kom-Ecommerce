@@ -17,11 +17,12 @@ export const newOrder = (props) => {
             username: localStorage.getItem('username'), token: localStorage.getItem('token'), orderData: props
         })
             .then((res) => {
-                if (res.status)
-                    return dispatch(newOrderSuccess('Zamówienie zostało złożone pomyślnie'));
+                dispatch(newOrderSuccess(res.data));
+                return res;
             })
             .catch((err) => {
-                return dispatch(newOrderError(err));
+                dispatch(newOrderError(err));
+                return err;
             })
     }
 }
@@ -29,16 +30,16 @@ export const newOrder = (props) => {
 export const userOrders = () => {
     return async dispatch => {
         dispatch(userOrdersInProgress());
-        console.log(routes.server + routes.users.orders);
         await Axios.post(routes.server + routes.users.orders, {
             username: localStorage.getItem('username'), token: localStorage.getItem('token')
         })
             .then((res) => {
-                console.log(res.data.orders);
                 dispatch(userOrdersSuccess(res.data.orders));
+                return res.data.orders;
             })
             .catch((err) => {
-                return dispatch(userOrdersError(err));
+                dispatch(userOrdersError(err));
+                return err;
             })
     };
 };

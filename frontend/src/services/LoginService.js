@@ -1,39 +1,34 @@
 import routes from "./api"
 import {
-    fetchUserInProgress,
-    fetchUserSuccess,
-    fetchUserError
+    loginInProgress,
+    loginSuccess,
+    loginFailure,
+    loginError
 } from "../actions/userAction"
 import Axios from "axios"
 
 const logInUser = (props) => {
-    console.log(props);
     const { username, password } = props;
-    return dispatch => {
-        dispatch(fetchUserInProgress());
-        console.log(routes.server + routes.users.login);
-        Axios.post(routes.server + routes.users.login, {
+    return async dispatch => {
+        dispatch(loginInProgress());
+        await Axios.post(routes.server + routes.users.login, {
             username: username,
             password: password
         })
             .then((res) => {
-                console.log(res);
-                if (res.data.isAuth == true) {
+                if (res.data.token) {
                     localStorage.setItem('username', res.data.username);
                     localStorage.setItem('token', res.data.token);
-                    localStorage.setItem('isAuth', 'true');
-                    localStorage.setItem('isAdmin', res.data.isAdmin ? 'true' : 'false');
-                    dispatch(fetchUserSuccess(res.data));
+                    localStorage.setItem('isAdmin', res.data.isAdmin);
+                    dispatch(loginSuccess(res.data));
                 }
                 else {
-                    localStorage.setItem('isAuth', 'failed');
-                    dispatch(fetchUserError(res.data));
+                    dispatch(loginFailure(res.data));
                 }
                 return res.data;
             })
             .catch(error => {
-                localStorage.setItem('isAuth', 'error');
-                dispatch(fetchUserError(error));
+                dispatch(loginError(error));
                 return error;
             });
 

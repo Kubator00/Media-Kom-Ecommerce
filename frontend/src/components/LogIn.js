@@ -26,6 +26,7 @@ const MyInput = (props) => {
 const mapStateToProps = (state) => {
     return {
         user: state.usersReducer.user,
+        error: state.usersReducer.error,
         inProgress: state.usersReducer.inprogress,
     };
 };
@@ -50,9 +51,9 @@ class LogIn extends Component {
             isAuth: this.props.user.isLogIn,
             msg: props.location.state ? props.location.state.msg : undefined,
         }
-        console.log(props);
-        console.log(props.location.state);
+
     }
+
     changeHandler = event => {
         this.setState(prevState => ({
             user: {
@@ -60,22 +61,21 @@ class LogIn extends Component {
                 [event.target.name]: event.target.value
             }
         }));
-
     };
 
-    logInHandler = (e) => {
-        e.preventDefault();
+    logInHandler = (event) => {
+        event.preventDefault();
         this.props.logInUser(this.state.user);
     };
 
     componentDidUpdate() {
-        console.log(this.props.user);
-        if (this.props.user.isAuth == 'true') {
-            this.setState({ isAuth: this.props.user.isLogIn });
+        if (this.props.user.token) {
+            console.log(this.props.user);
+            this.setState({ isAuth: true });
         }
     }
     render() {
-        if (localStorage.getItem('isAuth') == 'true') {
+        if (localStorage.getItem('token')) {
             return <Redirect to="/myaccount" />;
         }
 
@@ -83,7 +83,8 @@ class LogIn extends Component {
             <>
 
                 <h1>Zaloguj się</h1>
-                {this.state.msg && this.state.msg}
+                {this.state.msg && this.state.msg}<br></br>
+                {this.props.error && this.props.error}
                 <form onSubmit={this.logInHandler}>
                     <div class="form-group">
                         <MyInput label="Nazwa uzytkownika" type="text" name="username" className="form-control" required onChange={this.changeHandler} />

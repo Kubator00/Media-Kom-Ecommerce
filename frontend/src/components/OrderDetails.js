@@ -23,7 +23,7 @@ class OrderDetails extends React.Component {
         if (!prevState.details && this.props.details) {
             let tmp = 0;
             this.props.details.products.forEach(element => {
-                tmp += element.price;
+                tmp += element.price*element.amount;
             });
             this.setState({ cartAmount: tmp });
         }
@@ -41,7 +41,7 @@ class OrderDetails extends React.Component {
                         <h1>Zamówienie nr {order.id}</h1>
                         <span>złożone {`${order.date.slice(8, 10)}.${order.date.slice(5, 7)}.${order.date.slice(0, 4)}`}</span>
                         <h2>Dostawa</h2>
-                        <span>{order.delivery_type}</span>
+                        <span>{order.deliveryName}</span>
                         <h2>Dane do wysyłki</h2>
                         <span>{order.name} {order.surname} </span>
                         <span>ul. {order.street} </span>

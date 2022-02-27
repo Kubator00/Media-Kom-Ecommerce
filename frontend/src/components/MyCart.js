@@ -1,8 +1,7 @@
 import React from 'react'
-import Axios from "axios"
 import { Link } from 'react-router-dom'
 import './MyCart.css'
-import { fetchCart, productAmount } from '../services/MyCartService'
+import { fetchCart, changeProductAmount } from '../services/MyCartService'
 import { connect } from "react-redux";
 
 
@@ -75,7 +74,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(fetchCart());
         },
         changeAmount: (props) => {
-            dispatch(productAmount(props));
+            dispatch(changeProductAmount(props));
         }
     }
 }

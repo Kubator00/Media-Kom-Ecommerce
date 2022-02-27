@@ -6,20 +6,25 @@ import {
     adminOrdersError,
 } from '../../actions/adminOrderAction'
 
-export const adminAllOrders = (props) => {
+
+
+export const adminAllOrders = (limits) => {
+    console.log(limits);
     return async dispatch => {
         dispatch(adminOrdersInProgress());
         await Axios.post(routes.server + routes.admin.allOrders, {
             username: localStorage.getItem('username'),
             token: localStorage.getItem('token'),
-            limit1: props.limit1,
-            limit2: props.limit2,,
+            limit1: limits.beginning,
+            limit2: limits.end,
         })
             .then((res) => {
                 dispatch(adminOrdersSuccess(res.data.orders, res.data.rowsFound));
+                return res;
             })
             .catch((err) => {
-                return dispatch(adminOrdersError(err));
+                 dispatch(adminOrdersError(err));
+                 return err;
             })
     };
 };

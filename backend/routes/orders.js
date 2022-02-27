@@ -4,24 +4,27 @@ const connection = require("../index").connection;
 const verifyUserToken = require('../components/verifyUserToken')
 const jwt = require('jsonwebtoken');
 const getUserId = require('../components/getUserId');
+const getDelivery = require('../components/getDeliveryType');
 
 
 
 
 
 router.post('/new', async (req, res) => {
-    const { name, surname, town, postalCode, street, phone, deliveryName, deliveryCost, products } = req.body.orderData;
-    console.log(req.body);
+    const { name, surname, town, postalCode, street, phone, deliveryTypeId, products } = req.body.orderData;
+
     if (!await verifyUserToken(req))
-        return res.send({ 'status': 'failed' });
+        return res.status(401).send('Unauthorized');
     let userId = await getUserId(req);
+    let delivery = await getDelivery(deliveryTypeId);
+
 
     const insertOrder = () => {
         return new Promise((resolve, reject) => {
             connection.query(
                 `INSERT INTO orders 
-                (user_id, status, delivery_type, delivery_cost, name, surname, town, postal_code, street, phone) 
-                VALUES (${userId},'w przygotowaniu','${deliveryName}',${deliveryCost}, '${name}', '${surname}', '${town}', '${postalCode}', '${street}', '${phone}');`,
+                (user_id, status, delivery_type_id, delivery_cost, name, surname, town, postal_code, street, phone) 
+                VALUES (${userId},'w przygotowaniu',${delivery.id},${delivery.price}, '${name}', '${surname}', '${town}', '${postalCode}', '${street}', '${phone}');`,
                 (err, res) => {
                     if (err)
                         return reject(err);
@@ -31,12 +34,12 @@ router.post('/new', async (req, res) => {
     };
     const orderId = await insertOrder().catch(err => console.log(err));
     if (!orderId)
-        return res.send({ status: 'failed' });
+        return res.status(400).send('Błąd w składaniu zamówienia');
 
 
 
     const insertProduct = (productId, productAmount, productPrice) => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             connection.query(`INSERT INTO orders_product (order_id, product_id, product_amount, product_price)
              VALUES (${orderId},${productId},${productAmount},${productPrice});`,
                 (err) => {
@@ -48,7 +51,7 @@ router.post('/new', async (req, res) => {
     };
 
     const getProductPrice = (productId) => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             connection.query(`SELECT price FROM products where id=${productId};`,
                 (err, res) => {
                     if (err)
@@ -61,17 +64,22 @@ router.post('/new', async (req, res) => {
 
     for (product of products) {
         const price = await getProductPrice(product.id).catch(err => console.log(err));
-        await insertProduct(product.id, product.amount, price).catch(err => console.log(err));
+        await insertProduct(product.id, product.amount, price).catch(
+            err => {
+                console.log(err);
+                return res.status(400).send('Błąd w składaniu zamówienia');
+            }
+        );
     }
 
-    return res.send({ 'status': 'ok' });
+    return res.send('Zamówienie złożono pomyślnie');
 
 });
 
 router.post('/details', async (req, res) => {
-    
+
     if (!await verifyUserToken(req))
-        return res.send({ 'status': 'failed' });
+        return res.status(401).send('Unauthorized');
 
     let userId = await getUserId(req);
 
@@ -87,13 +95,11 @@ router.post('/details', async (req, res) => {
         })
     };
     const check = await checkIfOrderIsThisUser();
-    console.log(check);
-    console.log(userId);
-    if (check['user_id'] != userId){
-        console.log('a');
-        return res.send({ status: 'user_id_error' });
-    }
-   
+
+    if (check['user_id'] != userId)
+        return res.status(400).send('Zamówienie nie należy do użytkownika');
+
+
     const getOrders = () => {
         return new Promise((resolve, reject) => {
             connection.query(
@@ -108,8 +114,9 @@ router.post('/details', async (req, res) => {
 
     let order = await getOrders().catch(err => console.log(err));
     if (!order || order.length < 1)
-        return res.send({ status: 'failed' });
+        return res.status(400).send('Zamówienie nie istnieje');
 
+    const deliveryType = await getDelivery(order.delivery_type_id);
 
     const getProductsId = (orderId) => {
         return new Promise((resolve, reject) => {
@@ -145,14 +152,15 @@ router.post('/details', async (req, res) => {
         let product = Object.assign(tmp);
         product['amount'] = orderProductId.product_amount;
         product['price'] = orderProductId.product_price;
-        totalAmount += orderProductId.product_price;
+        totalAmount += orderProductId.product_price * orderProductId.product_amount;
         products.push(product);
     }
     orderDetails['products'] = products;
     orderDetails['totalAmount'] = totalAmount;
+    orderDetails['deliveryName'] = deliveryType.name;
 
 
-    res.send({ status: 'ok', order: orderDetails });
+    res.send({ order: orderDetails });
 
 
 });

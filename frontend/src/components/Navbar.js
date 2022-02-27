@@ -6,25 +6,6 @@ import { logOutUser } from "../actions/userAction";
 import categories from './Category';
 import { productRedirect } from '../actions/searchAction'
 
-const mapStateToProps = (props) => {
-    return {
-        user: props.usersReducer.user,
-        inprogress: props.usersReducer.inprogress,
-        redirect: props.searchProductsReducer.redirect
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        logOutUser: () => {
-            dispatch(logOutUser());
-        },
-        productRedirect:(state)=>{
-            dispatch(productRedirect(state));
-        }
-    }
-}
-
 class Navbar extends React.Component {
     constructor(props) {
         super(props);
@@ -51,12 +32,9 @@ class Navbar extends React.Component {
         e.preventDefault();
         this.props.productRedirect(true);
     }
-    componentDidUpdate() {
-        console.log(this.props.redirect);
-    }
 
     render() {
-
+        console.log(this.props.user);
         return (
             <div class="nav-container">
                 <div className='nav-main'>
@@ -83,7 +61,7 @@ class Navbar extends React.Component {
                             <img src='./icons/headphones-simple-solid.svg' class='icons' />
                             Kontakt
                         </button>
-                        {this.props.user.isAuth ?
+                        {((!this.props.inprogress) && this.props.user.token) ?
                             <>
                                 <div class="nav-dropdownMenu-container1">
                                     <div class="nav-dropdownMenu-container" onClick={() => { this.clickHandler(true) }} onMouseEnter={() => { this.clickHandler(true) }} onMouseLeave={() => { this.clickHandler(false) }} >
@@ -98,7 +76,7 @@ class Navbar extends React.Component {
                                             <Link to="/myaccount" className="nav-dropdownMenu-link">
                                                 Ustawienia konta
                                             </Link>
-                                            {localStorage.getItem('isAdmin') &&
+                                            {this.props.user.isAdmin === 1 &&
                                                 <Link to="/admin/panel" className="nav-dropdownMenu-link">
                                                     Admin
                                                 </Link>
@@ -141,6 +119,25 @@ class Navbar extends React.Component {
             </div>
         );
 
+    }
+}
+
+const mapStateToProps = (props) => {
+    return {
+        user: props.usersReducer.user,
+        inprogress: props.usersReducer.inprogress,
+        redirect: props.searchProductsReducer.redirect
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        logOutUser: () => {
+            dispatch(logOutUser());
+        },
+        productRedirect: (state) => {
+            dispatch(productRedirect(state));
+        }
     }
 }
 

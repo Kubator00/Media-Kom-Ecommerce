@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link, Redirect, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './Product.css'
-import axios from 'axios';
+import './searchProducts.css'
 import { connect } from "react-redux";
 import { productsSearch } from '../services/SearchService'
-import './searchProducts.css'
+import { addToCart } from '../services/MyCartService'
 import { productRedirect } from '../actions/searchAction'
 
 class SearchProducts extends React.Component {
@@ -18,8 +18,6 @@ class SearchProducts extends React.Component {
     }
     componentDidMount() {
         this.props.productRedirect(false);
-        // if (!this.props.match.params.keyword)
-        //     return;
         this.props.search(this.state.keyword, this.state.category)
         this.setState(
             { loaded: true }
@@ -28,8 +26,6 @@ class SearchProducts extends React.Component {
 
     componentDidUpdate(prevProps) {
         this.props.productRedirect(false);
-        // if (!this.props.match.params.keyword)
-        //     return;
         if (prevProps.match.params.keyword != this.props.match.params.keyword ||
             prevProps.match.params.category != this.props.match.params.category) {
             let keyword = this.props.match.params.keyword;
@@ -56,7 +52,9 @@ class SearchProducts extends React.Component {
                             </div>
                             <div class='searchProducts-product-right'>
                                 <h1>{`${product.price}zł`}</h1>
-                                <button className="searchProducts-button" onClick={this.addToCart}>Dodaj do koszyka</button>
+                                <Link to='#'>
+                                    <button className="searchProducts-button" onClick={() => { this.props.addToCart(product.id, 1) }}>Dodaj do koszyka</button>
+                                </Link>
                             </div>
                         </Link>
                     ))}
@@ -88,7 +86,10 @@ const mapDispatchToProps = dispatch => {
         },
         productRedirect: (state) => {
             dispatch(productRedirect(state));
-        }
+        },
+        addToCart: (productId, amount) => {
+            dispatch(addToCart(productId, amount));
+        },
     }
 }
 

@@ -1,8 +1,14 @@
-import { USER_LOGIN } from "./usersActionType";
-import { USER_LOGOUT } from "./usersActionType";
-import { FETCH_USER_INPROGRESS } from "./usersActionType";
-import { FETCH_USER_SUCCESS } from "./usersActionType";
-import { FETCH_USER_ERROR } from "./usersActionType";
+import {
+    USER_LOGOUT,
+    USER_LOGIN_IN_PROGRSS,
+    USER_LOGIN_SUCESS,
+    USER_LOGIN_FAILURE,
+    USER_LOGIN_ERROR,
+    VERIFY_TOKEN_IN_PROGRESS,
+    VERIFY_TOKEN_SUCESS,
+    VERIFY_TOKEN_FAILURE,
+    VERIFY_TOKEN_ERROR
+} from "./usersActionType";
 
 export const logOutUser = () => {
     return {
@@ -10,22 +16,57 @@ export const logOutUser = () => {
     };
 }
 
-export const fetchUserInProgress = () => {
+
+export const loginInProgress = () => {
     return {
-        type: FETCH_USER_INPROGRESS
+        type: USER_LOGIN_IN_PROGRSS
     };
 }
 
-export const fetchUserSuccess = (user) => {
+export const loginSuccess = (user) => {
+    console.log(user);
     return {
-        type: FETCH_USER_SUCCESS,
+        type: USER_LOGIN_SUCESS,
         user: user
     };
 }
-
-export const fetchUserError = (error) => {
+export const loginFailure = (msg) => {
     return {
-        type: FETCH_USER_ERROR,
+        type: USER_LOGIN_FAILURE,
+        error: msg
+    };
+}
+
+export const loginError = (error) => {
+    return {
+        type: USER_LOGIN_ERROR,
         error: error
     };
 }
+
+
+export const verifyTokenInProgress = () => {
+    return {
+        type: VERIFY_TOKEN_IN_PROGRESS
+    };
+}
+export const verifyTokenSucess = () => {
+    console.log('ccc');
+    return {
+        type: VERIFY_TOKEN_SUCESS
+    };
+}
+export const verifyTokenFailure = () => {
+    return {
+        type: VERIFY_TOKEN_FAILURE
+    };
+}
+export const verifyTokenError = (error) => {
+    return {
+        type: VERIFY_TOKEN_ERROR,
+        error: error,
+    };
+}
+
+
+

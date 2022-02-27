@@ -4,12 +4,14 @@ import {
     cartInProgress,
     cartSuccess,
     cartError,
+    addToCartInProgress,
+    addToCartSuccess,
+    addToCartError
 } from "../actions/cartAction"
 
 export const fetchCart = () => {
     return async dispatch => {
         dispatch(cartInProgress());
-        console.log(routes.server + routes.users.cart)
         await Axios.post(routes.server + routes.users.cart, {
             username: localStorage.getItem('username'), token: localStorage.getItem('token')
         })
@@ -28,13 +30,31 @@ export const fetchCart = () => {
     };
 }
 
-export const productAmount = (props) => {
-    console.log(props);
+export const addToCart = (productId,amount) => {
+    return async dispatch => {
+        dispatch(addToCartInProgress());
+        await Axios.post(routes.server + routes.cart.add, {
+            username: localStorage.getItem('username'), token: localStorage.getItem('token'),
+            amount: amount, productId: productId
+        })
+            .then((res) => {
+                dispatch(fetchCart());
+                dispatch(addToCartSuccess(res.data));
+                return res;
+            })
+            .catch(err => {
+                dispatch(addToCartError(err));
+                return err;
+            })
+    };
+}
+
+export const changeProductAmount = (props) => {
     return async dispatch => {
         dispatch(cartInProgress());
         await Axios.post(routes.server + routes.cart.changeAmount,
             { 'username': localStorage.getItem('username'), 'token': localStorage.getItem('token'), 'productId': props.productId, 'amount': props.amount })
-            .then((res) => {
+            .then(() => {
                 return dispatch(fetchCart());
             })
             .catch(err => {

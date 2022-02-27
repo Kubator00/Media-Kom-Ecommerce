@@ -1,36 +1,31 @@
 import Axios from "axios"
 import routes from "./api"
 import {
-    fetchUserInProgress,
-    fetchUserSuccess,
-    fetchUserError,
+    verifyTokenInProgress,
+    verifyTokenSucess,
+    verifyTokenFailure,
+    verifyTokenError,
     logOutUser
 } from "../actions/userAction"
-import store from '../store';
 
-const verifyToken = (props) => {
+const verifyToken = () => {
     return async dispatch => {
-        dispatch(fetchUserInProgress());
-        const state = store.getState();
-        await Axios.post(routes.server + routes.users.myaccount, {
-            username: props.username,
-            token: props.token,
+        dispatch(verifyTokenInProgress());
+        await Axios.post(routes.server + routes.users.token, {
+            username: localStorage.username,
+            token: localStorage.token,
         })
             .then((res) => {
-                if (!res.data.isAuth) {
-                    console.log(`Auth error, logout...`);
+                if (!res.data) {
                     dispatch(logOutUser());
-                    return;
+                    dispatch(verifyTokenFailure('Sesja wygasła'));
                 }
                 else {
-                    const user = { ...state.usersReducer.user, isAuth: res.data.isAuth };
-                    dispatch(fetchUserSuccess(user));
-                    return user;
+                    dispatch(verifyTokenSucess());
                 }
             })
             .catch(err => {
-                dispatch(fetchUserError(err));
-                return err;
+                dispatch(verifyTokenError(err));
             })
     };
 }

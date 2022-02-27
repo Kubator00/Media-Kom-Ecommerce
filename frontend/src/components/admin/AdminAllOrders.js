@@ -3,14 +3,12 @@ import '../MyOrders.css'
 import { connect } from "react-redux";
 import { adminAllOrders } from '../../services/admin/adminAllOrders'
 import { Link } from 'react-router-dom';
+import { adminOrdersReset } from '../../actions/adminOrderAction'
 
 class AdminAllOrders extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            increase: 5,
-            limit1: 0,
-            limit2: 5,
             isEnd: false,
             ordersStatus: [
                 { id: 0, name: 'w przygotowaniu', isChecked: false },
@@ -18,29 +16,31 @@ class AdminAllOrders extends React.Component {
                 { id: 2, name: 'zakończono', isChecked: false },
                 { id: 3, name: 'zwrócono', isChecked: false },
                 { id: 4, name: 'anulowano', isChecked: false },
-            ]
+            ],
         }
     }
 
     handlerScroll = (event) => {
         if (this.props.inProgress)
             return;
-        if (this.state.limit2 > this.props.rowsFound + this.state.increase) {
+        if (this.props.limits.end > this.props.rowsFound + 5) {
             this.setState({ isEnd: true });
             return;
         }
         if (event.srcElement.documentElement.scrollHeight <=
             event.srcElement.documentElement.scrollTop +
-            window.innerHeight) {
-            this.setState(prevState => ({ limit1: prevState.limit1 + prevState.increase, limit2: prevState.limit2 + prevState.increase }));
-            this.props.ordersFetch({ limit1: this.state.limit1 - this.state.increase, limit2: this.state.limit2 - this.state.increase, status: this.statusSubmit() });
+            window.innerHeight+1) {
+            this.props.ordersFetch(this.props.limits);
         }
     }
 
     componentDidMount() {
         window.addEventListener('scroll', this.handlerScroll);
-        this.props.ordersFetch({ limit1: this.state.limit1, limit2: this.state.limit2 });
-        this.setState(prevState => ({ limit1: prevState.limit1 + prevState.increase, limit2: prevState.limit2 + prevState.increase, status: this.statusSubmit() }));
+        this.props.ordersFetch(this.props.limits);
+    }
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handlerScroll);
+        this.props.reset();
     }
 
     statusHandler = (event) => {
@@ -59,10 +59,9 @@ class AdminAllOrders extends React.Component {
         this.state.ordersStatus.forEach(s => {
             s.isChecked && result.push(s.name);
         });
-        console.log(result);
         return result;
     }
-    
+
     render() {
         const orders = this.props.orders;
         if (orders.length > 0)
@@ -113,14 +112,18 @@ const mapStateToProps = (state) => {
         orders: state.adminAllOrdersReducer.orders,
         rowsFound: state.adminAllOrdersReducer.rowsFound,
         inProgress: state.adminAllOrdersReducer.inprogress,
+        limits: state.adminAllOrdersReducer.limits,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        ordersFetch: (props) => {
-            dispatch(adminAllOrders(props));
+        ordersFetch: (limits) => {
+            dispatch(adminAllOrders(limits));
         },
+        reset: () => {
+            dispatch(adminOrdersReset());
+        }
     }
 }
 

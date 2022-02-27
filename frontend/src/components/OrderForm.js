@@ -1,10 +1,9 @@
 import React from 'react'
-import Axios from "axios"
 import { Link, Redirect } from 'react-router-dom'
 import './OrderForm.css'
-import { productAmount } from '../services/MyCartService'
 import { newOrder } from '../services/OrderService'
 import { connect } from "react-redux";
+import { deliveryTypes } from "../services/DeliveryTypesService"
 
 const MyInput = (props) => {
     const { label, type, name, value, className, onChange } = props;
@@ -28,30 +27,29 @@ const MyInput = (props) => {
 class OrderForm extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props.location.state);
         this.state = {
             cart: this.props.location.state ? this.props.location.state.cart : undefined,
             productAmount: this.props.location.state ? this.props.location.state.totalAmount : undefined,
             totalAmount: this.props.location.state ? this.props.location.state.totalAmount : undefined,
             deliveryData: {
                 name: '', surname: '', town: '', postalCode: '',
-                street: '', phone: '', deliveryName: '',
-                deliveryCost: null, products: null,
+                street: '', phone: '', deliveryTypeId: null, products: null,
             },
-            deliveryTypes: [
-                { id: 1, name: 'List Polecony', price: 10 },
-                { id: 2, name: 'Kurier DPD', price: 25 },
-            ],
+
         }
 
     }
 
+    componentDidMount() {
+        this.props.fetchDeliveryTypes();
+    }
+
 
     deliveryHandler = (event) => {
-        const delivery = this.state.deliveryTypes[event.target.value - 1];
+        const delivery = this.props.deliveryTypes[event.target.value - 1];
         this.setState(prevState => ({
             totalAmount: this.state.productAmount + delivery.price,
-            deliveryData: { ...prevState.deliveryData, deliveryName: delivery.name, deliveryCost: delivery.price }
+            deliveryData: { ...prevState.deliveryData, deliveryTypeId: delivery.id }
         }));
     }
 
@@ -73,7 +71,6 @@ class OrderForm extends React.Component {
 
         let data = this.state.deliveryData;
         data['products'] = productsData;
-
         this.props.newOrder(data);
     }
 
@@ -81,15 +78,31 @@ class OrderForm extends React.Component {
     render() {
         if (!this.state.cart)
             return <Redirect to='/' />
+        if (this.props.msg)
+            return (
+                <div class='orderform-placed-order'>
+                    {this.props.msg}
+                    <Link to='/myorders' class='orderform-form-details-button'>
+                        Moje zamówienia
+                    </Link>
+                </div>
+            );
+
+        const deliveryTypes = this.props.deliveryTypes;
         return (
             <div class='orderform-container'>
                 <div class='orderform-form-container'>
                     <form onSubmit={this.sumbitHandler}>
                         <h1>1. Dostawa</h1>
-                        <div onChange={this.deliveryHandler} class='orderform-delivery'>
-                            <span><input type="radio" value={1} name="delivery-type" />{this.state.deliveryTypes[0].name}</span>
-                            <span><input type="radio" value={2} name="delivery-type" />{this.state.deliveryTypes[1].name}</span>
-                        </div>
+                        {deliveryTypes &&
+                            <div onChange={this.deliveryHandler} class='orderform-delivery'>
+                                {deliveryTypes.map((delivery) => (
+                                    <span>
+                                        <input type="radio" value={delivery.id} name="delivery-type" />{delivery.name}
+                                    </span>
+                                ))}
+                            </div>
+                        }
                         <div class='orderform-form-details'>
                             <h1>2. Dane do wysyłki</h1>
                             <MyInput label="Imię" type="text" name="name" className="form-control" required onChange={this.changeHandler} />
@@ -122,13 +135,24 @@ class OrderForm extends React.Component {
 
 }
 
+
+const mapStateToProps = (state) => {
+    return {
+        deliveryTypes: state.deliveryTypesReducer.deliveryTypes,
+        msg: state.newOrderReducer.msg
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         newOrder: (deliveryData) => {
             dispatch(newOrder(deliveryData));
         },
+        fetchDeliveryTypes: () => {
+            dispatch(deliveryTypes());
+        },
     }
 }
 
 
-export default connect(null, mapDispatchToProps)(OrderForm);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderForm);

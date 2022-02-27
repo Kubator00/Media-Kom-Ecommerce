@@ -92,6 +92,13 @@
     width: 50px;
 }
 
+.orderform-placed-order{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 2000px;
+    width: 100%;
+}
 
 @media only screen and (max-width: 750px) {
     .orderform-container {

@@ -33,11 +33,13 @@ const adminsRoute = require('./routes/admins')
 const cartRoute = require('./routes/cart')
 const orderRoute = require('./routes/orders')
 const searchRoute = require('./routes/search')
+const deliveryRoute = require('./routes/delivery')
 app.use('/users', usersRoute)
 app.use('/admin', adminsRoute)
 app.use('/cart', cartRoute)
 app.use('/orders', orderRoute)
 app.use('/search', searchRoute)
+app.use('/delivery', deliveryRoute)
 
 
 

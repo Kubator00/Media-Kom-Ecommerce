@@ -1,6 +1,11 @@
-import { CART_IN_PROGRESS } from './cartActionType';
-import { CART_SUCCESS } from './cartActionType';
-import { CART_ERROR } from './cartActionType';
+import {
+    CART_IN_PROGRESS,
+    CART_SUCCESS,
+    CART_ERROR,
+    ADD_TO_CART_IN_PROGRESS,
+    ADD_TO_CART_SUCCESS,
+    ADD_TO_CART_ERROR
+} from './cartActionType';
 
 
 export const cartInProgress = () => {
@@ -17,10 +22,29 @@ export const cartSuccess = (cart, totalAmount) => {
     };
 }
 
-
 export const cartError = error => {
     return {
         type: CART_ERROR,
+        error: error
+    };
+}
+
+export const addToCartInProgress = () => {
+    return {
+        type: ADD_TO_CART_IN_PROGRESS,
+    };
+}
+
+export const addToCartSuccess = (msg) => {
+    return {
+        type: ADD_TO_CART_SUCCESS,
+        msg: msg
+    };
+}
+
+export const addToCartError = error => {
+    return {
+        type: ADD_TO_CART_ERROR,
         error: error
     };
 }

@@ -6,7 +6,7 @@ import ProdectedRoute from './ProtectedRoute';
 import Navbar from './components/Navbar';
 import Home from './components/Home'
 import LogIn from './components/LogIn';
-import LogOut from './components/Logout';
+
 import MyAccount from './components/MyAccount';
 import Product from './components/Product';
 import MyCart from './components/MyCart';
@@ -34,8 +34,7 @@ class App extends React.Component {
               {LogIn} />
             <Route path='/' exact component=
               {Home} />
-            <Route path='/logout' exact component=
-              {() => <LogOut />} />
+ 
             <Route path='/product:id' component=
               {Product} />
             <Route path='/search/keyword=:keyword?/category=:category?' component= {SearchProducts} />

@@ -6,19 +6,15 @@ import { Link } from 'react-router-dom'
 
 class MyOrders extends React.Component {
     constructor(props) {
+        console.log('ooo');
         super(props);
     }
 
     componentDidMount() {
         this.props.ordersFetch();
     }
-    componentDidUpdate() {
-
-    }
-
     render() {
         const orders = this.props.orders;
-        console.log(orders);
         if (orders)
             return (
                 <div className='userOrders-container'>

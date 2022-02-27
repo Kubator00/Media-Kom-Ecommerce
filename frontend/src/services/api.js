@@ -2,7 +2,7 @@ export default {
     server: 'http://192.168.1.50:3010/',
     users: {
         login: 'users/login',
-        account: 'users/myaccount',
+        token: 'users/token',
         orders: 'users/orders',
         cart: 'users/cart',
     },
@@ -19,6 +19,9 @@ export default {
         newStatus: 'admin/order/newstatus',
         details: 'admin/orders/details'
     },
-    search: 'search'
+    search: 'search',
+    delivery: {
+        types: 'delivery/types',
+    }
 
 }

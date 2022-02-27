@@ -1,48 +1,39 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
-import routes from "./services/api";
-import Axios from "axios";
 import verifyToken from "./services/VerifyToken";
-import { useDispatch, connect } from 'react-redux';
-import { fetchUserInProgress } from "./actions/userAction";
+import { connect } from 'react-redux';
 
 class ProdectedRoute extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            c: true,
+            isLoaded: true,
         }
     }
     componentDidMount() {
-        this.props.verifyUserToken({ username: localStorage.getItem('username'), token: localStorage.getItem('token') })
+        this.props.verifyToken();
     }
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.c === true) {
-            if (this.props.inProgress === false) {
-                this.setState({ c: this.props.inProgress });
+        if (prevState.isLoaded === true)
+            if (this.props.inProgress === false && prevProps.inProgress === true){
+                this.setState({ isLoaded: this.props.inProgress });
             }
-        }
-
     }
 
     render() {
         const { component: Component, exact, path, ...rest } = this.props;
-
-        if (this.state.c === true) {
+        
+        if (this.state.isLoaded === true)
             return <>Ładowanie...</>
-        }
 
-        if (!this.props.user.isAuth) {
+        if (!this.props.user.token)
             return <Redirect to={{
                 pathname: '/login',
                 state: { msg: 'Sesja wygasła' }
             }} />
-        }
-
         return (
             < Route exact={exact} path={path}>
-               <Component {...rest} />
+                <Component {...rest} />
             </Route>
         );
     };
@@ -57,7 +48,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        verifyUserToken: (props) => {
+        verifyToken: (props) => {
             dispatch(verifyToken(props));
         },
     }

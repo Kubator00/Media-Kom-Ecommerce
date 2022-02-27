@@ -5,36 +5,47 @@ const verifyUserToken = require('../components/verifyUserToken')
 const jwt = require('jsonwebtoken');
 const getUserId = require('../components/getUserId');
 const PRIVATE_KEY = require('../index').PRIVATE_KEY;
+const bcrypt = require('bcrypt');
+const Joi = require('joi');
+const login = require('../components/loginUser');
+const register = require('../components/registerUser');
 
-
-router.post('/myaccount', async (req, res) => {
+router.post('/token', async (req, res) => {
     if (!await verifyUserToken(req))
-        return res.send({ 'isAuth': false });
+        return res.send(false);
     else
-        return res.send({ 'isAuth': true, 'username': 'example' });
-
+        return res.send(true);
 })
 
-router.post('/login', (req, res) => {
-    connection.query(`SELECT * from users WHERE username='${req.body.username}' AND password='${req.body.password}'`,
-        (error, results) => {
-            if (error)
-                return res.send({ 'isAuth': false })
-            if (results.length > 0) {
-                const token = jwt.sign({ id: results[0].id }, PRIVATE_KEY, { expiresIn: 20000 });
-                res.send({ isAuth: true, username: results[0].username, token: token, isAdmin: results[0].isAdmin })
-            }
-            else {
-                res.send({ isAuth: false })
-            }
-        });
+
+router.post('/login', async (req, res) => {
+    const schemaValidate = login.schema.validate({ username: req.body.username, password: req.body.password });
+    if (schemaValidate.error)
+        return res.send('Niepoprawne dane');
+    const user = await login.find(req.body, res);
+    const validPass = await bcrypt.compare(req.body.password, user.password);
+    if (!validPass)
+        return res.send('Niepoparwne hasło');
+    const token = jwt.sign({ id: user.id }, PRIVATE_KEY, { expiresIn: 20000 });
+    res.header('token', token).send({ 'username': user.username, 'token': token, 'isAdmin': user.isAdmin });
 })
+
+router.post('/register', async (req, res) => {
+    const schemaValidate = register.schema.validate(
+        { username: req.body.username, password: req.body.password, email: req.body.email }
+    );
+    if (schemaValidate.error)
+        return res.status(400).send('Niepoprawne dane');
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    await register.register(req.body, hashedPassword, res);
+});
 
 
 
 router.post('/orders', async (req, res) => {
     if (!await verifyUserToken(req))
-        return res.send({ 'status': 'failed' });
+        return res.status(401).send('Unauthorized');
     const userId = await getUserId(req);
 
 
@@ -95,13 +106,14 @@ router.post('/orders', async (req, res) => {
         orderDetails['totalAmount'] = totalAmount;
         result.push(orderDetails);
     }
-    res.send({ status: 'ok', orders: result });
+    res.send({orders: result });
 })
 
 
 router.post('/cart', async (req, res) => {
+    console.log(req.body);
     if (!await verifyUserToken(req))
-        return res.send({ 'status': false });
+        return res.status(401).send('Unauthorized');
     let userId = await getUserId(req);
     const getProductsId = async () => {
         return new Promise((resolve) => {

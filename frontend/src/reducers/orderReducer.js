@@ -30,8 +30,7 @@ export const userOrdersReducer = (state = { inprogress: false, error: null, rows
         case USER_ORDERS_IN_PROGRESS:
             return { ...state, inprogress: true };
         case USER_ORDERS_SUCCESS:
-            console.log( {orders: [...state.orders, ...action.orders] });
-            return { ...state, inprogress: false, rowsFound: action.rowsFound, orders: [...state.orders, ...action.orders] };
+            return { ...state, inprogress: false, rowsFound: action.rowsFound, orders: action.orders };
         case USER_ORDERS_ERROR:
             return { ...state, inprogress: false, error: action.error };
         default:

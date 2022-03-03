@@ -1,5 +1,5 @@
 export default {
-    server: 'http://192.168.1.50:3010/',
+    server: 'http://localhost:3010/',
     users: {
         login: 'users/login',
         token: 'users/token',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import './Navbar.css'
 import { connect } from "react-redux";
 import { logOutUser } from "../actions/userAction";
@@ -34,7 +34,6 @@ class Navbar extends React.Component {
     }
 
     render() {
-        console.log(this.props.user);
         return (
             <div class="nav-container">
                 <div className='nav-main'>
@@ -46,7 +45,7 @@ class Navbar extends React.Component {
                             <input type="text" class="nav-search" placeholder='Wyszukaj...' onChange={this.textChangeHandler} name='search' />
                             <input type="submit" hidden />
                             <select onChange={this.selectHandler} class='nav-search-select'>
-                                <option selected value=''>Wszędzie</option>
+                                <option defaultValue value=''>Wszędzie</option>
                                 {categories.map((category) => (
                                     <option value={category.name}>{category.name}</option>
                                 ))}
@@ -108,14 +107,14 @@ class Navbar extends React.Component {
                 </div>
                 <div class='nav-categories-container'>
                     {categories.map((category) => (
-                        <Link to={`/search/category=${category.name}`} class='nav-category'>
+                        <Link to={`/search/category/${category.name}`} class='nav-category'>
                             {category.name}
                         </Link>
                     ))}
                 </div>
                 {(this.props.redirect) &&
-                    <Redirect to=
-                        {`/search/keyword=${this.state.search}/category=${this.state.serachCategory}`} class='nav-search-button' />}
+                    <Navigate to=
+                        {`/search/keyword/${this.state.search}/category/${this.state.serachCategory}`} class='nav-search-button' />}
             </div>
         );
 

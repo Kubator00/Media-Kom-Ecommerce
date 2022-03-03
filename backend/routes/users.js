@@ -11,10 +11,10 @@ const login = require('../components/loginUser');
 const register = require('../components/registerUser');
 
 router.post('/token', async (req, res) => {
-    if (!await verifyUserToken(req))
+    if (!await verifyUserToken(req)) 
         return res.send(false);
-    else
-        return res.send(true);
+    
+    return res.send(true);
 })
 
 
@@ -106,7 +106,7 @@ router.post('/orders', async (req, res) => {
         orderDetails['totalAmount'] = totalAmount;
         result.push(orderDetails);
     }
-    res.send({orders: result });
+    res.send({ orders: result });
 })
 
 

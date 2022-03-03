@@ -1,6 +1,6 @@
 import React from 'react'
 import './OrderDetails.css'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { connect } from "react-redux";
 import { userOrderDetails } from '../services/UserOrderDetailsService'
 
@@ -31,8 +31,8 @@ class OrderDetails extends React.Component {
 
     render() {
         const order = this.props.details;
-        if (this.props.error == 'user_id_error')
-            return <Redirect to='/' />;
+        if (this.props.error)
+            return <Navigate to='/' />;
 
         if (order && !this.props.inProgress)
             return (

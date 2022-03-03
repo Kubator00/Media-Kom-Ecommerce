@@ -1,58 +1,49 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import { useState, useEffect, useRef } from 'react'
+import { Navigate, Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
 import verifyToken from "./services/VerifyToken";
-import { connect } from 'react-redux';
+import usePrevious from "./customHooks/prevState";
 
-class ProdectedRoute extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoaded: true,
-        }
-    }
-    componentDidMount() {
-        this.props.verifyToken();
-    }
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.isLoaded === true)
-            if (this.props.inProgress === false && prevProps.inProgress === true){
-                this.setState({ isLoaded: this.props.inProgress });
+const ProdectedRoute = (props) => {
+    const [isLoaded, setIsLoaded] = useState(true);
+
+    
+
+    const inProgress = useSelector((state) => state.usersReducer.inprogress);
+    const user = useSelector((state) => state.usersReducer.user,);
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(verifyToken());
+    }, [])
+
+    const prevIsLoaded = usePrevious(isLoaded);
+    const prevInProgress = usePrevious(inProgress);
+
+    useEffect(() => {
+        if (prevIsLoaded === true)
+            if (inProgress === false && prevInProgress === true) {
+                setIsLoaded(false);
             }
-    }
+    })
 
-    render() {
-        const { component: Component, exact, path, ...rest } = this.props;
-        
-        if (this.state.isLoaded === true)
-            return <>Ładowanie...</>
+    console.log(user);
+    
+    if (isLoaded == true)
+        return <>Ładowanie...</>;
 
-        if (!this.props.user.token)
-            return <Redirect to={{
-                pathname: '/login',
-                state: { msg: 'Sesja wygasła' }
-            }} />
-        return (
-            < Route exact={exact} path={path}>
-                <Component {...rest} />
-            </Route>
-        );
-    };
+    if (!user.token)
+        return <Navigate to={{
+            pathname: '/',
+            state: { msg: 'Sesja wygasła' }
+        }} />
+
+    return <Outlet />;
+
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.usersReducer.user,
-        inProgress: state.usersReducer.inprogress,
-    };
-};
-const mapDispatchToProps = dispatch => {
-    return {
-        verifyToken: (props) => {
-            dispatch(verifyToken(props));
-        },
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProdectedRoute);
+export default ProdectedRoute;
 

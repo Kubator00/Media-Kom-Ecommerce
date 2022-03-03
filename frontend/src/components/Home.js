@@ -1,15 +1,13 @@
 import React from 'react'
-import { Link, Redirect, Route } from "react-router-dom";
 import './Home.css'
-import { useState, useEffect } from 'react'
 
 
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
-
-    }
+        console.log('dasda');
+    }   
 
     render() {
         return (

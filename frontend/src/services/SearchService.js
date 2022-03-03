@@ -10,16 +10,16 @@ export const productsSearch = (keyword, category) => {
     return async dispatch => {
         dispatch(productsSearchInProgress);
         await Axios.post(routes.server + routes.search, {
-            keyword: keyword?keyword:null,
-            category: category?category:null,
+            keyword: keyword ? keyword : null,
+            category: category ? category : null,
         })
-        .then((res) => {
-            if (res)
-                return dispatch(productsSearchSuccess(res.data.products));
-        })
-        .catch((err) => {
-            return dispatch(productsSearchError(err));
-        })
+            .then((res) => {
+                if (res)
+                    return dispatch(productsSearchSuccess(res.data.products));
+            })
+            .catch((err) => {
+                return dispatch(productsSearchError(err));
+            })
     }
 }
 

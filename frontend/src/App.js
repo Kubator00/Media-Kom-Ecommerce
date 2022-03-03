@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProdectedRoute from './ProtectedRoute';
 
 import Navbar from './components/Navbar';
@@ -27,29 +27,31 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Router>
+        <BrowserRouter>
           <Navbar />
-          <Switch>
-            <Route path='/logIn' exact component=
-              {LogIn} />
-            <Route path='/' exact component=
-              {Home} />
- 
-            <Route path='/product:id' component=
-              {Product} />
-            <Route path='/search/keyword=:keyword?/category=:category?' component= {SearchProducts} />
-            <Route path='/search/category=:category?' component= {SearchProducts} />
-            
-            <ProdectedRoute path='/myaccount' component={MyAccount} />
-            <ProdectedRoute path='/mycart' component={MyCart} />
-            <ProdectedRoute path='/orderform' component={OrderForm} />
-            <ProdectedRoute path='/myorders' component={MyOrders} />
-            <ProdectedRoute exact path='/order:id' exact component={OrderDetails} />
-            <ProdectedRoute path="/admin/panel" component={AdminPanel} />
-            <ProdectedRoute path="/admin/allorders" component={AdminAllOrders} />
-            <ProdectedRoute path='/admin/order:id' component={AdminOrderDetails} />
-          </Switch>
-        </Router>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<LogIn />} />
+
+            <Route element={<ProdectedRoute />}>
+              <Route path='mycart' element={<MyCart />} />
+              <Route path='myaccount' element={<MyAccount />} />
+              <Route path='myorders' element={<MyOrders />} />
+              <Route path='orderform' element={<OrderForm />} />
+              {/* <Route path='/order:id' element={<OrderDetails />} /> */}
+              <Route path='admin/panel' element={<AdminPanel />} />
+              <Route path='admin/allorders' element={<AdminAllOrders />} />
+              <Route path='admin/order:id' element={<AdminOrderDetails />} />
+            </Route>
+            <Route path='/product/:productId' exact element={<Product />} />
+            <Route path="search">
+            <Route path='keyword/:keyword/category/:category' element={<SearchProducts />} />
+              <Route path='keyword/:keyword/category' element={<SearchProducts />} />
+              <Route path='keyword//category/:category' element={<SearchProducts />} />
+            </Route>
+
+          </Routes>
+        </BrowserRouter>
 
       </>
     );

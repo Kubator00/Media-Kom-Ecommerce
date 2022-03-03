@@ -23,6 +23,7 @@ const initialState = {
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_LOGOUT:
+            console.log('wylogowanie');
             localStorage.removeItem('username');
             localStorage.removeItem('isAdmin');
             localStorage.removeItem('token');

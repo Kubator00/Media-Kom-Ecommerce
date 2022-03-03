@@ -31,8 +31,10 @@ export const fetchCart = () => {
 }
 
 export const addToCart = (productId,amount) => {
+    console.log(productId);
     return async dispatch => {
         dispatch(addToCartInProgress());
+        console.log(routes.server + routes.cart.add);
         await Axios.post(routes.server + routes.cart.add, {
             username: localStorage.getItem('username'), token: localStorage.getItem('token'),
             amount: amount, productId: productId

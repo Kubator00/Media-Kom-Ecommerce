@@ -6,7 +6,7 @@ import {
 } from "../actions/deliveryAction"
 import Axios from "axios"
 
-export const deliveryTypes = () => {
+export const fetchDeliveryTypes = () => {
     return async dispatch => {
         dispatch(deliveryTypesInProgress);
         await Axios.post(routes.server + routes.delivery.types)

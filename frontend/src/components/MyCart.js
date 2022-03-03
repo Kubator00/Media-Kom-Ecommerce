@@ -18,7 +18,7 @@ class MyCart extends React.Component {
 
 
     render() {
-        const cart = this.props.cart; 
+        const cart = this.props.cart;
         if (cart)
             return (
                 <div className="mycart-container">
@@ -43,19 +43,17 @@ class MyCart extends React.Component {
                     {cart.length > 0 &&
                         <>
                             Całkowity koszt: {this.props.totalAmount}zł
-                            <Link to=
-                                {{
-                                    pathname: '/orderform',
-                                    state: { cart: this.props.cart, totalAmount: this.props.totalAmount }
-                                }}>
-                                <button>Przejdź do płatności</button>
-                            </Link>
+                            <Link to={'/orderform'}
+                                state={{cart: this.props.cart, productsAmount: this.props.totalAmount }}
+                            >
+                            <button>Przejdź do płatności</button>
+                        </Link>
                         </>
                     }
 
                 </div>
             );
-        return <>Ladowanie...</>;
+return <>Ladowanie...</>;
     }
 }
 

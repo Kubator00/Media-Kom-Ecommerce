@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, Redirect, Route } from "react-router-dom";
+import { Link, Navigate, Route } from "react-router-dom";
 import './LogIn.css'
 import { useState, useEffect } from 'react'
 import Axios from "axios"
@@ -49,7 +49,7 @@ class LogIn extends Component {
                 password: "",
             },
             isAuth: this.props.user.isLogIn,
-            msg: props.location.state ? props.location.state.msg : undefined,
+            msg: props.location?.state ? props.location.state.msg : undefined,
         }
 
     }
@@ -76,7 +76,7 @@ class LogIn extends Component {
     }
     render() {
         if (localStorage.getItem('token')) {
-            return <Redirect to="/myaccount" />;
+            return <Navigate to="/myaccount" />;
         }
 
         return (

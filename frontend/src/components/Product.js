@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import './Product.css'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,7 +9,7 @@ import { addToCart } from '../services/MyCartService'
 
 
 
-function Product() {
+const Product = () => {
     const { productId } = useParams();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -52,15 +52,12 @@ function Product() {
                     <div className="product-buttons">
                         <button className="product-button" id="product-cart-button" onClick={() => { addToCart1(productId, 1) }}>Dodaj do koszyka</button>
 
-                        <Link to=
-                            {{
-                                pathname: '/orderform',
-                                state: {
-                                    cart:
-                                        [{ title: title, price: price, title_img: titleImg, amount: 1, id: productId }],
-                                    totalAmount: price,
-                                },
-                            }}>
+                        <Link to={'/orderform'}
+                            state={{
+                                cart: [{ title: title, price: price, title_img: titleImg, amount: 1, id: productId }],
+                                productsAmount: price,
+                            }}
+                        >
                             <button className="product-button" id="product-cart-button" >Kup Teraz</button>
                         </Link>
 
@@ -69,7 +66,7 @@ function Product() {
             </div>
             <h2>Opis:</h2>
             {description}
-        </div>
+        </div >
     );
 };
 

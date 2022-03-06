@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 27 Lut 2022, 20:12
+-- Czas generowania: 06 Mar 2022, 11:29
 -- Wersja serwera: 10.4.16-MariaDB
 -- Wersja PHP: 7.4.12
 
@@ -68,13 +68,22 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `date`, `status`, `delivery_type_id`, `delivery_cost`, `name`, `surname`, `town`, `postal_code`, `street`, `phone`) VALUES
-(40, 1, '2022-02-27 16:28:29', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (41, 1, '2022-02-27 17:44:50', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (42, 1, '2022-02-27 17:49:00', 'zakończono', 1, 25, 'Piotr', 'Zys', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (43, 1, '2022-02-27 17:49:44', 'zakończono', 2, 12, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (44, 1, '2022-02-27 17:49:58', 'anulowano', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (45, 1, '2022-02-27 17:51:47', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(50, 1, '2022-02-27 19:33:17', 'wysłane', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
+(50, 1, '2022-02-27 19:33:17', 'wysłane', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(51, 1, '2022-03-03 16:56:54', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(52, 1, '2022-03-03 20:42:14', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(53, 1, '2022-03-03 20:51:44', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(54, 1, '2022-03-03 21:13:15', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(55, 1, '2022-03-03 22:08:07', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(56, 1, '2022-03-04 13:10:47', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(57, 1, '2022-03-04 13:41:22', 'anulowano', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(58, 6, '2022-03-04 17:23:32', 'zakończono', 1, 25, 'Bartek', 'Wojciechowski', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(59, 6, '2022-03-04 17:26:32', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(60, 1, '2022-03-04 18:24:20', 'wysłane', 2, 12, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
 
 -- --------------------------------------------------------
 
@@ -94,19 +103,36 @@ CREATE TABLE `orders_product` (
 --
 
 INSERT INTO `orders_product` (`order_id`, `product_id`, `product_amount`, `product_price`) VALUES
-(40, 2, 2, 700),
-(40, 4, 1, 3144),
 (41, 1, 1, 1300),
 (42, 1, 1, 1300),
 (43, 1, 1, 1300),
 (43, 3, 1, 1400),
 (44, 1, 1, 1300),
 (45, 2, 1, 700),
-(46, 2, 1, 700),
-(47, 2, 1, 700),
-(48, 2, 1, 700),
-(49, 2, 1, 700),
-(50, 4, 2, 3144);
+(50, 4, 2, 3144),
+(51, 4, 2, 3144),
+(52, 4, 2, 3144),
+(53, 2, 1, 700),
+(54, 2, 1, 700),
+(54, 3, 1, 1400),
+(55, 5, 1, 3500),
+(55, 4, 1, 3144),
+(55, 3, 1, 1400),
+(55, 1, 1, 1300),
+(56, 5, 1, 3500),
+(56, 4, 1, 3144),
+(56, 3, 1, 1400),
+(56, 1, 1, 1300),
+(56, 6, 1, 3990),
+(56, 8, 1, 3900),
+(56, 7, 1, 2750),
+(56, 2, 1, 700),
+(57, 5, 1, 3500),
+(57, 2, 1, 700),
+(58, 4, 1, 3144),
+(58, 7, 1, 2750),
+(59, 5, 1, 3500),
+(60, 5, 1, 3500);
 
 -- --------------------------------------------------------
 
@@ -128,10 +154,38 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category`, `title`, `description`, `price`, `title_img`) VALUES
-(1, 'telefony', 'Redmi 10X Pro 5G 8/256GB', '48px super telefon ekstra fajny', 1300.00, 'id1_1.jpg'),
-(2, 'podzespoły komputerowe', 'AMD RYZEN 2400G 3.6GHz VEGA 11', 'Procesor ze zintegrowaną kartą graficzną Vega 11 \r\n4 RDZENIE 8 WĄTKÓW 3.6GHz', 700.00, 'id2_1.jpg'),
-(3, 'telefony', 'Redmi Note 10S 6/128GB Fioletowy', 'Redmi Note 10S teraz napędzany mocą Helio G95! Inteligentny aparat główny 64MP uchwyci wspaniałe scenerie. Odporna na zachlapania obudowa, piękny wyświetlacz oraz bardzo pojemna bateria 5000mAh.', 1400.00, 'id3_1.jpg'),
-(4, 'telewizory', 'LG 65″ 4K NanoCell DVB-T2', 'Telewizor LG oferuje krystalicznie czysty obraz z technologią NanoCell', 3144.00, 'id4_1.jpg');
+(1, 'telefony', 'Redmi 10X Pro 5G 8/256GB', '48px super telefon ekstra fajny', 1300.00, 'id1_1.png'),
+(2, 'podzespoły komputerowe', 'AMD RYZEN 2400G 3.6GHz VEGA 11', 'Procesor ze zintegrowaną kartą graficzną Vega 11 \r\n4 RDZENIE 8 WĄTKÓW 3.6GHz', 700.00, 'id2_1.png'),
+(3, 'telefony', 'Redmi Note 10S 6/128GB Fioletowy', 'Redmi Note 10S teraz napędzany mocą Helio G95! Inteligentny aparat główny 64MP uchwyci wspaniałe scenerie. Odporna na zachlapania obudowa, piękny wyświetlacz oraz bardzo pojemna bateria 5000mAh.', 1400.00, 'id3_1.png'),
+(4, 'telewizory', 'LG 65″ 4K NanoCell DVB-T2', 'Telewizor LG oferuje krystalicznie czysty obraz z technologią NanoCell', 3144.00, 'id4_1.png'),
+(5, 'laptopy', 'Microsoft Surface i5/8GB/512 Platinum', '8GB Ramu, płaski laptop, dysk SSD m2 512GB, błyszczący led IPS, Windows 11', 3500.00, 'id5_1.png'),
+(6, 'laptopy', 'HP Pavilion 15', 'Procesor i5-1130G\r\nPamięć Ram 32GB\r\nDysk SDD 512GB\r\nWindows 11', 3990.00, 'id6_1.png'),
+(7, 'telewizory', 'Samsung AU8002 Crystal UHD 4K Smart TV 55\"', 'Smukły design, krystaliczne żywe kolory 60Hz, AndroidTV', 2750.00, 'id7_1.png'),
+(8, 'telewizory', 'LG 55” NanoCell 4K 2021', 'Krystaliczny czysty obraz, Smart TV, osty i wyrazisty obraz', 3900.00, 'id8_1.png');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `recommended_products`
+--
+
+CREATE TABLE `recommended_products` (
+  `product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `recommended_products`
+--
+
+INSERT INTO `recommended_products` (`product_id`) VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8);
 
 -- --------------------------------------------------------
 
@@ -172,7 +226,9 @@ CREATE TABLE `user_cart` (
 --
 
 INSERT INTO `user_cart` (`user_id`, `product_id`, `product_amount`) VALUES
-(1, 4, 2);
+(1, 5, 1),
+(1, 2, 1),
+(6, 5, 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -191,16 +247,36 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `orders_product`
+--
+ALTER TABLE `orders_product`
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indeksy dla tabeli `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `recommended_products`
+--
+ALTER TABLE `recommended_products`
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `user_cart`
+--
+ALTER TABLE `user_cart`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
@@ -216,19 +292,43 @@ ALTER TABLE `delivery_types`
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT dla tabeli `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `orders_product`
+--
+ALTER TABLE `orders_product`
+  ADD CONSTRAINT `orders_product_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orders_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Ograniczenia dla tabeli `recommended_products`
+--
+ALTER TABLE `recommended_products`
+  ADD CONSTRAINT `recommended_products_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ograniczenia dla tabeli `user_cart`
+--
+ALTER TABLE `user_cart`
+  ADD CONSTRAINT `user_cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

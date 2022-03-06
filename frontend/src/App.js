@@ -38,16 +38,17 @@ class App extends React.Component {
               <Route path='myaccount' element={<MyAccount />} />
               <Route path='myorders' element={<MyOrders />} />
               <Route path='orderform' element={<OrderForm />} />
-              {/* <Route path='/order:id' element={<OrderDetails />} /> */}
+              <Route path='myorders/order/:id' element={<OrderDetails />} />
               <Route path='admin/panel' element={<AdminPanel />} />
               <Route path='admin/allorders' element={<AdminAllOrders />} />
-              <Route path='admin/order:id' element={<AdminOrderDetails />} />
+              <Route path='admin/order/:id' element={<AdminOrderDetails />} />
             </Route>
             <Route path='/product/:productId' exact element={<Product />} />
             <Route path="search">
-            <Route path='keyword/:keyword/category/:category' element={<SearchProducts />} />
+              <Route path='keyword/:keyword/category/:category' element={<SearchProducts />} />
               <Route path='keyword/:keyword/category' element={<SearchProducts />} />
               <Route path='keyword//category/:category' element={<SearchProducts />} />
+              <Route path='category/:category' element={<SearchProducts />} />
             </Route>
 
           </Routes>

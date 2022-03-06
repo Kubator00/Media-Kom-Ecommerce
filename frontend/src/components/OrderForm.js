@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Navigate, useLocation} from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 import './OrderForm.css'
 import { newOrder } from '../services/OrderService'
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +40,7 @@ const OrderForm = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchDeliveryTypes());
-    }, [])
+    }, [dispatch])
 
 
     const deliveryHandler = (event) => {
@@ -78,7 +78,8 @@ const OrderForm = () => {
     if (msg)
         return (
             <div class='orderform-placed-order'>
-                {msg}
+                <span>{msg}</span>
+                <span>Wkrótce otrzymasz maila z danymi do płatności.</span>
                 <Link to='/myorders' class='orderform-form-details-button'>
                     Moje zamówienia
                 </Link>
@@ -95,7 +96,7 @@ const OrderForm = () => {
                         <div onChange={deliveryHandler} class='orderform-delivery'>
                             {deliveryTypes.map((delivery) => (
                                 <span>
-                                    <input type="radio" value={delivery.id} name="delivery-type" />{delivery.name}
+                                    <input type="radio" value={delivery.id} name="delivery-type" />{delivery.name} - {delivery.price} zł
                                 </span>
                             ))}
                         </div>

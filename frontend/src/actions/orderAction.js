@@ -39,6 +39,7 @@ export const userOrdersInProgress = () => {
 }
 
 export const userOrdersSuccess = (orders, rowsFound) => {
+    console.log(orders);
     return {
         type: USER_ORDERS_SUCCESS,
         orders: orders,

@@ -79,7 +79,9 @@
     width: 100%;
     flex-direction: row;
     justify-content: center;
-    margin-bottom: 20px;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-bottom: 2px solid #c2c1c1;
 }
 
@@ -96,6 +98,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    height: 200px;
     max-width: 2000px;
     width: 100%;
 }

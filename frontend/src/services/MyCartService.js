@@ -51,11 +51,11 @@ export const addToCart = (productId,amount) => {
     };
 }
 
-export const changeProductAmount = (props) => {
+export const changeProductAmount = (productId,amount) => {
     return async dispatch => {
         dispatch(cartInProgress());
         await Axios.post(routes.server + routes.cart.changeAmount,
-            { 'username': localStorage.getItem('username'), 'token': localStorage.getItem('token'), 'productId': props.productId, 'amount': props.amount })
+            { 'username': localStorage.getItem('username'), 'token': localStorage.getItem('token'), 'productId': productId, 'amount': amount })
             .then(() => {
                 return dispatch(fetchCart());
             })

@@ -14,11 +14,11 @@ export const userOrderDetails = (orderId) => {
             username: localStorage.getItem('username'), token: localStorage.getItem('token'), orderId: orderId
         })
             .then((res) => {
-                if (res.data.status == 'user_id_error')
-                    return dispatch(userOrderDetailsError('user_id_error'));
+                res.data.order['cartAmount'] = res.data.order.products.reduce((sum, element) => sum + element.price, 0);
                 return dispatch(userOrderDetailsSuccess(res.data.order));
             })
             .catch((err) => {
+                console.log(err);
                 return dispatch(userOrderDetailsError(err));
             })
     };

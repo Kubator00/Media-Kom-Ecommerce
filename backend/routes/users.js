@@ -11,9 +11,9 @@ const login = require('../components/loginUser');
 const register = require('../components/registerUser');
 
 router.post('/token', async (req, res) => {
-    if (!await verifyUserToken(req)) 
+    if (!await verifyUserToken(req))
         return res.send(false);
-    
+
     return res.send(true);
 })
 
@@ -49,10 +49,27 @@ router.post('/orders', async (req, res) => {
     const userId = await getUserId(req);
 
 
+
+    const countRows = () => {
+        let query = `SELECT COUNT(*) FROM orders where user_id=${userId};`;
+        return new Promise((resolve, reject) => {
+            connection.query(query,
+                (err, res) => {
+                    if (err)
+                        return reject(err);
+                    return resolve(res[0]['COUNT(*)']);
+                });
+        })
+    };
+
+    const numberOfRows = await countRows().catch(() => {
+        return res.status(400).send('Error')
+    });
+
     const getOrders = () => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT id, user_id, date, status, delivery_cost FROM orders where user_id=${userId} ORDER BY date DESC;`,
+                `SELECT id, user_id, date, status, delivery_cost FROM orders where user_id=${userId} ORDER BY date DESC  LIMIT ${req.body.beginning},${req.body.numOfRows};`,
                 (err, res) => {
                     if (err)
                         return reject(err);
@@ -99,14 +116,14 @@ router.post('/orders', async (req, res) => {
             let product = Object.assign(tmp);
             product['amount'] = orderProductId.product_amount;
             product['price'] = orderProductId.product_price;
-            totalAmount += orderProductId.product_price;
+            totalAmount += orderProductId.product_price * orderProductId.product_amount;
             products.push(product);
         }
         orderDetails['products'] = products;
         orderDetails['totalAmount'] = totalAmount;
         result.push(orderDetails);
     }
-    res.send({ orders: result });
+    res.send({ rowsFound: numberOfRows, orders: result });
 })
 
 

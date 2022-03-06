@@ -10,12 +10,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-#root{
+
+#root {
   display: flex;
-  margin: auto;
   justify-content: center;
   align-items: center;
-  flex-direction:column;
+  flex-direction: column;
   flex-wrap: wrap;
   width: 100%;
   min-width: 400px;

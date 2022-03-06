@@ -47,8 +47,16 @@ a{
     margin-top: 7px;
     margin-bottom: 7px;
 }
-
-.userOrders-order-products-img {
-    width: 100px;
+.userOrders-order-products-img-container{
     height: 100px;
+    width: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
+.userOrders-order-products-img {
+    max-width: 100px;
+    max-height: 100px;
+}
+

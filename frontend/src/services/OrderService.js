@@ -27,14 +27,15 @@ export const newOrder = (props) => {
     }
 }
 
-export const userOrders = () => {
+export const userOrders = (beginning, numOfRows) => {
     return async dispatch => {
         dispatch(userOrdersInProgress());
         await Axios.post(routes.server + routes.users.orders, {
-            username: localStorage.getItem('username'), token: localStorage.getItem('token')
+            username: localStorage.getItem('username'), token: localStorage.getItem('token'),
+            beginning: beginning, numOfRows: numOfRows
         })
             .then((res) => {
-                dispatch(userOrdersSuccess(res.data.orders));
+                dispatch(userOrdersSuccess(res.data.orders, res.data.rowsFound));
                 return res.data.orders;
             })
             .catch((err) => {

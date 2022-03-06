@@ -14,6 +14,7 @@ export const adminOrderDetails = (orderId) => {
             username: localStorage.getItem('username'), token: localStorage.getItem('token'), orderId: orderId
         })
             .then((res) => {
+                res.data.order['cartAmount'] = res.data.order.products.reduce((sum, element) => sum + element.price, 0);
                 return dispatch(adminOrderDetailsSuccess(res.data.order));
             })
             .catch((err) => {

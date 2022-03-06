@@ -24,12 +24,13 @@ export const newOrderReducer = (state = { inprogress: false, error: null, msg: '
     }
 };
 
-export const userOrdersReducer = (state = { inprogress: false, error: null, rowsFound: 0, orders: [] }, action) => {
+export const userOrdersReducer = (state = { inprogress: false, error: null, rowsFound: 0, orders: null }, action) => {
 
     switch (action.type) {
         case USER_ORDERS_IN_PROGRESS:
             return { ...state, inprogress: true };
         case USER_ORDERS_SUCCESS:
+            console.log({ ...state, inprogress: false, rowsFound: action.rowsFound, orders: action.orders });
             return { ...state, inprogress: false, rowsFound: action.rowsFound, orders: action.orders };
         case USER_ORDERS_ERROR:
             return { ...state, inprogress: false, error: action.error };

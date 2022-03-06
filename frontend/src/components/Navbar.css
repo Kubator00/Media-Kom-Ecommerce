@@ -6,14 +6,18 @@
 
 .nav-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: flex-start;
     justify-content: center;
-    max-width: 2000px;
-    margin-bottom: 20px;
+    align-items: center;
     width: 100%;
     background-color: #E8E8E8;
-    color: black;
+    margin-bottom: 30px;
 }
+.nav-container1 {
+    width: 100%;
+    max-width: 2000px;
+}
+
 
 .nav-main {
     display: flex;

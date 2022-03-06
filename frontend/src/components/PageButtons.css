@@ -1,0 +1,47 @@
+.pagebuttons-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagebuttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 50%
+}
+
+.pagebuttons-button {
+    background-color: #E8E8E8;
+    padding: 15px;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.pagebuttons-current-button {
+    background-color: green;
+    padding: 15px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.pagebuttons-input {
+    width: 35px;
+    height: 43px;
+    margin-right: 5px;
+}
+
+.pagebuttons-nextbutton {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+button:last-child {
+    margin-right: 0;
+}

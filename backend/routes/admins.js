@@ -23,9 +23,9 @@ router.post('/allorders', async (req, res) => {
     }
 
     const getOrders = () => {
-        let query = `SELECT * FROM orders ORDER BY date DESC LIMIT ${req.body.limit1},${req.body.limit2};`;
+        let query = `SELECT * FROM orders ORDER BY date DESC LIMIT ${req.body.beginning},${req.body.numOfRows};`;
         if (req.body.status)
-            query = `SELECT * FROM orders WHERE status=${statusQuery} ORDER BY date DESC LIMIT ${req.body.limit1},${req.body.limit2};`;
+            query = `SELECT * FROM orders WHERE status=${statusQuery} ORDER BY date DESC LIMIT ${req.body.beginning},${req.body.numOfRows};`;
         return new Promise((resolve, reject) => {
             connection.query(query,
                 (err, res) => {
@@ -98,7 +98,7 @@ router.post('/allorders', async (req, res) => {
         orderDetails['totalAmount'] = totalAmount;
         result.push(orderDetails);
     }
-    res.send({ status: 'ok', rowsFound: foundRows, orders: result });
+    res.send({ rowsFound: foundRows, orders: result });
 })
 
 
@@ -133,9 +133,7 @@ router.post('/orders/details', async (req, res) => {
         return res.send({ 'status': 'failed' });
 
 
-    let userId = await getUserId(req);
-
-    const getUserData = () => {
+    const getUserData = (userId) => {
         return new Promise((resolve, reject) => {
             connection.query(
                 `SELECT username, email FROM users where id=${userId};`,
@@ -146,7 +144,6 @@ router.post('/orders/details', async (req, res) => {
                 });
         })
     }
-    let userData = await getUserData().catch(err => { console.log(err) });
 
 
     const getOrders = () => {
@@ -162,6 +159,8 @@ router.post('/orders/details', async (req, res) => {
     };
 
     let order = await getOrders().catch(err => console.log(err));
+    let userData = await getUserData(order.user_id).catch(err => { console.log(err) });
+
     if (!order || order.length < 1)
         return res.send({ status: 'failed' });
 

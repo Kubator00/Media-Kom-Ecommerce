@@ -10,7 +10,7 @@ import {
 
 
 
-export const adminAllOrdersReducer = (state = { inprogress: false, error: null, orders: [], rowsFound: null, limits: { beginning: 0, end: 5, increase: 5 } }, action) => {
+export const adminAllOrdersReducer = (state = { inprogress: false, error: null, orders: null, rowsFound: null, limits: { beginning: 0, end: 10, increase: 10 } }, action) => {
     switch (action.type) {
         case ADMIN_ORDERS_IN_PROGRESS:
             return { ...state, inprogress: true };
@@ -18,7 +18,7 @@ export const adminAllOrdersReducer = (state = { inprogress: false, error: null, 
             return {
                 ...state,
                 inprogress: false,
-                orders: [...state.orders, ...action.orders],
+                orders: action.orders,
                 rowsFound: action.rowsFound,
                 limits: {
                     ...state.limits,
@@ -29,7 +29,7 @@ export const adminAllOrdersReducer = (state = { inprogress: false, error: null, 
         case ADMIN_ORDERS_ERROR:
             return { ...state, inprogress: false, error: action.error };
         case ADMIN_ORDERS_RESET:
-            return  { inprogress: false, error: null, orders: [], rowsFound: null, limits: { beginning: 0, end: 5, increase: 5 } };
+            return  { inprogress: false, error: null, orders: [], rowsFound: null, limits: { beginning: 0, end: 10, increase: 10 } };
         default:
             return state;
     }

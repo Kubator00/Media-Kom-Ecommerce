@@ -1,5 +1,4 @@
 .mycart-container{
-    /* background-color: blue; */
     max-width: 1500px;
     width: 100%;
     display: flex;
@@ -16,6 +15,7 @@
     border-radius: 15px;
     border-color: #E8E8E8;
     background-color: #E8E8E8;
+    height: 100px;
     
 }
 .mycart-product-link{
@@ -26,11 +26,18 @@
     align-items: center;
     width: 50%;
     text-decoration: none;
-    /* background-color: red; */
 }
-.cart-img{
+.cart-img-container{
     height: 100px;
     width: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.cart-img{
+    max-height: 100px;
+    max-width: 100px;
 }
 .mycart-price-label{
     margin-right: 50px;

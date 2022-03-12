@@ -15,7 +15,7 @@ export const productsSearch = (keyword, category) => {
         })
             .then((res) => {
                 if (res)
-                    return dispatch(productsSearchSuccess(res.data.products));
+                    return dispatch(productsSearchSuccess(res.data));
             })
             .catch((err) => {
                 return dispatch(productsSearchError(err));

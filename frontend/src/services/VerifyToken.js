@@ -10,17 +10,16 @@ import {
 
 const verifyToken = () => {
     return async dispatch => {
-        console.log("BEKA");
-        console.log(localStorage.getItem('username'));
-        console.log(localStorage.getItem('token'));
-        console.log(routes.server + routes.users.token);
         dispatch(verifyTokenInProgress());
-        await Axios.post(routes.server + routes.users.token, {
-            username: localStorage.getItem('username'),
-            token: localStorage.getItem('token'),
+        await Axios({
+            method: 'post',
+            url: routes.server + routes.users.token,
+            headers: {
+                "X-USER-TOKEN": localStorage.getItem('token'),
+                "X-USERNAME": localStorage.getItem('username')
+            },
         })
             .then((res) => {
-                console.log('DUPA');
                 console.log(res);
                 if (!res.data) {
                     dispatch(logOutUser());

@@ -9,14 +9,19 @@ const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const login = require('../components/loginUser');
 const register = require('../components/registerUser');
+const selectQuery = require('../components/selectQuery')
+
 
 router.post('/token', async (req, res) => {
+    try {
+        req.headers['userId'] = await getUserId(req)
+    } catch (err) {
+        console.error(err);
+    }
     if (!await verifyUserToken(req))
         return res.send(false);
-
     return res.send(true);
 })
-
 
 router.post('/login', async (req, res) => {
     const schemaValidate = login.schema.validate({ username: req.body.username, password: req.body.password });
@@ -41,130 +46,54 @@ router.post('/register', async (req, res) => {
     await register.register(req.body, hashedPassword, res);
 });
 
-
+router.use(auth)
+async function auth(req, res, next) {
+    try {
+        req.headers['userId'] = await getUserId(req)
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(400).send("Nie znaleziono uzytkownika w bazie");
+    }
+    if (!await verifyUserToken(req))
+        return res.status(400).send("Blad autentykacji");
+    next();
+}
 
 router.post('/orders', async (req, res) => {
-    if (!await verifyUserToken(req))
-        return res.status(401).send('Unauthorized');
-    const userId = await getUserId(req);
-
-
-
-    const countRows = () => {
-        let query = `SELECT COUNT(*) FROM orders where user_id=${userId};`;
-        return new Promise((resolve, reject) => {
-            connection.query(query,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res[0]['COUNT(*)']);
-                });
-        })
-    };
-
-    const numberOfRows = await countRows().catch(() => {
-        return res.status(400).send('Error')
-    });
-
-    const getOrders = () => {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                `SELECT id, user_id, date, status, delivery_cost FROM orders where user_id=${userId} ORDER BY date DESC  LIMIT ${req.body.beginning},${req.body.numOfRows};`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res);
-                });
-        })
-    };
-
-    const orders = await getOrders().catch(err => console.log(err));
-    if (!getOrders)
-        return res.send({ status: 'failed' });
-
-    const getProductsId = (orderId) => {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                `SELECT product_id, product_amount, product_price FROM orders_product where order_id=${orderId};`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res);
-                });
-        })
-    };
-    const getProductDetails = (product_id) => {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                `SELECT id, title,title_img FROM products where id=${product_id};`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res[0]);
-                });
-        })
-    };
-
-    let result = [];
-    for (order of orders) {
-        let orderDetails = order;
-        let products = [];
-        let totalAmount = order.delivery_cost;
-        const orderProductsId = await getProductsId(order.id);
-        for (orderProductId of orderProductsId) {
-            const tmp = await getProductDetails(orderProductId.product_id);
-            let product = Object.assign(tmp);
-            product['amount'] = orderProductId.product_amount;
-            product['price'] = orderProductId.product_price;
-            totalAmount += orderProductId.product_price * orderProductId.product_amount;
-            products.push(product);
-        }
-        orderDetails['products'] = products;
-        orderDetails['totalAmount'] = totalAmount;
-        result.push(orderDetails);
+    let rowsFound, orders, ordersProducts;
+    try {
+        rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders where user_id=${req.headers.userId};`))[0]['COUNT(*)'];
+        orders = await selectQuery(`SELECT id, date, status FROM orders where user_id=${req.headers.userId} ORDER BY date DESC LIMIT ${req.body.beginning},${req.body.numOfRows};`);
+        ordersProducts = await selectQuery(
+            `SELECT o.order_id,o.product_id, o.product_amount as amount, o.product_price as price, p.title, p.title_img
+            FROM orders_product as o join products as p on o.product_id=p.id 
+            where o.order_id BETWEEN ${orders[orders.length - 1].id} AND ${orders[0].id}`);
+    } catch (err) {
+        console.log(err);
+        return res.status(400).send('Blad pobierania danych');
     }
-    res.send({ rowsFound: numberOfRows, orders: result });
+
+    for (order of orders) {
+        order['products'] = [];
+        order.products.push(...ordersProducts.filter(i => order.id === i.order_id));
+    }
+    res.send({ rowsFound: rowsFound, orders: orders });
 })
 
 
 router.post('/cart', async (req, res) => {
-    console.log(req.body);
-    if (!await verifyUserToken(req))
-        return res.status(401).send('Unauthorized');
-    let userId = await getUserId(req);
-    const getProductsId = async () => {
-        return new Promise((resolve) => {
-            connection.query(`SELECT product_id,product_amount from user_cart WHERE user_id=${userId}`, (error, result) => {
-                if (error)
-                    return false;
-                return resolve(result);
-            })
-        });
-    };
-    const productsId = await getProductsId();
-    const getProductDetails = async (productId) => {
-        return new Promise((resolve) => {
-            connection.query(`SELECT title, price, title_img from products WHERE id=${productId}`, (error, result) => {
-                if (error) {
-                    console.log(error);
-                    return false;
-                }
-                if (result.length > 0)
-                    return resolve(result[0]);
-                return false;
-
-            })
-        });
-    };
-    let productsDetails = [];
-    for (i of productsId) {
-        productsDetails.push(await getProductDetails(i.product_id));
-        productsDetails.at(-1)['id'] = i.product_id;
-        productsDetails.at(-1)['amount'] = i.product_amount;
+    let cart;
+    try {
+        cart = await selectQuery(
+            `SELECT c.product_id as id, c.product_amount as amount, p.title, p.title_img, p.price 
+        FROM user_cart as c join products as p 
+        on c.product_id=p.id WHERE user_id=${req.headers.userId}`);
+    } catch (err) {
+        console.log(err);
+        return res.status(400).send('Blad pobierania danych');
     }
-    console.log(productsDetails);
-    res.send(productsDetails);
-
+    res.send(cart);
 })
 
 module.exports = router;

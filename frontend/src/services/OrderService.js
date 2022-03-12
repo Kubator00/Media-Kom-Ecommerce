@@ -13,8 +13,16 @@ import {
 export const newOrder = (props) => {
     return async dispatch => {
         dispatch(newOrderInProgress());
-        await Axios.post(routes.server + routes.orders.new, {
-            username: localStorage.getItem('username'), token: localStorage.getItem('token'), orderData: props
+        await Axios({
+            method: 'post',
+            url: routes.server + routes.orders.new,
+            headers: {
+                "X-USER-TOKEN": localStorage.getItem('token'),
+                "X-USERNAME": localStorage.getItem('username')
+            },
+            data: {
+                orderData: props
+            }
         })
             .then((res) => {
                 dispatch(newOrderSuccess(res.data));
@@ -30,11 +38,22 @@ export const newOrder = (props) => {
 export const userOrders = (beginning, numOfRows) => {
     return async dispatch => {
         dispatch(userOrdersInProgress());
-        await Axios.post(routes.server + routes.users.orders, {
-            username: localStorage.getItem('username'), token: localStorage.getItem('token'),
-            beginning: beginning, numOfRows: numOfRows
+        await Axios({
+            method: 'post',
+            url: routes.server + routes.users.orders,
+            headers: {
+                "X-USER-TOKEN": localStorage.getItem('token'),
+                "X-USERNAME": localStorage.getItem('username')
+            },
+            data: {
+                beginning: beginning,
+                numOfRows: numOfRows
+            }
         })
             .then((res) => {
+                res.data.orders.forEach(element => {
+                    element.totalAmount = element.products.reduce((sum, a) => sum + a.price * a.amount, 0);
+                });
                 dispatch(userOrdersSuccess(res.data.orders, res.data.rowsFound));
                 return res.data.orders;
             })

@@ -23,12 +23,13 @@ const Product = () => {
     };
 
     async function read() {
-        await axios.post(`http://localhost:3010/product`, { 'id': productId })
+        await axios.post(`http://localhost:3010/products/details`, { 'id': productId })
             .then(result => {
-                setTitle(result.data.product.title);
-                setPrice(result.data.product.price);
-                setDescription(result.data.product.description);
-                setTitleImg(result.data.product.title_img);
+                console.log(result);
+                setTitle(result.data.title);
+                setPrice(result.data.price);
+                setDescription(result.data.description);
+                setTitleImg(result.data.title_img);
             });
     }
 

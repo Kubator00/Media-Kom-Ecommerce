@@ -11,11 +11,17 @@ import {
 export const adminAllOrders = (beginning, numOfRows) => {
     return async dispatch => {
         dispatch(adminOrdersInProgress());
-        await Axios.post(routes.server + routes.admin.allOrders, {
-            username: localStorage.getItem('username'),
-            token: localStorage.getItem('token'),
-            beginning: beginning,
-            numOfRows: numOfRows,
+        await Axios({
+            method: 'post',
+            url: routes.server + routes.admin.allOrders,
+            headers: {
+                "X-USER-TOKEN": localStorage.getItem('token'),
+                "X-USERNAME": localStorage.getItem('username')
+            },
+            data: {
+                beginning: beginning,
+                numOfRows: numOfRows,
+            }
         })
             .then((res) => {
                 dispatch(adminOrdersSuccess(res.data.orders, res.data.rowsFound));

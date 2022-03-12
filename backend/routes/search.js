@@ -1,30 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const connection = require("../index").connection;
-const verifyUserToken = require('../components/verifyUserToken')
-const jwt = require('jsonwebtoken');
-const getUserId = require('../components/getUserId');
-
+const selectQuery = require('../components/selectQuery');
 
 
 router.post('/', async (req, res) => {
-    console.log(req.body);
-    const searchProducts = () => {
-        let query = `SELECT * from products`;
-        if (req.body.category)
-            query = `SELECT * from products where category='${req.body.category}';`
-        return new Promise((resolve, reject) => {
-            connection.query(query,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res);
-                });
-        })
-    };
-    const products = await searchProducts();
+    let query = `SELECT * from products`;
+    if (req.body.category)
+        query = `SELECT * from products where category='${req.body.category}';`
+    let products;
+    try {
+        products = await selectQuery(query);
+    } catch (err) {
+        if(err=='No rows found')
+            return res.status(200).send("Brak wyników");
+        return res.status(400).send("Blad laczenia z baza");
+    }
     let result = [];
-
     for (product of products) {
         if (req.body.keyword) {
             if ((product.title.toLowerCase()).includes(req.body.keyword.toLowerCase()))
@@ -33,8 +24,7 @@ router.post('/', async (req, res) => {
         else
             result.push(product);
     }
-
-    res.send({ status: 'ok', products: result });
+    res.send(result);
 })
 
 module.exports = router;

@@ -10,12 +10,22 @@ import {
 export const userOrderDetails = (orderId) => {
     return async dispatch => {
         dispatch(userOrderDetailsInProgress());
-        await Axios.post(routes.server + routes.orders.details, {
-            username: localStorage.getItem('username'), token: localStorage.getItem('token'), orderId: orderId
+        await Axios({
+            method: 'post',
+            url: routes.server + routes.orders.details,
+            headers: {
+                "X-USER-TOKEN": localStorage.getItem('token'),
+                "X-USERNAME": localStorage.getItem('username')
+            },
+            data: {
+                orderId: orderId
+            }
         })
             .then((res) => {
-                res.data.order['cartAmount'] = res.data.order.products.reduce((sum, element) => sum + element.price, 0);
-                return dispatch(userOrderDetailsSuccess(res.data.order));
+                console.log(res.data);
+                res.data['cartAmount'] = res.data.products.reduce((sum, element) => sum + element.price * element.amount, 0);
+                res.data['totalAmount'] = res.data.cartAmount + res.data.deliveryPrice;
+                return dispatch(userOrderDetailsSuccess(res.data));
             })
             .catch((err) => {
                 console.log(err);

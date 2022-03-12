@@ -18,8 +18,7 @@ const AdminOrderDetails = () => {
 
     const order = useSelector(state => state.adminOrderDetailsReducer.order);
     const inProgress = useSelector(state => state.adminOrderDetailsReducer.inprogress);
-    const [cartAmount, setCartAmount] = useState(0);
-
+  
     if (order && !inProgress)
         return (
             <div className='orderdetails-container'>
@@ -29,7 +28,7 @@ const AdminOrderDetails = () => {
                     <h2>Status</h2>
                     {order.status}
                     <h2>Dostawa</h2>
-                    <span>{order.delivery_type}</span>
+                    <span>{order.deliveryName}</span>
                     <h2>Dane do wysyłki</h2>
                     <span>{order.name} {order.surname} </span>
                     <span>ul. {order.street} </span>
@@ -64,7 +63,7 @@ const AdminOrderDetails = () => {
                 </div>
                 <div className='orderdetails-amount'>
                     <span>Wartość koszyka: {order.cartAmount} zł</span>
-                    <span>Koszt dostawy: {order.delivery_cost} zł</span>
+                    <span>Koszt dostawy: {order.deliveryPrice} zł</span>
                     <span>Razem: {order.totalAmount} zł</span>
                 </div>
             </div >

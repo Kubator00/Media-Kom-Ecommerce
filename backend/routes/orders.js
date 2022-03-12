@@ -2,75 +2,81 @@ const express = require('express');
 const router = express.Router();
 const connection = require("../index").connection;
 const verifyUserToken = require('../components/verifyUserToken')
-const jwt = require('jsonwebtoken');
 const getUserId = require('../components/getUserId');
-const getDelivery = require('../components/getDeliveryType');
+const selectQuery = require('../components/selectQuery')
 
 
 
+router.use(auth)
+async function auth(req, res, next) {
+    try {
+        req.headers['userId'] = await getUserId(req)
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(400).send("Nie znaleziono uzytkownika w bazie");
+    }
+    if (!await verifyUserToken(req))
+        return res.status(400).send("Blad autentykacji");
+    next();
+}
 
 
 router.post('/new', async (req, res) => {
     const { name, surname, town, postalCode, street, phone, deliveryTypeId, products } = req.body.orderData;
+    let delivery, prices;
+    let productsIds = '';
+    products.forEach(product => {
+        productsIds += `${product.id},`
+    });
+    productsIds = productsIds.slice(0,-1);
 
-    if (!await verifyUserToken(req))
-        return res.status(401).send('Unauthorized');
-    let userId = await getUserId(req);
-    let delivery = await getDelivery(deliveryTypeId);
-
-
-    const insertOrder = () => {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                `INSERT INTO orders 
-                (user_id, status, delivery_type_id, delivery_cost, name, surname, town, postal_code, street, phone) 
-                VALUES (${userId},'w przygotowaniu',${delivery.id},${delivery.price}, '${name}', '${surname}', '${town}', '${postalCode}', '${street}', '${phone}');`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res.insertId);
-                });
-        })
-    };
-    const orderId = await insertOrder().catch(err => console.log(err));
-    if (!orderId)
-        return res.status(400).send('Błąd w składaniu zamówienia');
-
-
-
-    const insertProduct = (productId, productAmount, productPrice) => {
-        return new Promise((resolve, reject) => {
-            connection.query(`INSERT INTO orders_product (order_id, product_id, product_amount, product_price)
-             VALUES (${orderId},${productId},${productAmount},${productPrice});`,
-                (err) => {
-                    if (err)
-                        return reject(err);
-                    resolve();
-                });
-        })
-    };
-
-    const getProductPrice = (productId) => {
-        return new Promise((resolve, reject) => {
-            connection.query(`SELECT price FROM products where id=${productId};`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    resolve(res[0].price);
-                });
-        })
-    };
-
-
-    for (product of products) {
-        const price = await getProductPrice(product.id).catch(err => console.log(err));
-        await insertProduct(product.id, product.amount, price).catch(
-            err => {
-                console.log(err);
-                return res.status(400).send('Błąd w składaniu zamówienia');
-            }
-        );
+    try{
+        delivery = (await selectQuery(`SELECT * from delivery_types WHERE id='${deliveryTypeId}'`))[0];
+        prices = (await selectQuery(`SELECT id, price FROM products where id in(${productsIds})`));
     }
+    catch(err){
+        console.log(err);
+       return res.status(400).send("Blad polaczenia z baza");
+    }
+    products.forEach(product => {
+        product['price'] = (prices.find((i) => i.id == product.id)).price;
+    })
+
+
+    connection.beginTransaction((err) => {
+        if (err)
+            throw err;
+        connection.query(
+            `INSERT INTO orders 
+        (user_id, status, delivery_type_id, name, surname, town, postal_code, street, phone) 
+        VALUES (${req.headers.userId},'w przygotowaniu',${delivery.id}, '${name}', '${surname}',
+        '${town}', '${postalCode}', '${street}', '${phone}');`, (err, res) => {
+
+            if (err) {
+                return connection.rollback(function () {
+                    throw err;
+                });
+            }
+            console.log(products);
+            products.forEach(prod => {
+                connection.query(`INSERT INTO orders_product VALUES (${res.insertId},${prod.id},${prod.amount},${prod.price})`, function (error) {
+                    if (err) {
+                        return connection.rollback(function () {
+                            throw err;
+                        });
+                    }
+                });
+            });
+            connection.commit(function (err) {
+                if (err) {
+                    return connection.rollback(function () {
+                        throw err;
+                    });
+                }
+            });
+        });
+    });
 
     return res.send('Zamówienie złożono pomyślnie');
 
@@ -78,90 +84,26 @@ router.post('/new', async (req, res) => {
 
 router.post('/details', async (req, res) => {
 
-    if (!await verifyUserToken(req))
-        return res.status(401).send('Unauthorized');
-
-    let userId = await getUserId(req);
-
-    const checkIfOrderIsThisUser = () => {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                `SELECT user_id from orders where id=${req.body.orderId};`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res[0]);
-                });
-        })
-    };
-    const check = await checkIfOrderIsThisUser();
-
-    if (check['user_id'] != userId)
+    let orders, products;
+    try {
+        orders = (await selectQuery(
+            `SELECT o.id, o.user_id as userId, o.date, o.status, o.name, o.surname, o.town, o.postal_code, o.street,
+            o.phone, d.name as deliveryName, d.price as deliveryPrice  FROM orders as o join 
+            delivery_types as d on o.delivery_type_id=d.id where o.id=${req.body.orderId}`))[0];
+        products = await selectQuery(
+            `SELECT o.product_id as id, o.product_amount as amount, o.product_price as price, p.title ,p.title_img as titleImg
+        FROM orders_product as o join products as p on p.id=o.product_id where order_id=${req.body.orderId}`);
+    } catch (err) {
+        console.log(err);
+        return res.status(400).send('Blad pobierania danych');
+    }
+    if (orders.userId != req.headers.userId)
         return res.status(400).send('Zamówienie nie należy do użytkownika');
 
-
-    const getOrders = () => {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                `SELECT * FROM orders where id=${req.body.orderId};`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res[0]);
-                });
-        })
-    };
-
-    let order = await getOrders().catch(err => console.log(err));
-    if (!order || order.length < 1)
-        return res.status(400).send('Zamówienie nie istnieje');
-
-    const deliveryType = await getDelivery(order.delivery_type_id);
-
-    const getProductsId = (orderId) => {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                `SELECT product_id, product_amount, product_price FROM orders_product where order_id=${orderId};`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res);
-                });
-        })
-    };
-
-    const getProductDetails = (product_id) => {
-        return new Promise((resolve, reject) => {
-            connection.query(
-                `SELECT id, title,title_img FROM products where id=${product_id};`,
-                (err, res) => {
-                    if (err)
-                        return reject(err);
-                    return resolve(res[0]);
-                });
-        })
-    };
-
-
-    let orderDetails = order;
-    let products = [];
-    let totalAmount = order.delivery_cost;
-    const orderProductsId = await getProductsId(order.id);
-    for (orderProductId of orderProductsId) {
-        const tmp = await getProductDetails(orderProductId.product_id);
-        let product = Object.assign(tmp);
-        product['amount'] = orderProductId.product_amount;
-        product['price'] = orderProductId.product_price;
-        totalAmount += orderProductId.product_price * orderProductId.product_amount;
-        products.push(product);
-    }
-    orderDetails['products'] = products;
-    orderDetails['totalAmount'] = totalAmount;
-    orderDetails['deliveryName'] = deliveryType.name;
-
-
-    res.send({ order: orderDetails });
-
+    res.send({
+        ...orders,
+        products: products
+    });
 
 });
 module.exports = router;

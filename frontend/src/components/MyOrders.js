@@ -13,7 +13,7 @@ const MyOrders = () => {
     useEffect(()=>{
         dispatch(userOrders(0,4));
     },[])
-
+    console.log(orders);
     if (orders)
         return (
             <div className='userOrders-container'>

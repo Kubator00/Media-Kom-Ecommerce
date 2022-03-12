@@ -6,7 +6,6 @@ import { userOrderDetails } from '../services/UserOrderDetailsService'
 
 
 const OrderDetails = () => {
-
     const { id } = useParams();
     const dispatch = useDispatch()
     useEffect(() => {
@@ -16,7 +15,7 @@ const OrderDetails = () => {
     const order = useSelector(state => state.userOrderDetailsReducer.order);
     const inProgress = useSelector(state => state.userOrderDetailsReducer.inprogress);
     const error = useSelector(state => state.userOrderDetailsReducer.error);
-
+ 
     if (error)
         return <Navigate to='/' />;
 
@@ -39,7 +38,7 @@ const OrderDetails = () => {
                     {order.products.map((product) => (
                         <div className='orderdetails-products-product'>
                             <Link to={`/product/${product.id}`} className='orderdetails-products-product-left'>
-                                <img src={`products/${product.title_img}`} className='orderdetails-products-product-img' />
+                                <img src={`products/${product.titleImg}`} className='orderdetails-products-product-img' />
                                 <span>{product.title}</span>
                             </Link>
                             <div className='orderdetails-products-product-right'>
@@ -51,7 +50,7 @@ const OrderDetails = () => {
                 </div>
                 <div className='orderdetails-amount'>
                     <span>Wartość koszyka: {order.cartAmount} zł</span>
-                    <span>Koszt dostawy: {order.delivery_cost} zł</span>
+                    <span>Koszt dostawy: {order.deliveryPrice} zł</span>
                     <span>Razem: {order.totalAmount} zł</span>
                 </div>
             </div >

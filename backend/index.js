@@ -24,9 +24,11 @@ const verifyIsAdmin = require('./components/verifyIsAdmin');
 
 app.use(cors());
 app.use(express.json())
+
 app.get('/', (req, res) => {
     res.send('Server')
 })
+
 
 const usersRoute = require('./routes/users')
 const adminsRoute = require('./routes/admins')
@@ -45,23 +47,6 @@ app.use('/products', productsRoute)
 
 
 
-
-
-
-app.post('/product', (req, res) => {
-    console.log(req.body.id);
-    connection.query(`SELECT * from products WHERE id=${req.body.id}`,
-        (error, result) => {
-            if (error)
-                return console.log(error);
-            if (result.length > 0) {
-                res.send({ 'product': result[0] })
-            }
-            else {
-                res.send({ 'status': false })
-            }
-        });
-})
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`)

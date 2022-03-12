@@ -12,11 +12,17 @@ import {
 export const fetchCart = () => {
     return async dispatch => {
         dispatch(cartInProgress());
-        await Axios.post(routes.server + routes.users.cart, {
-            username: localStorage.getItem('username'), token: localStorage.getItem('token')
+        await Axios({
+            method: 'post',
+            url: routes.server + routes.users.cart,
+            headers: {
+                "X-USER-TOKEN": localStorage.getItem('token'),
+                "X-USERNAME": localStorage.getItem('username')
+            }
         })
             .then((res) => {
                 let sum = 0;
+                console.log(res.data);
                 if (res.data.length > 0)
                     sum = res.data.reduce((sum, a) => sum + a.price * a.amount, 0);
                 dispatch(cartSuccess(res.data, sum));
@@ -30,14 +36,21 @@ export const fetchCart = () => {
     };
 }
 
-export const addToCart = (productId,amount) => {
+export const addToCart = (productId, amount) => {
     console.log(productId);
     return async dispatch => {
         dispatch(addToCartInProgress());
-        console.log(routes.server + routes.cart.add);
-        await Axios.post(routes.server + routes.cart.add, {
-            username: localStorage.getItem('username'), token: localStorage.getItem('token'),
-            amount: amount, productId: productId
+        await Axios({
+            method: 'post',
+            url: routes.server + routes.cart.add,
+            headers: {
+                "X-USER-TOKEN": localStorage.getItem('token'),
+                "X-USERNAME": localStorage.getItem('username')
+            },
+            data: {
+                amount: amount,
+                productId: productId
+            }
         })
             .then((res) => {
                 dispatch(fetchCart());
@@ -51,11 +64,21 @@ export const addToCart = (productId,amount) => {
     };
 }
 
-export const changeProductAmount = (productId,amount) => {
+export const changeProductAmount = (productId, amount) => {
     return async dispatch => {
         dispatch(cartInProgress());
-        await Axios.post(routes.server + routes.cart.changeAmount,
-            { 'username': localStorage.getItem('username'), 'token': localStorage.getItem('token'), 'productId': productId, 'amount': amount })
+        await Axios({
+            method: 'post',
+            url: routes.server + routes.cart.changeAmount,
+            headers: {
+                "X-USER-TOKEN": localStorage.getItem('token'),
+                "X-USERNAME": localStorage.getItem('username')
+            },
+            data: {
+                productId: productId,
+                amount: amount
+            }
+        })
             .then(() => {
                 return dispatch(fetchCart());
             })

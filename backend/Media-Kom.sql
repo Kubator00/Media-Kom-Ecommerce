@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 06 Mar 2022, 11:29
+-- Czas generowania: 13 Mar 2022, 17:18
 -- Wersja serwera: 10.4.16-MariaDB
 -- Wersja PHP: 7.4.12
 
@@ -20,6 +20,24 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `sklep`
 --
+
+DELIMITER $$
+--
+-- Procedury
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `my_proc` ()  BEGIN
+INSERT INTO `orders`(`user_id`,  `status`, `delivery_type_id`, `name`, `surname`, `town`, `postal_code`, `street`, `phone`) VALUES (1,'wda',1,'ad','adsdas','dsada','dasdas','dsasda','das');
+SET @id = LAST_INSERT_ID();
+SELECT @id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `my_proc1` ()  BEGIN
+INSERT INTO `orders`(`user_id`,  `status`, `delivery_type_id`, `name`, `surname`, `town`, `postal_code`, `street`, `phone`) VALUES (1,'wda',1,'ad','STASIEL','dsada','dasdas','dsasda','das');
+SET @id = LAST_INSERT_ID();
+SELECT @id;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -54,7 +72,6 @@ CREATE TABLE `orders` (
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `status` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
   `delivery_type_id` int(11) NOT NULL,
-  `delivery_cost` float NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_polish_ci NOT NULL,
   `surname` varchar(30) COLLATE utf8mb4_polish_ci NOT NULL,
   `town` varchar(30) COLLATE utf8mb4_polish_ci NOT NULL,
@@ -67,23 +84,21 @@ CREATE TABLE `orders` (
 -- Zrzut danych tabeli `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `date`, `status`, `delivery_type_id`, `delivery_cost`, `name`, `surname`, `town`, `postal_code`, `street`, `phone`) VALUES
-(41, 1, '2022-02-27 17:44:50', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(42, 1, '2022-02-27 17:49:00', 'zakończono', 1, 25, 'Piotr', 'Zys', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(43, 1, '2022-02-27 17:49:44', 'zakończono', 2, 12, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(44, 1, '2022-02-27 17:49:58', 'anulowano', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(45, 1, '2022-02-27 17:51:47', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(50, 1, '2022-02-27 19:33:17', 'wysłane', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(51, 1, '2022-03-03 16:56:54', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(52, 1, '2022-03-03 20:42:14', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(53, 1, '2022-03-03 20:51:44', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(54, 1, '2022-03-03 21:13:15', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(55, 1, '2022-03-03 22:08:07', 'w przygotowaniu', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(56, 1, '2022-03-04 13:10:47', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(57, 1, '2022-03-04 13:41:22', 'anulowano', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(58, 6, '2022-03-04 17:23:32', 'zakończono', 1, 25, 'Bartek', 'Wojciechowski', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(59, 6, '2022-03-04 17:26:32', 'zakończono', 1, 25, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(60, 1, '2022-03-04 18:24:20', 'wysłane', 2, 12, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
+INSERT INTO `orders` (`id`, `user_id`, `date`, `status`, `delivery_type_id`, `name`, `surname`, `town`, `postal_code`, `street`, `phone`) VALUES
+(41, 1, '2022-02-27 17:44:50', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(42, 1, '2022-02-27 17:49:00', 'zakończono', 1, 'Piotr', 'Zys', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(43, 1, '2022-02-27 17:49:44', 'zakończono', 2, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(44, 1, '2022-02-27 17:49:58', 'anulowano', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(45, 1, '2022-02-27 17:51:47', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(50, 1, '2022-02-27 19:33:17', 'wysłane', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(51, 1, '2022-03-03 16:56:54', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(52, 1, '2022-03-03 20:42:14', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(53, 1, '2022-03-03 20:51:44', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(54, 1, '2022-03-03 21:13:15', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(55, 1, '2022-03-03 22:08:07', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(56, 1, '2022-03-04 13:10:47', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(57, 1, '2022-03-04 13:41:22', 'anulowano', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(116, 1, '2022-03-12 16:39:58', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
 
 -- --------------------------------------------------------
 
@@ -129,10 +144,13 @@ INSERT INTO `orders_product` (`order_id`, `product_id`, `product_amount`, `produ
 (56, 2, 1, 700),
 (57, 5, 1, 3500),
 (57, 2, 1, 700),
-(58, 4, 1, 3144),
-(58, 7, 1, 2750),
-(59, 5, 1, 3500),
-(60, 5, 1, 3500);
+(116, 2, 3, 700),
+(116, 4, 1, 3144),
+(116, 7, 3, 2750),
+(116, 3, 3, 1400),
+(116, 1, 3, 1300),
+(116, 5, 3, 3500),
+(116, 6, 3, 3990);
 
 -- --------------------------------------------------------
 
@@ -226,9 +244,11 @@ CREATE TABLE `user_cart` (
 --
 
 INSERT INTO `user_cart` (`user_id`, `product_id`, `product_amount`) VALUES
-(1, 5, 1),
 (1, 2, 1),
-(6, 5, 1);
+(6, 5, 5),
+(1, 4, 1),
+(1, 7, 1),
+(1, 5, 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -244,7 +264,9 @@ ALTER TABLE `delivery_types`
 -- Indeksy dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `delivery_type_id` (`delivery_type_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indeksy dla tabeli `orders_product`
@@ -292,7 +314,7 @@ ALTER TABLE `delivery_types`
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT dla tabeli `products`
@@ -309,6 +331,13 @@ ALTER TABLE `users`
 --
 -- Ograniczenia dla zrzutów tabel
 --
+
+--
+-- Ograniczenia dla tabeli `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`delivery_type_id`) REFERENCES `delivery_types` (`id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Ograniczenia dla tabeli `orders_product`

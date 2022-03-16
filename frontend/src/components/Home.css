@@ -13,6 +13,9 @@
     width: 100%;
 
 }
+.home-slider-product-img-container1{
+    height: 70%;
+}
 .home-slider-product-img-container{
     display: flex;
     justify-content: center;
@@ -35,10 +38,10 @@
     margin: 5px;
     padding: 10px;
     border: 2px solid lightgray;
-
-
 }
-
+.home-slider-product label{
+    height: 15%;
+}
 .home-container {
     width: 100%;
     max-width: 2000px;

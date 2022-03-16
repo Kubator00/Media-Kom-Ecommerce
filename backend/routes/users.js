@@ -39,10 +39,12 @@ router.post('/register', async (req, res) => {
     const schemaValidate = register.schema.validate(
         { username: req.body.username, password: req.body.password, email: req.body.email }
     );
+    console.log(schemaValidate.error)   
     if (schemaValidate.error)
         return res.status(400).send('Niepoprawne dane');
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    console.log(req.body);
     await register.register(req.body, hashedPassword, res);
 });
 

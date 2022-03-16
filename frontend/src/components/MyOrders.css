@@ -3,7 +3,7 @@ a{
     color: black;
 }
 .userOrders-container {
-    width: 100%;
+    width: 80%;
     max-width: 2000px;
     display: flex;
     flex-direction: column;
@@ -16,21 +16,24 @@ a{
     margin-bottom: 30px;
     border-style: solid;
     border-radius: 15px;
-    border-color: #E8E8E8;
+    border-color: rgb(245, 245, 245);
 }
 
 .userOrders-order-details {
-    background-color: #E8E8E8;
+    background-color:rgb(245, 245, 245);
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: column;
     border-top-left-radius: 14px;
     border-bottom-left-radius: 14px;
     border-color: #E8E8E8;
     flex-wrap: wrap;
 }
-
+.userOrders-order-details span{
+    font-size: 20px;
+    margin-bottom: 15px;
+}
 .userOrders-order-products {
     width: 100%;
     display: flex;

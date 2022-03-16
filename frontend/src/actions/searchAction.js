@@ -2,7 +2,9 @@ import {
     PRODUCTS_SEARCH_IN_PROGRESS,
     PRODUCTS_SEARCH_SUCCESS,
     PRODUCTS_SEARCH_ERROR,
-    PRODUCTS_SEARCH_REDIRECT
+    PRODUCTS_SEARCH_REDIRECT,
+    KEYWORD_SET,
+    CATEGORY_SET,
 } from './searchActionType'
 
 export const productsSearchInProgress = () => {
@@ -29,5 +31,19 @@ export const productRedirect = (state) => {
     return {
         type: PRODUCTS_SEARCH_REDIRECT,
         redirect: state
+    };
+}
+
+export const setKeyword = (keyword) => {
+    return {
+        type: KEYWORD_SET,
+        keyword: keyword,
+    };
+}
+
+export const setCategory = (category) => {
+    return {
+        type: CATEGORY_SET,
+        category: category,
     };
 }

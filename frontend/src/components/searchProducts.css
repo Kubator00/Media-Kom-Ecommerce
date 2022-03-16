@@ -1,6 +1,6 @@
 .searchProducts-container {
     max-width: 2000px;
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,9 +8,9 @@
 }
 
 .searchProducts-product-container {
-    background-color: #E8E8E8;
+    background-color: #ffff;
     border-radius: 15px;
-    border: 2px solid #E8E8E8;
+    border: 3px solid #E8E8E8;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -28,19 +28,29 @@
     height: 150px;
 }
 
+.searchProducts-product-left-img {
+    max-height: 80%;
+    max-width: 80%;
+}
+
+.searchProducts-product-left-label{
+    max-height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30px;
+}
+
 .searchProducts-product-right {
     display: flex;
     flex-direction: row;
     width: 40%;
     height: 150px;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
 }
 
-.searchProducts-product-img {
-    max-height: 80%;
-    max-width: 80%;
-}
+
 
 .searchProducts-button {
     display: flex;
@@ -49,12 +59,12 @@
     border-radius: 10px;
     font-size: 18px;
     cursor: pointer;
-    background-color: lightblue;
+    background-color:rgb(69, 224, 7);
     border: 0px solid #fff;
 }
 
 .searchProducts-button:hover {
-    background-color: rgb(69, 224, 7);
+    background-color: rgb(55, 179, 7);
 }
 
 @media only screen and (max-width: 800px) {

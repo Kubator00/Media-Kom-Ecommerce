@@ -6,6 +6,7 @@ import ProdectedRoute from './ProtectedRoute';
 import Navbar from './components/Navbar';
 import Home from './components/Home'
 import LogIn from './components/LogIn';
+import Register from './components/Register';
 
 import MyAccount from './components/MyAccount';
 import Product from './components/Product';
@@ -32,6 +33,7 @@ class App extends React.Component {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<LogIn />} />
+            <Route path='/register' element={<Register />} />
 
             <Route element={<ProdectedRoute />}>
               <Route path='mycart' element={<MyCart />} />

@@ -15,40 +15,67 @@ const MyCart = () => {
         dispatch(fetchCart());
     }, [])
 
+    const deleteAll = () => {
+        cart.forEach(element => {
+            dispatch(changeProductAmount(element.id, 0));
+        });
+    };
+
+    if (cart?.length < 1)
+        return (
+            <div className="mycart-container">
+                <h1>Brak produktów w koszyku</h1>
+            </div>
+        );
     if (cart)
         return (
             <div className="mycart-container">
-                {cart.length < 1 && `Brak przedmiotów w koszyku`}
-                {cart.length > 0 && <h1>Twój koszyk</h1>}
-                {cart.map((product) => (
-                    <ul className="mycart-product">
-                        <Link to={{
-                            pathname: '/product/' + product.id
-                        }} className="mycart-product-link">
-                            <div class='cart-img-container'>
-                                <img src={`./products/${product.title_img}`} className='cart-img' />
-                            </div>
-                            {product.title}
-                        </Link>
-                        <div className='mycart-price-label'>
-                            <button onClick={() => { dispatch(changeProductAmount(product.id, product.amount - 1)) }}>-</button>
-                            {`Ilość:  ${product.amount}  `}
-                            <button onClick={() => { dispatch(changeProductAmount(product.id, product.amount + 1)) }}>+</button><br />
-                            {`Cena: ${product.price}zł`}
+                <div className="mycart-cart">
+                    <div className="mycart-cart-title">
+                        <h1>Twój koszyk</h1>
+                        <div class="mycart-cart-deleteAll" onClick={() => { deleteAll() }}>
+                            <img src='./icons/trash-can.svg' class="mycart-cart-icon" style={{ "margin-left": "10px" }} />
+                            Wyczyść wszystko
                         </div>
-                    </ul>
-                ))}
-                {cart.length > 0 &&
+                    </div>
+                    {cart.map((product) => (
+                        <div className="mycart-product">
+                            <Link to={{
+                                pathname: '/product/' + product.id
+                            }} className="mycart-product-link">
+                                <div class='cart-img-container'>
+                                    <img src={`./products/${product.title_img}`} className='cart-img' />
+                                </div>
+                                {product.title}
+                            </Link>
+                            <div className='mycart-price-label'>
+                                <h3> {`${product.price}zł`} </h3>
+                                <div className='mycart-price-changeAmount'>
+                                    <img src='./icons/circle-minus.svg' onClick={() => { dispatch(changeProductAmount(product.id, product.amount - 1)) }} class="mycart-cart-icon" style={{ "margin-right": "3px", "margin-left": "3px" }} />
+                                    <label>
+                                        {`Ilość:  ${product.amount}  `}
+                                    </label>
+                                    <img src='./icons/circle-plus.svg' onClick={() => { dispatch(changeProductAmount(product.id, product.amount + 1)) }} class="mycart-cart-icon" style={{ "margin-left": "3px" }} />
+                                </div>
+                                <img src='./icons/trash-can.svg' onClick={() => { dispatch(changeProductAmount(product.id, 0)) }} class="mycart-cart-icon" style={{ "margin-left": "10px" }} />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className="mycart-summary">
                     <>
-                        Całkowity koszt: {totalAmount}zł
+                        <span>
+                            <h3> Całkowity koszt </h3>
+                            <h3> {totalAmount}zł </h3>
+                        </span>
                         <Link to={'/orderform'}
                             state={{ cart: cart, productsAmount: totalAmount }}
+                            class="mycart-summary-button"
                         >
-                            <button>Przejdź do płatności</button>
+                            Przejdź do dostawy
                         </Link>
                     </>
-                }
-
+                </div>
             </div>
         );
     return <>Ladowanie...</>;

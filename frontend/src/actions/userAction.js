@@ -7,7 +7,10 @@ import {
     VERIFY_TOKEN_IN_PROGRESS,
     VERIFY_TOKEN_SUCESS,
     VERIFY_TOKEN_FAILURE,
-    VERIFY_TOKEN_ERROR
+    VERIFY_TOKEN_ERROR,
+    USER_REGISTER_IN_PROGRSS,
+    USER_REGISTER_SUCESS,
+    USER_REGISTER_ERROR
 } from "./usersActionType";
 
 export const logOutUser = () => {
@@ -24,7 +27,7 @@ export const loginInProgress = () => {
 }
 
 export const loginSuccess = (user) => {
-    console.log(user);
+    console.log('b');
     return {
         type: USER_LOGIN_SUCESS,
         user: user
@@ -70,3 +73,23 @@ export const verifyTokenError = (error) => {
 
 
 
+
+export const registerInProgress = () => {
+    return {
+        type: USER_REGISTER_IN_PROGRSS
+    };
+}
+
+export const registerSuccess = (msg) => {
+    return {
+        type: USER_REGISTER_SUCESS,
+        msg: msg
+    };
+}
+
+export const registerError = (error) => {
+    return {
+        type: USER_REGISTER_ERROR,
+        error: error
+    };
+}

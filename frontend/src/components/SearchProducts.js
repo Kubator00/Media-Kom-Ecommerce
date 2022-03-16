@@ -39,11 +39,13 @@ const SearchProducts = () => {
                 {products.map((product) => (
                     <Link to={`/product/${product.id}`} class='searchProducts-product-container'>
                         <div class='searchProducts-product-left'>
-                            <img src={`./products/${product.title_img}`} class='searchProducts-product-img' />
-                            <h2>{product.title}</h2>
+                            <img src={`./products/${product.title_img}`} class='searchProducts-product-left-img' />
+                            <div class='searchProducts-product-left-label'>
+                                <label>{product.title}</label>
+                                <h4>{product.price} zł</h4>
+                            </div>
                         </div>
                         <div class='searchProducts-product-right'>
-                            <h1>{`${product.price}zł`}</h1>
                             <Link to='#'>
                                 <button class="searchProducts-button" onClick={() => { dispatch(addToCart(product.id, 1)) }}>Dodaj do koszyka</button>
                             </Link>

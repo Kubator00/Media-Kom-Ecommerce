@@ -20,6 +20,7 @@ const logInUser = (props) => {
                     localStorage.setItem('username', res.data.username);
                     localStorage.setItem('token', res.data.token);
                     localStorage.setItem('isAdmin', res.data.isAdmin);
+                    console.log('a');
                     dispatch(loginSuccess(res.data));
                 }
                 else {

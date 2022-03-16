@@ -1,145 +1,200 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom';
 import './Navbar.css'
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logOutUser } from "../actions/userAction";
 import categories from './Category';
 import { productRedirect } from '../actions/searchAction'
+import { setKeyword, setCategory } from '../actions/searchAction'
 
-class Navbar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isClicked: false,
-            search: '',
-            serachCategory: '',
-        }
-    }
 
-    clickHandler = (p) => {
-        this.setState({ isClicked: p });
-    }
-    textChangeHandler = (event) => {
-        this.setState(prevState => ({
-            ...prevState,
-            [event.target.name]: event.target.value
-        }));
-    }
-    selectHandler = (event) => {
-        this.setState({ serachCategory: event.target.value.toLowerCase() });
-    }
-    submitHandler = (e) => {
+const SearchInput = () => {
+
+    const submitHandler = (e) => {
         e.preventDefault();
-        this.props.productRedirect(true);
+        dispatch(productRedirect(true));
     }
+    const dispatch = useDispatch();
+    const textChangeHandler = (event) => {
+        dispatch(setKeyword(event.target.value));
+    }
+    const selectHandler = (event) => {
+        dispatch(setCategory(event.target.value.toLowerCase()));
+    }
+    return (
+        <form class="nav-search-section" onSubmit={submitHandler}>
+            <input type="text" class="nav-search" placeholder='Wyszukaj...' onChange={textChangeHandler} name='search' />
+            <input type="submit" hidden />
+            <select onChange={selectHandler} class='nav-search-select'>
+                <option defaultValue value=''>Wszędzie</option>
+                {categories.map((category) => (
+                    <option value={category.name}>{category.name}</option>
+                ))}
+            </select>
+            <button type='submit'>
+                <img src='./icons/search.svg' class='icons' />
+            </button>
+        </form>
+    );
+}
 
-    render() {
+const AccountMenu = () => {
+    const [isClicked, isClickedSet] = useState(false);
+    const clickHandler = (p) => {
+        isClickedSet(p);
+    }
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.usersReducer.user);
+    const inprogress = useSelector((state) => state.usersReducer.inprogress);
+
+    if (!inprogress && user.token)
         return (
-            <div class="nav-container">
-                <div class="nav-container1">
-                    <div className='nav-main'>
-                        <div class="nav-left">
-                            <Link to='/' class="nav-title">
-                                <img src='logo.png' class='nav-logo' />
+            <>
+                <div class="nav-dropdownMenu-container1">
+                    <div class="nav-dropdownMenu-container" onClick={() => { clickHandler(!isClicked) }} onMouseEnter={() => { clickHandler(true) }} onMouseLeave={() => { clickHandler(false) }} >
+                        <button class='nav-button' style={{ "border-bottom": "none" }}>
+                            <img src='./icons/user-solid.svg' class='icons' />
+                            Twoje konto
+                        </button>
+                        <div class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'}>
+                            <Link to="/myorders" className="nav-dropdownMenu-link">
+                                <img src='./account/clipboard.svg' class='nav-dropdownMenu-icon' /> Moje zamówienia
                             </Link>
-                            <form class="nav-search-section" onSubmit={this.submitHandler}>
-                                <input type="text" class="nav-search" placeholder='Wyszukaj...' onChange={this.textChangeHandler} name='search' />
-                                <input type="submit" hidden />
-                                <select onChange={this.selectHandler} class='nav-search-select'>
-                                    <option defaultValue value=''>Wszędzie</option>
-                                    {categories.map((category) => (
-                                        <option value={category.name}>{category.name}</option>
-                                    ))}
-                                </select>
-                                <button type='submit'>
-                                    <img src='./icons/search.svg' class='icons' />
-                                </button>
-                            </form>
-                        </div>
-                        <div class="nav-right">
-                            <button class='nav-button'>
-                                <img src='./icons/headphones-simple-solid.svg' class='icons' />
-                                Kontakt
-                            </button>
-                            {((!this.props.inprogress) && this.props.user.token) ?
-                                <>
-                                    <div class="nav-dropdownMenu-container1">
-                                        <div class="nav-dropdownMenu-container" onClick={() => { this.clickHandler(true) }} onMouseEnter={() => { this.clickHandler(true) }} onMouseLeave={() => { this.clickHandler(false) }} >
-                                            <button class='nav-button'>
-                                                <img src='./icons/user-solid.svg' class='icons' />
-                                                Twoje konto
-                                            </button>
-                                            <div class={this.state.isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'}>
-                                                <Link to="/myorders" className="nav-dropdownMenu-link">
-                                                    Moje zamówienia
-                                                </Link>
-                                                <Link to="/myaccount" className="nav-dropdownMenu-link">
-                                                    Ustawienia konta
-                                                </Link>
-                                                {this.props.user.isAdmin === 1 &&
-                                                    <Link to="/admin/panel" className="nav-dropdownMenu-link">
-                                                        Admin
-                                                    </Link>
-                                                }
-                                                <button onClick={this.props.logOutUser} className="nav-dropdownMenu-link">
-                                                    Wyloguj się
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <Link to="/mycart" className="nav-cart">
-                                        <button onClick class='nav-button' >
-                                            <img src='./icons/cart-shopping-solid.svg' class='icons' />
-                                            Koszyk
-                                        </button>
-                                    </Link>
-                                </>
-                                :
-                                <Link to="/login">
-                                    <button class='nav-button'>
-                                        <img src='./icons/user-solid.svg' class='icons' />
-                                        Zaloguj się
-                                    </button>
+                            <Link to="/myaccount" className="nav-dropdownMenu-link">
+                                <img src='./account/settings.svg' class='nav-dropdownMenu-icon' /> Ustawienia konta
+                            </Link>
+                            {user.isAdmin === 1 &&
+                                <Link to="/admin/panel" className="nav-dropdownMenu-link">
+                                    <img src='./account/admin.svg' class='nav-dropdownMenu-icon' />  Admin
                                 </Link>
                             }
+                            <button onClick={() => { dispatch(logOutUser()) }} className="nav-dropdownMenu-link" >
+                                <img src='./account/logout.svg' class='nav-dropdownMenu-icon' style={{ "margin-left": "2px" }} /> Wyloguj się
+                            </button>
                         </div>
                     </div>
-                    <div class='nav-categories-container'>
-                        {categories.map((category) => (
-                            <Link to={`/search/category/${category.name}`} class='nav-category'>
-                                {category.name}
-                            </Link>
-                        ))}
-                    </div>
-                    {(this.props.redirect) &&
-                        <Navigate to=
-                            {`/search/keyword/${this.state.search}/category/${this.state.serachCategory}`} class='nav-search-button' />}
+                </div>
+
+
+                <Link to="/mycart" className="nav-cart">
+                    <button onClick class='nav-button' >
+                        <img src='./icons/cart-shopping-solid.svg' class='icons' />
+                        Koszyk
+                    </button>
+                </Link>
+            </>
+        );
+
+    return (
+        <Link to="/login">
+            <button class='nav-button'>
+                <img src='./icons/user-solid.svg' class='icons' />
+                Zaloguj się
+            </button>
+        </Link>
+    );
+}
+
+const Categories = () => {
+    const [isMobileActive, isMobileActiveSet] = useState(false);
+    const [categoryButtonIsActive, categoryButtonIsActiveSet] = useState(false);
+
+    const showCategoryButton = () => {
+
+        if (window.innerWidth <= 1000) {
+            isMobileActiveSet(true);
+        }
+        else
+            isMobileActiveSet(false);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', showCategoryButton);
+
+        showCategoryButton();
+
+    }, [])
+
+    const mobileCategoryHandler = () => {
+        categoryButtonIsActiveSet((prevState) =>
+            !prevState
+        );
+    }
+
+    if (isMobileActive)
+        return (
+            <div class='nav-categories-container'>
+                <div class='nav-categoryButton' onClick={mobileCategoryHandler} onMouseEnter={mobileCategoryHandler} onMouseLeave={mobileCategoryHandler}>
+                    <span>
+                        {<img src="./categories/bars.svg" class='nav-category-icons' />}
+                        <label>Kategorie</label>
+                    </span>
+                    {categoryButtonIsActive &&
+                        <div class='nav-dropdownMenu-container1'>
+                            <div class="nav-dropdownMenu-container">
+                                <div class={"nav-dropdownMenu-show"}>
+                                    {categories.map((category) => (
+                                        <Link to={`/search/category/${category.name}`} class='nav-category'>
+                                            {<img src={category.img} class='nav-category-icons' />}
+                                            <label>{category.name}</label>
+                                        </Link>
+                                    ))
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         );
-
-    }
+    return (
+        <div class='nav-categories-container'>
+            {categories.map((category) => (
+                <Link to={`/search/category/${category.name}`} class='nav-category'>
+                    {<img src={category.img} class='nav-category-icons' />}
+                    <label> {category.name} </label>
+                </Link>
+            ))
+            }
+        </div>
+    );
 }
 
-const mapStateToProps = (props) => {
-    return {
-        user: props.usersReducer.user,
-        inprogress: props.usersReducer.inprogress,
-        redirect: props.searchProductsReducer.redirect
-    };
-};
+function Navbar() {
 
-const mapDispatchToProps = dispatch => {
-    return {
-        logOutUser: () => {
-            dispatch(logOutUser());
-        },
-        productRedirect: (state) => {
-            dispatch(productRedirect(state));
-        }
-    }
+
+
+    const redirect = useSelector((state) => state.searchProductsReducer.redirect);
+    const searchValue = useSelector((state) => state.searchProductsReducer.keyword);
+    const searchCategory = useSelector((state) => state.searchProductsReducer.category);
+
+
+    return (
+        <div class="nav-container">
+            <div class="nav-container1">
+                <div className='nav-main'>
+                    <div class="nav-left">
+                        <Link to='/' class="nav-title">
+                            <img src='logo.png' class='nav-logo' />
+                        </Link>
+                        <SearchInput />
+                    </div>
+                    <div class="nav-right">
+                        <button class='nav-button'>
+                            <img src='./icons/headphones-simple-solid.svg' class='icons' />
+                            Kontakt
+                        </button>
+                        <AccountMenu />
+                    </div>
+                </div>
+                <Categories />
+                {(redirect) &&
+                    <Navigate to=
+                        {`/search/keyword/${searchValue}/category/${searchCategory}`} class='nav-search-button' />}
+            </div>
+        </div>
+    );
+
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default Navbar;

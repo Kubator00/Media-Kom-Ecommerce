@@ -5,23 +5,7 @@ import { useState, useEffect } from 'react'
 import Axios from "axios"
 import { connect } from "react-redux";
 import logInUser from '../services/LoginService'
-
-const MyInput = (props) => {
-    const { label, type, name, value, className, onChange } = props;
-    return (
-        <div>
-            <label htmlFor={name}>{label}: </label>
-            <input
-                name={name}
-                id={name}
-                type={type}
-                value={value}
-                className={className}
-                onChange={onChange}
-            />
-        </div>
-    )
-}
+import MyInput from './MyInput';
 
 const mapStateToProps = (state) => {
     return {
@@ -76,29 +60,32 @@ class LogIn extends Component {
     }
     render() {
         if (localStorage.getItem('token')) {
-            return <Navigate to="/myaccount" />;
+            return <Navigate to="/" />;
         }
 
         return (
-            <>
-
-                <h1>Zaloguj się</h1>
-                {this.state.msg && this.state.msg}<br></br>
-                {this.props.error && this.props.error}
-                <form onSubmit={this.logInHandler}>
-                    <div class="form-group">
-                        <MyInput label="Nazwa uzytkownika" type="text" name="username" className="form-control" required onChange={this.changeHandler} />
-
-                        <MyInput label="Hasło" type="text" name="password" className="form-control" required onChange={this.changeHandler} />
-
-                        <button type="submit">
-                            Zaloguj sie
-                        </button>
-
+            <div class="login-container">
+                <div class="login-login-container">
+                    <div class="login-login-content">
+                        <h3>Zaloguj się</h3>
+                        {this.state.msg && this.state.msg}<br></br>
+                        {this.props.error && this.props.error}
+                        <form onSubmit={this.logInHandler} class="login-login-form" >
+                            <MyInput label="Nazwa uzytkownika" type="text" name="username" className="login-login-form-control" required onChange={this.changeHandler} />
+                            <MyInput label="Hasło" type="password" name="password" className="login-login-form-control" required onChange={this.changeHandler} />
+                            <button type="submit" class="login-button">
+                                Zaloguj sie
+                            </button>
+                        </form>
                     </div>
-                </form>
-
-            </>
+                </div>
+                <div class="login-register-container">
+                    <h3>Nie masz konta?</h3>
+                    <Link to="/register"  class="login-button">
+                        Zarejestruj się
+                    </Link>
+                </div>
+            </div>
         );
 
     }

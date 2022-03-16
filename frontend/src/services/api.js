@@ -2,6 +2,7 @@ export default {
     server: 'http://localhost:3010/',
     users: {
         login: 'users/login',
+        register: 'users/register',
         token: 'users/token',
         orders: 'users/orders',
         cart: 'users/cart',

@@ -11,11 +11,13 @@ const Cart = (props) => {
 
     return (
         <Link to={`/product/${id}`} class="home-slider-product">
-            <div class="home-slider-product-img-container">
-                <img src={`./products/${img}`} alt='produkt' className='home-slider-product-img' />
+            <div class="home-slider-product-img-container1">
+                <div class="home-slider-product-img-container">
+                    <img src={`./products/${img}`} alt='produkt' className='home-slider-product-img' />
+                </div>
             </div>
             <label>{title}</label>
-            <label>Cena {price} zł</label>
+            <h3>{price} zł</h3>
         </Link>
     );
 }

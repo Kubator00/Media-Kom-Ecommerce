@@ -4,24 +4,7 @@ import './OrderForm.css'
 import { newOrder } from '../services/OrderService'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDeliveryTypes } from "../services/DeliveryTypesService"
-
-const MyInput = (props) => {
-    const { label, type, name, value, className, onChange } = props;
-
-    return (
-        <div>
-            <label htmlFor={name}>{label}: </label>
-            <input
-                name={name}
-                id={name}
-                type={type}
-                value={value}
-                className={className}
-                onChange={onChange}
-            />
-        </div>
-    )
-}
+import MyInput from './MyInput';
 
 
 const OrderForm = () => {
@@ -116,16 +99,20 @@ const OrderForm = () => {
                 </form>
             </div>
             <div className='orderform-cart-container'>
-                {cart.map((product) => (
-                    <Link to={{
-                        pathname: '/product:' + product.id
-                    }} className="orderform-cart-product-link">
-                        <img src={`products/${product.title_img}`} className='orderform-img' />
-                        <label>{product.title}</label><br />
-                        {product.amount}szt
-                    </Link>
-                ))}
-                Całkowitka kwota: {totalAmount} zł
+                <div className='orderform-cart-cart'>
+                    {cart.map((product) => (
+                        <Link to={{
+                            pathname: '/product:' + product.id
+                        }} className="orderform-cart-product-link">
+                            <img src={`products/${product.title_img}`} className='orderform-img' />
+                            <label>{product.title}</label><br />
+                            {product.amount}szt
+                        </Link>
+                    ))}
+                </div>
+                <div class="orderform-cart-container-totalAmountLabel">
+                    Całkowitka kwota: {totalAmount} zł
+                </div>
             </div>
         </div>
     );

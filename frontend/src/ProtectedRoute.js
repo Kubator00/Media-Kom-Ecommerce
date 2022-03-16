@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import verifyToken from "./services/VerifyToken";
@@ -7,8 +7,6 @@ import usePrevious from "./customHooks/prevState";
 
 const ProdectedRoute = (props) => {
     const [isLoaded, setIsLoaded] = useState(true);
-
-    
 
     const inProgress = useSelector((state) => state.usersReducer.inprogress);
     const user = useSelector((state) => state.usersReducer.user,);
@@ -27,8 +25,6 @@ const ProdectedRoute = (props) => {
                 setIsLoaded(false);
             }
     })
-
-    console.log(user);
     
     if (isLoaded == true)
         return <>Ładowanie...</>;

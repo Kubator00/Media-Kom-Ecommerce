@@ -65,10 +65,18 @@
 }
 
 
+.orderform-cart-cart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .orderform-cart-container {
     width: 30%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     border: 2px solid #c2c1c1;
     border-radius: 10px;
@@ -84,7 +92,10 @@
     padding-bottom: 10px;
     border-bottom: 2px solid #c2c1c1;
 }
-
+.orderform-cart-container-totalAmountLabel{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .orderform-cart-product-link label {
     width: 200px;
 }

@@ -24,6 +24,9 @@ export const adminAllOrders = (beginning, numOfRows) => {
             }
         })
             .then((res) => {
+                res.data.orders.forEach(element => {
+                    element.totalAmount = element.products.reduce((sum, a) => sum + a.productPrice * a.productAmount, 0);
+                });
                 dispatch(adminOrdersSuccess(res.data.orders, res.data.rowsFound));
                 return res;
             })

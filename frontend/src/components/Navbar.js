@@ -6,7 +6,7 @@ import { logOutUser } from "../actions/userAction";
 import categories from './Category';
 import { productRedirect } from '../actions/searchAction'
 import { setKeyword, setCategory } from '../actions/searchAction'
-
+import verifyToken from "../services/VerifyToken";
 
 const SearchInput = () => {
 
@@ -98,19 +98,18 @@ const AccountMenu = () => {
 const Categories = () => {
     const [isMobileActive, isMobileActiveSet] = useState(false);
     const [categoryButtonIsActive, categoryButtonIsActiveSet] = useState(false);
+    const dispatch = useDispatch();
 
     const showCategoryButton = () => {
-
-        if (window.innerWidth <= 1000) {
-            isMobileActiveSet(true);
-        }
+        if (window.innerWidth <= 1000) 
+            isMobileActiveSet(true);     
         else
             isMobileActiveSet(false);
     }
 
     useEffect(() => {
+        dispatch(verifyToken())
         window.addEventListener('resize', showCategoryButton);
-
         showCategoryButton();
 
     }, [])
@@ -161,9 +160,6 @@ const Categories = () => {
 }
 
 function Navbar() {
-
-
-
     const redirect = useSelector((state) => state.searchProductsReducer.redirect);
     const searchValue = useSelector((state) => state.searchProductsReducer.keyword);
     const searchCategory = useSelector((state) => state.searchProductsReducer.category);

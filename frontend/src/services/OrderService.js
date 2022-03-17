@@ -51,9 +51,11 @@ export const userOrders = (beginning, numOfRows) => {
             }
         })
             .then((res) => {
+                console.log(res.data.orders)
                 res.data.orders.forEach(element => {
-                    element.totalAmount = element.products.reduce((sum, a) => sum + a.price * a.amount, 0);
+                    element.totalAmount = element.products.reduce((sum, a) => sum + a.productPrice * a.productAmount, 0);
                 });
+
                 dispatch(userOrdersSuccess(res.data.orders, res.data.rowsFound));
                 return res.data.orders;
             })

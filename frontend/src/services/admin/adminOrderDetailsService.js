@@ -23,7 +23,7 @@ export const adminOrderDetails = (orderId) => {
         })
             .then((res) => {
                 console.log(res.data.products);
-                res.data['cartAmount'] = res.data.products.reduce((sum, element) => sum + element.price * element.amount, 0);
+                res.data['cartAmount'] = res.data.products.reduce((sum, element) => sum + element.productPrice * element.productAmount, 0);
                 res.data['totalAmount'] = res.data.cartAmount + res.data.deliveryPrice;
                 return dispatch(adminOrderDetailsSuccess(res.data));
             })

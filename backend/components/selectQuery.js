@@ -7,8 +7,6 @@ module.exports = async (query) => {
                     console.log(err);
                     return reject(err);
                 }
-                if (res.length < 1)
-                    return reject("No rows found");
                 return resolve(res);
             });
     })

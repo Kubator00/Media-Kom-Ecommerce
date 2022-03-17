@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { productsSearch } from '../services/SearchService'
 import { addToCart } from '../services/MyCartService'
 import { productRedirect } from '../actions/searchAction'
-import usePrevious from "../customHooks/prevState";
 
 const SearchProducts = () => {
     const { keyword, category } = useParams();
@@ -30,16 +29,27 @@ const SearchProducts = () => {
     }, [keyword, category])
 
     if (loaded === false || inProgress)
-        return <div>Ładowanie...</div>
+        return (
+            <div class='searchProducts-container'>
+                Ładowanie...
+            </div>
+        );
+
+    if (products?.length < 1)
+        return (
+            <div class='searchProducts-container'>
+                Brak wyników
+            </div>
+        );
 
     if (products?.length > 0)
         return (
             <div class='searchProducts-container'>
                 <h1>{keyword ? `Wyniki wyszukiwania dla "${keyword}":` : category.toUpperCase()}</h1>
                 {products.map((product) => (
-                    <Link to={`/product/${product.id}`} class='searchProducts-product-container'>
+                    <Link to={`/product/${product.productId}`} class='searchProducts-product-container'>
                         <div class='searchProducts-product-left'>
-                            <img src={`./products/${product.title_img}`} class='searchProducts-product-left-img' />
+                            <img src={`./products/${product.titleImg}`} class='searchProducts-product-left-img' />
                             <div class='searchProducts-product-left-label'>
                                 <label>{product.title}</label>
                                 <h4>{product.price} zł</h4>
@@ -47,18 +57,13 @@ const SearchProducts = () => {
                         </div>
                         <div class='searchProducts-product-right'>
                             <Link to='#'>
-                                <button class="searchProducts-button" onClick={() => { dispatch(addToCart(product.id, 1)) }}>Dodaj do koszyka</button>
+                                <button class="searchProducts-button" onClick={() => { dispatch(addToCart(product.productId, 1)) }}>Dodaj do koszyka</button>
                             </Link>
                         </div>
                     </Link>
                 ))}
             </div>
         );
-
-    if (products?.length < 1)
-        return <div>Brak wyników</div>
-
-    return <div>Błąd wyszukiwania</div>
 
 }
 

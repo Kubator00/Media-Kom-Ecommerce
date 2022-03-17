@@ -23,6 +23,9 @@ export default {
     search: 'search',
     delivery: {
         types: 'delivery/types',
+    },
+    products:{
+        details: 'products/details'
     }
 
 }

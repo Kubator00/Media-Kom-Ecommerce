@@ -23,14 +23,14 @@ const OrderDetails = () => {
         return (
             <div className='orderdetails-container'>
                 <div className='orderdetails-details'>
-                    <h1>Zamówienie nr {order.id}</h1>
+                    <h1>Zamówienie nr {order.orderId}</h1>
                     <span>złożone {`${order.date.slice(8, 10)}.${order.date.slice(5, 7)}.${order.date.slice(0, 4)}`}</span>
                     <h2>Dostawa</h2>
                     <span>{order.deliveryName}</span>
                     <h2>Dane do wysyłki</h2>
                     <span>{order.name} {order.surname} </span>
                     <span>ul. {order.street} </span>
-                    <span>{order.postal_code} {order.town} </span>
+                    <span>{order.postalCode} {order.town} </span>
                     <span>{order.phone}</span>
                 </div>
                 <div className='orderdetails-products'>
@@ -42,8 +42,8 @@ const OrderDetails = () => {
                                 <span>{product.title}</span>
                             </Link>
                             <div className='orderdetails-products-product-right'>
-                                <span>{product.amount} szt.</span>
-                                <span>{product.price} zł</span>
+                                <span>{product.productAmount} szt.</span>
+                                <span>{product.productPrice} zł</span>
                             </div>
                         </div>
                     ))}

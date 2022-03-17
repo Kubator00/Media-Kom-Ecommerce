@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProdectedRoute from './ProtectedRoute';
 
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './components/Home'
 import LogIn from './components/LogIn';
 import Register from './components/Register';
@@ -54,6 +55,7 @@ class App extends React.Component {
             </Route>
 
           </Routes>
+           <Footer />
         </BrowserRouter>
 
       </>

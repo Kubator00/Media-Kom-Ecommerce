@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 13 Mar 2022, 17:18
+-- Czas generowania: 17 Mar 2022, 22:19
 -- Wersja serwera: 10.4.16-MariaDB
 -- Wersja PHP: 7.4.12
 
@@ -42,11 +42,33 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `categories`
+--
+
+CREATE TABLE `categories` (
+  `categoryId` int(11) NOT NULL,
+  `categoryName` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `categories`
+--
+
+INSERT INTO `categories` (`categoryId`, `categoryName`) VALUES
+(1, 'laptopy'),
+(2, 'telefony'),
+(3, 'telewizory'),
+(4, 'podzespoły komputerowe'),
+(5, 'akcesoria');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `delivery_types`
 --
 
 CREATE TABLE `delivery_types` (
-  `id` int(11) NOT NULL,
+  `deliveryId` int(11) NOT NULL,
   `name` varchar(256) COLLATE utf8mb4_polish_ci NOT NULL,
   `price` float NOT NULL,
   `available` tinyint(1) NOT NULL DEFAULT 1
@@ -56,9 +78,10 @@ CREATE TABLE `delivery_types` (
 -- Zrzut danych tabeli `delivery_types`
 --
 
-INSERT INTO `delivery_types` (`id`, `name`, `price`, `available`) VALUES
+INSERT INTO `delivery_types` (`deliveryId`, `name`, `price`, `available`) VALUES
 (1, 'Kurier DPD', 25, 1),
-(2, 'List Polecony', 12, 1);
+(2, 'List Polecony', 12, 1),
+(3, 'Odbiór osobisty', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -67,15 +90,15 @@ INSERT INTO `delivery_types` (`id`, `name`, `price`, `available`) VALUES
 --
 
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `orderId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `status` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
-  `delivery_type_id` int(11) NOT NULL,
+  `deliveryId` int(11) NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_polish_ci NOT NULL,
   `surname` varchar(30) COLLATE utf8mb4_polish_ci NOT NULL,
   `town` varchar(30) COLLATE utf8mb4_polish_ci NOT NULL,
-  `postal_code` varchar(7) COLLATE utf8mb4_polish_ci NOT NULL,
+  `postalCode` varchar(7) COLLATE utf8mb4_polish_ci NOT NULL,
   `street` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
   `phone` varchar(12) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
@@ -84,10 +107,10 @@ CREATE TABLE `orders` (
 -- Zrzut danych tabeli `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `date`, `status`, `delivery_type_id`, `name`, `surname`, `town`, `postal_code`, `street`, `phone`) VALUES
+INSERT INTO `orders` (`orderId`, `userId`, `date`, `status`, `deliveryId`, `name`, `surname`, `town`, `postalCode`, `street`, `phone`) VALUES
 (41, 1, '2022-02-27 17:44:50', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (42, 1, '2022-02-27 17:49:00', 'zakończono', 1, 'Piotr', 'Zys', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(43, 1, '2022-02-27 17:49:44', 'zakończono', 2, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(43, 1, '2022-02-27 17:49:44', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (44, 1, '2022-02-27 17:49:58', 'anulowano', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (45, 1, '2022-02-27 17:51:47', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (50, 1, '2022-02-27 19:33:17', 'wysłane', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
@@ -98,7 +121,9 @@ INSERT INTO `orders` (`id`, `user_id`, `date`, `status`, `delivery_type_id`, `na
 (55, 1, '2022-03-03 22:08:07', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (56, 1, '2022-03-04 13:10:47', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (57, 1, '2022-03-04 13:41:22', 'anulowano', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(116, 1, '2022-03-12 16:39:58', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
+(122, 1, '2022-03-17 19:37:19', 'anulowano', 1, 'Piotr ', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(123, 6, '2022-03-17 20:13:58', 'w przygotowaniu', 2, 'Piotr ', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(124, 1, '2022-03-17 21:50:17', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
 
 -- --------------------------------------------------------
 
@@ -107,17 +132,17 @@ INSERT INTO `orders` (`id`, `user_id`, `date`, `status`, `delivery_type_id`, `na
 --
 
 CREATE TABLE `orders_product` (
-  `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `product_amount` int(11) NOT NULL,
-  `product_price` float NOT NULL
+  `orderId` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
+  `productAmount` int(11) NOT NULL,
+  `productPrice` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `orders_product`
 --
 
-INSERT INTO `orders_product` (`order_id`, `product_id`, `product_amount`, `product_price`) VALUES
+INSERT INTO `orders_product` (`orderId`, `productId`, `productAmount`, `productPrice`) VALUES
 (41, 1, 1, 1300),
 (42, 1, 1, 1300),
 (43, 1, 1, 1300),
@@ -144,13 +169,11 @@ INSERT INTO `orders_product` (`order_id`, `product_id`, `product_amount`, `produ
 (56, 2, 1, 700),
 (57, 5, 1, 3500),
 (57, 2, 1, 700),
-(116, 2, 3, 700),
-(116, 4, 1, 3144),
-(116, 7, 3, 2750),
-(116, 3, 3, 1400),
-(116, 1, 3, 1300),
-(116, 5, 3, 3500),
-(116, 6, 3, 3990);
+(122, 3, 4, 1300),
+(122, 1, 1, 1300),
+(122, 4, 2, 1300),
+(123, 2, 1, 700),
+(124, 1, 1, 1300);
 
 -- --------------------------------------------------------
 
@@ -159,27 +182,56 @@ INSERT INTO `orders_product` (`order_id`, `product_id`, `product_amount`, `produ
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `category` varchar(64) COLLATE utf8mb4_polish_ci NOT NULL,
+  `productId` int(11) NOT NULL,
   `title` varchar(256) COLLATE utf8mb4_polish_ci NOT NULL,
+  `categoryId` int(11) NOT NULL,
   `description` varchar(4096) COLLATE utf8mb4_polish_ci NOT NULL,
   `price` float(10,2) NOT NULL,
-  `title_img` varchar(128) COLLATE utf8mb4_polish_ci NOT NULL
+  `titleImg` varchar(128) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `products`
 --
 
-INSERT INTO `products` (`id`, `category`, `title`, `description`, `price`, `title_img`) VALUES
-(1, 'telefony', 'Redmi 10X Pro 5G 8/256GB', '48px super telefon ekstra fajny', 1300.00, 'id1_1.png'),
-(2, 'podzespoły komputerowe', 'AMD RYZEN 2400G 3.6GHz VEGA 11', 'Procesor ze zintegrowaną kartą graficzną Vega 11 \r\n4 RDZENIE 8 WĄTKÓW 3.6GHz', 700.00, 'id2_1.png'),
-(3, 'telefony', 'Redmi Note 10S 6/128GB Fioletowy', 'Redmi Note 10S teraz napędzany mocą Helio G95! Inteligentny aparat główny 64MP uchwyci wspaniałe scenerie. Odporna na zachlapania obudowa, piękny wyświetlacz oraz bardzo pojemna bateria 5000mAh.', 1400.00, 'id3_1.png'),
-(4, 'telewizory', 'LG 65″ 4K NanoCell DVB-T2', 'Telewizor LG oferuje krystalicznie czysty obraz z technologią NanoCell', 3144.00, 'id4_1.png'),
-(5, 'laptopy', 'Microsoft Surface i5/8GB/512 Platinum', '8GB Ramu, płaski laptop, dysk SSD m2 512GB, błyszczący led IPS, Windows 11', 3500.00, 'id5_1.png'),
-(6, 'laptopy', 'HP Pavilion 15', 'Procesor i5-1130G\r\nPamięć Ram 32GB\r\nDysk SDD 512GB\r\nWindows 11', 3990.00, 'id6_1.png'),
-(7, 'telewizory', 'Samsung AU8002 Crystal UHD 4K Smart TV 55\"', 'Smukły design, krystaliczne żywe kolory 60Hz, AndroidTV', 2750.00, 'id7_1.png'),
-(8, 'telewizory', 'LG 55” NanoCell 4K 2021', 'Krystaliczny czysty obraz, Smart TV, osty i wyrazisty obraz', 3900.00, 'id8_1.png');
+INSERT INTO `products` (`productId`, `title`, `categoryId`, `description`, `price`, `titleImg`) VALUES
+(1, 'Redmi 10X Pro 5G 8/256GB', 2, '48px super telefon ekstra fajny', 1300.00, 'id1_1.png'),
+(2, 'AMD RYZEN 2400G 3.6GHz VEGA 11', 4, 'Procesor ze zintegrowaną kartą graficzną Vega 11 \r\n4 RDZENIE 8 WĄTKÓW 3.6GHz', 700.00, 'id2_1.png'),
+(3, 'Redmi Note 10S 6/128GB Fioletowy', 2, 'Redmi Note 10S teraz napędzany mocą Helio G95! Inteligentny aparat główny 64MP uchwyci wspaniałe scenerie. Odporna na zachlapania obudowa, piękny wyświetlacz oraz bardzo pojemna bateria 5000mAh.', 1400.00, 'id3_1.png'),
+(4, 'LG 65″ 4K NanoCell DVB-T2', 3, 'Telewizor LG oferuje krystalicznie czysty obraz z technologią NanoCell', 3144.00, 'id4_1.png'),
+(5, 'Microsoft Surface i5/8GB/512 Platinum', 1, '8GB Ramu, płaski laptop, dysk SSD m2 512GB, błyszczący led IPS, Windows 11', 3500.00, 'id5_1.png'),
+(6, 'HP Pavilion 15', 1, 'Procesor i5-1130G\r\nPamięć Ram 32GB\r\nDysk SDD 512GB\r\nWindows 11', 3990.00, 'id6_1.png'),
+(7, 'Samsung AU8002 Crystal UHD 4K Smart TV 55\"', 3, 'Smukły design, krystaliczne żywe kolory 60Hz, AndroidTV', 2750.00, 'id7_1.png'),
+(8, 'LG 55” NanoCell 4K 2021', 3, 'Krystaliczny czysty obraz, Smart TV, osty i wyrazisty obraz', 3900.00, 'id8_1.png');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `products_details`
+--
+
+CREATE TABLE `products_details` (
+  `productId` int(11) NOT NULL,
+  `parameterName` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
+  `parameter` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Zrzut danych tabeli `products_details`
+--
+
+INSERT INTO `products_details` (`productId`, `parameterName`, `parameter`) VALUES
+(1, 'Pamięć RAM', '8'),
+(1, 'Pamięć wewnętrzna', '256GB'),
+(1, 'Bateria', 'Li-Po 5000mAh'),
+(1, 'System operacyjny', 'Android 11'),
+(2, 'Rodzina procesorów', 'AMD Ryzen'),
+(2, 'Gniazdo procesora ', 'AM4'),
+(2, 'Taktowanie rdzenia', '3.6 GHz'),
+(2, 'Liczba rdzeni', '4'),
+(2, 'Liczba wątków', '8'),
+(2, 'Zintegrowana grafika', 'Radeon RX Vega 11'),
+(2, 'TDP', '65W');
 
 -- --------------------------------------------------------
 
@@ -188,14 +240,14 @@ INSERT INTO `products` (`id`, `category`, `title`, `description`, `price`, `titl
 --
 
 CREATE TABLE `recommended_products` (
-  `product_id` int(11) NOT NULL
+  `productId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `recommended_products`
 --
 
-INSERT INTO `recommended_products` (`product_id`) VALUES
+INSERT INTO `recommended_products` (`productId`) VALUES
 (1),
 (2),
 (3),
@@ -212,7 +264,7 @@ INSERT INTO `recommended_products` (`product_id`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
   `username` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
   `password` varchar(1024) COLLATE utf8mb4_polish_ci NOT NULL,
   `email` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
@@ -223,9 +275,11 @@ CREATE TABLE `users` (
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `isAdmin`) VALUES
+INSERT INTO `users` (`userId`, `username`, `password`, `email`, `isAdmin`) VALUES
 (1, 'Kubator', '$2b$10$tXUHn8x6b8BmH4ofCvnVkeDo5Uuth11goYgfHA6UYdYaLRVHfGMWi', 'kubator@gmail.com', 1),
-(6, 'Bartek', '$2b$10$5fcqGHfvHcafBRdegtAVJ.p9WZVCDEt0AP6xnV7u9t4AhvYGjxM0i', 'barteq@gmail.com', 0);
+(6, 'Bartek', '$2b$10$5fcqGHfvHcafBRdegtAVJ.p9WZVCDEt0AP6xnV7u9t4AhvYGjxM0i', 'barteq@gmail.com', 0),
+(8, 'Jan', '$2b$10$awIdN0g1MtD4tLXoJI0rIeTqDLjCO3P7HuhGiFGcgL4EDlk1EGltm', 'jan@gasd.com', 0),
+(9, 'Bartek', '$2b$10$MupSTfpUZpBMU2V7CIf4aOhrNZVwL1rORB/OOsBiT0DG/YFgK90C2', 'kubator222@wp.pl', 0);
 
 -- --------------------------------------------------------
 
@@ -234,99 +288,108 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `isAdmin`) VALUES
 --
 
 CREATE TABLE `user_cart` (
-  `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `product_amount` int(11) NOT NULL
+  `userId` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
+  `productAmount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `user_cart`
 --
 
-INSERT INTO `user_cart` (`user_id`, `product_id`, `product_amount`) VALUES
-(1, 2, 1),
-(6, 5, 5),
-(1, 4, 1),
-(1, 7, 1),
-(1, 5, 1);
+INSERT INTO `user_cart` (`userId`, `productId`, `productAmount`) VALUES
+(6, 2, 4);
 
 --
 -- Indeksy dla zrzutów tabel
 --
 
 --
+-- Indeksy dla tabeli `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`categoryId`);
+
+--
 -- Indeksy dla tabeli `delivery_types`
 --
 ALTER TABLE `delivery_types`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`deliveryId`);
 
 --
 -- Indeksy dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `delivery_type_id` (`delivery_type_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`orderId`),
+  ADD KEY `deliveryId` (`deliveryId`),
+  ADD KEY `userId` (`userId`);
 
 --
 -- Indeksy dla tabeli `orders_product`
 --
 ALTER TABLE `orders_product`
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `productId` (`productId`),
+  ADD KEY `orders_product_ibfk_1` (`orderId`);
 
 --
 -- Indeksy dla tabeli `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`productId`),
+  ADD KEY `categoryId` (`categoryId`);
+
+--
+-- Indeksy dla tabeli `products_details`
+--
+ALTER TABLE `products_details`
+  ADD KEY `productId` (`productId`);
 
 --
 -- Indeksy dla tabeli `recommended_products`
 --
 ALTER TABLE `recommended_products`
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `productId` (`productId`);
 
 --
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`userId`);
 
 --
 -- Indeksy dla tabeli `user_cart`
 --
 ALTER TABLE `user_cart`
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `userId` (`userId`),
+  ADD KEY `productId` (`productId`);
 
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT dla tabeli `delivery_types`
 --
 ALTER TABLE `delivery_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `deliveryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
-
---
--- AUTO_INCREMENT dla tabeli `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -336,28 +399,40 @@ ALTER TABLE `users`
 -- Ograniczenia dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`delivery_type_id`) REFERENCES `delivery_types` (`id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`deliveryId`) REFERENCES `delivery_types` (`deliveryId`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
 
 --
 -- Ograniczenia dla tabeli `orders_product`
 --
 ALTER TABLE `orders_product`
-  ADD CONSTRAINT `orders_product_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `orders_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `orders_product_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orders_product_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`);
+
+--
+-- Ograniczenia dla tabeli `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`);
+
+--
+-- Ograniczenia dla tabeli `products_details`
+--
+ALTER TABLE `products_details`
+  ADD CONSTRAINT `products_details_ibfk_1` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `recommended_products`
 --
 ALTER TABLE `recommended_products`
-  ADD CONSTRAINT `recommended_products_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `recommended_products_ibfk_1` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `user_cart`
 --
 ALTER TABLE `user_cart`
-  ADD CONSTRAINT `user_cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_cart_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_cart_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

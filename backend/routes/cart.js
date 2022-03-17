@@ -23,10 +23,10 @@ async function auth(req, res, next) {
 
 router.post('/add', async (req, res) => {
     connection.query(
-        `IF (SELECT COUNT(*) FROM user_cart WHERE user_id = ${req.headers.userId} AND product_id=${req.body.productId} > 0) THEN
-            UPDATE user_cart SET product_amount=product_amount+${req.body.amount};
+        `IF (SELECT COUNT(*) FROM user_cart WHERE userId = ${req.headers.userId} AND productId=${req.body.productId} > 0) THEN
+            UPDATE user_cart SET productAmount=productAmount+${req.body.amount};
         ELSE
-            INSERT INTO user_cart (user_id, product_id, product_amount) VALUES (${req.headers.userId}, ${req.body.productId}, ${req.body.amount});
+            INSERT INTO user_cart (userId, productId, productAmount) VALUES (${req.headers.userId}, ${req.body.productId}, ${req.body.amount});
         END IF;`,
         (error) => {
             if (error)
@@ -41,9 +41,9 @@ router.post('/add', async (req, res) => {
 
 
 router.post('/editamount', async (req, res) => {
-    let query = `UPDATE user_cart SET product_amount=${req.body.amount} where user_id=${req.headers.userId} AND product_id=${req.body.productId}`;
-    if (req.body.amount < 1)
-        query = `DELETE FROM user_cart where user_id=${req.headers.userId} AND product_id=${req.body.productId}`;
+    let query = `UPDATE user_cart SET productAmount=${req.body.productAmount} where userId=${req.headers.userId} AND productId=${req.body.productId}`;
+    if (req.body.productAmount < 1)
+        query = `DELETE FROM user_cart where userId=${req.headers.userId} AND productId=${req.body.productId}`;
 
     try {
         connection.query(query,

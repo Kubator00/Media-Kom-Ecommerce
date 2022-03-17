@@ -1,10 +1,10 @@
 :root {
     --button-width: 300px;
-    --button-font:25px;
-    --product-photo-height:600px;
-    --margin-purchase-section:80px;
-    --product-title-font-size:40px;
-  }
+    --button-font: 25px;
+    --product-photo-height: 600px;
+    --margin-purchase-section: 80px;
+    --product-title-font-size: 40px;
+}
 
 
 .product-container {
@@ -26,7 +26,8 @@
     align-items: center;
     margin-bottom: var(--margin-purchase-section);
 }
-.product-title h1{
+
+.product-title h1 {
     font-size: var(--product-title-font-size);
 }
 
@@ -65,7 +66,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;    
+    width: 100%;
 }
 
 .product-button {
@@ -79,20 +80,51 @@
     border: none;
     cursor: pointer;
     background-color: transparent;
-    color: black;
-    background-color: lightblue;
-    border: 1px solid #fff;
+    color: white;
+    background-color: rgb(55, 179, 7);
+    border: 1px solid white;
 }
-.product-button:hover{
+
+.product-button:hover {
     background-color: rgb(10, 241, 126);
+}
+
+.product-parameter-container {
+    width: 80%;
+    margin-bottom: 150px;
+}
+
+.product-parameter {
+    width: 100%;
+    border-top: 2px solid #e8e8e8;
+    border-bottom: 2px solid #e8e8e8;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.product-parameter {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.product-parameter-parameter {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.product-parameter-parameter label{
+    width: 50%;
 }
 
 @media only screen and (max-width: 700px) {
     :root {
         --button-width: 150px;
-        --button-font:15px;
-        --product-photo-height:300px;
-        --margin-purchase-section:0px;
-        --product-title-font-size:15px;
-      }
-  }
+        --button-font: 15px;
+        --product-photo-height: 300px;
+        --margin-purchase-section: 0px;
+        --product-title-font-size: 15px;
+    }
+}

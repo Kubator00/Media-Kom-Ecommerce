@@ -17,7 +17,7 @@ const MyCart = () => {
 
     const deleteAll = () => {
         cart.forEach(element => {
-            dispatch(changeProductAmount(element.id, 0));
+            dispatch(changeProductAmount(element.productId, 0));
         });
     };
 
@@ -34,7 +34,7 @@ const MyCart = () => {
                     <div className="mycart-cart-title">
                         <h1>Twój koszyk</h1>
                         <div class="mycart-cart-deleteAll" onClick={() => { deleteAll() }}>
-                            <img src='./icons/trash-can.svg' class="mycart-cart-icon" style={{ "margin-left": "10px" }} />
+                            <img src='./icons/trash-can.svg' class="mycart-cart-icon" style={{ "marginLeft": "10px" }} />
                             Wyczyść wszystko
                         </div>
                     </div>
@@ -44,20 +44,20 @@ const MyCart = () => {
                                 pathname: '/product/' + product.id
                             }} className="mycart-product-link">
                                 <div class='cart-img-container'>
-                                    <img src={`./products/${product.title_img}`} className='cart-img' />
+                                    <img src={`./products/${product.titleImg}`} className='cart-img' />
                                 </div>
                                 {product.title}
                             </Link>
                             <div className='mycart-price-label'>
                                 <h3> {`${product.price}zł`} </h3>
                                 <div className='mycart-price-changeAmount'>
-                                    <img src='./icons/circle-minus.svg' onClick={() => { dispatch(changeProductAmount(product.id, product.amount - 1)) }} class="mycart-cart-icon" style={{ "margin-right": "3px", "margin-left": "3px" }} />
+                                    <img src='./icons/circle-minus.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount - 1)) }} class="mycart-cart-icon" style={{ "margin-right": "3px", "margin-left": "3px" }} />
                                     <label>
-                                        {`Ilość:  ${product.amount}  `}
+                                        {`Ilość:  ${product.productAmount}  `}
                                     </label>
-                                    <img src='./icons/circle-plus.svg' onClick={() => { dispatch(changeProductAmount(product.id, product.amount + 1)) }} class="mycart-cart-icon" style={{ "margin-left": "3px" }} />
+                                    <img src='./icons/circle-plus.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount + 1)) }} class="mycart-cart-icon" style={{ "margin-left": "3px" }} />
                                 </div>
-                                <img src='./icons/trash-can.svg' onClick={() => { dispatch(changeProductAmount(product.id, 0)) }} class="mycart-cart-icon" style={{ "margin-left": "10px" }} />
+                                <img src='./icons/trash-can.svg' onClick={() => { dispatch(changeProductAmount(product.productId, 0)) }} class="mycart-cart-icon" style={{ "margin-left": "10px" }} />
                             </div>
                         </div>
                     ))}

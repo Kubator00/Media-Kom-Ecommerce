@@ -26,14 +26,15 @@ router.post('/new', async (req, res) => {
     const { name, surname, town, postalCode, street, phone, deliveryTypeId, products } = req.body.orderData;
     let delivery, prices;
     let productsIds = '';
+    console.log(products)
     products.forEach(product => {
-        productsIds += `${product.id},`
+        productsIds += `${product.productId},`
     });
     productsIds = productsIds.slice(0,-1);
 
     try{
-        delivery = (await selectQuery(`SELECT * from delivery_types WHERE id='${deliveryTypeId}'`))[0];
-        prices = (await selectQuery(`SELECT id, price FROM products where id in(${productsIds})`));
+        delivery = (await selectQuery(`SELECT * from delivery_types WHERE deliveryId='${deliveryTypeId}'`))[0];
+        prices = (await selectQuery(`SELECT productId, price FROM products where productId in(${productsIds})`));
     }
     catch(err){
         console.log(err);
@@ -49,8 +50,8 @@ router.post('/new', async (req, res) => {
             throw err;
         connection.query(
             `INSERT INTO orders 
-        (user_id, status, delivery_type_id, name, surname, town, postal_code, street, phone) 
-        VALUES (${req.headers.userId},'w przygotowaniu',${delivery.id}, '${name}', '${surname}',
+        (userId, status, deliveryId, name, surname, town, postalCode, street, phone) 
+        VALUES (${req.headers.userId},'w przygotowaniu',${deliveryTypeId}, '${name}', '${surname}',
         '${town}', '${postalCode}', '${street}', '${phone}');`, (err, res) => {
 
             if (err) {
@@ -58,9 +59,9 @@ router.post('/new', async (req, res) => {
                     throw err;
                 });
             }
-            console.log(products);
+     
             products.forEach(prod => {
-                connection.query(`INSERT INTO orders_product VALUES (${res.insertId},${prod.id},${prod.amount},${prod.price})`, function (error) {
+                connection.query(`INSERT INTO orders_product VALUES (${res.insertId},${prod.productId},${prod.productAmount},${prod.price})`, function (error) {
                     if (err) {
                         return connection.rollback(function () {
                             throw err;
@@ -87,12 +88,12 @@ router.post('/details', async (req, res) => {
     let orders, products;
     try {
         orders = (await selectQuery(
-            `SELECT o.id, o.user_id as userId, o.date, o.status, o.name, o.surname, o.town, o.postal_code, o.street,
+            `SELECT o.orderId, o.userId, o.date, o.status, o.name, o.surname, o.town, o.postalCode, o.street,
             o.phone, d.name as deliveryName, d.price as deliveryPrice  FROM orders as o join 
-            delivery_types as d on o.delivery_type_id=d.id where o.id=${req.body.orderId}`))[0];
+            delivery_types as d on o.deliveryId=d.deliveryId where o.orderId=${req.body.orderId}`))[0];
         products = await selectQuery(
-            `SELECT o.product_id as id, o.product_amount as amount, o.product_price as price, p.title ,p.title_img as titleImg
-        FROM orders_product as o join products as p on p.id=o.product_id where order_id=${req.body.orderId}`);
+            `SELECT o.productId, o.productAmount, o.productPrice, p.title ,p.titleImg
+        FROM orders_product as o join products as p on p.productId=o.productId where orderId=${req.body.orderId}`);
     } catch (err) {
         console.log(err);
         return res.status(400).send('Blad pobierania danych');

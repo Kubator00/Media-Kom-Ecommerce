@@ -23,7 +23,7 @@ export const userOrderDetails = (orderId) => {
         })
             .then((res) => {
                 console.log(res.data);
-                res.data['cartAmount'] = res.data.products.reduce((sum, element) => sum + element.price * element.amount, 0);
+                res.data['cartAmount'] = res.data.products.reduce((sum, element) => sum + element.productPrice * element.productAmount, 0);
                 res.data['totalAmount'] = res.data.cartAmount + res.data.deliveryPrice;
                 return dispatch(userOrderDetailsSuccess(res.data));
             })

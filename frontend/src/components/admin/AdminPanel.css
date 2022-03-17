@@ -3,8 +3,9 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    min-height: 600px;
 }
 .adminpanel-link{
     display: flex;

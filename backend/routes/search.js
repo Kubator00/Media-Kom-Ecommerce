@@ -6,13 +6,12 @@ const selectQuery = require('../components/selectQuery');
 router.post('/', async (req, res) => {
     let query = `SELECT * from products`;
     if (req.body.category)
-        query = `SELECT * from products where category='${req.body.category}';`
+        query = `SELECT * from products as p join categories as c
+        on p.categoryId = c.categoryId where c.categoryName='${req.body.category.toLowerCase()}';`
     let products;
     try {
         products = await selectQuery(query);
     } catch (err) {
-        if(err=='No rows found')
-            return res.status(200).send("Brak wyników");
         return res.status(400).send("Blad laczenia z baza");
     }
     let result = [];

@@ -24,7 +24,7 @@ export const fetchCart = () => {
                 let sum = 0;
                 console.log(res.data);
                 if (res.data.length > 0)
-                    sum = res.data.reduce((sum, a) => sum + a.price * a.amount, 0);
+                    sum = res.data.reduce((sum, a) => sum + a.price * a.productAmount, 0);
                 dispatch(cartSuccess(res.data, sum));
                 return res;
             })
@@ -64,7 +64,7 @@ export const addToCart = (productId, amount) => {
     };
 }
 
-export const changeProductAmount = (productId, amount) => {
+export const changeProductAmount = (productId, productAmount) => {
     return async dispatch => {
         dispatch(cartInProgress());
         await Axios({
@@ -76,7 +76,7 @@ export const changeProductAmount = (productId, amount) => {
             },
             data: {
                 productId: productId,
-                amount: amount
+                productAmount: productAmount
             }
         })
             .then(() => {

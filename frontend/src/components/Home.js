@@ -86,6 +86,7 @@ const Slider = () => {
                 tmpProducts.push(products[element])
         });
         setDisplayProducts(tmpProducts);
+        console.log(products);
     }, [products, index])
 
 
@@ -95,7 +96,7 @@ const Slider = () => {
                 <div class="home-slider">
                     <img onClick={prevSlide} src='./icons/circle-chevron-left-solid.svg' class='home-slider-buttons' />
                     {displayProducts.map((product) => (
-                        <Cart img={product.title_img} title={product.title} price={product.price} id={product.id} />
+                        <Cart img={product.titleImg} title={product.title} price={product.price} id={product.productId} />
                     ))}
                     <img onClick={nextSlide} src='./icons/circle-chevron-right-solid.svg' class='home-slider-buttons' />
                 </div>

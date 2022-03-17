@@ -17,7 +17,7 @@ async function auth(req, res, next) {
         console.error(err);
         return res.status(400).send("Nie znaleziono uzytkownika w bazie");
     }
-  
+
     if (!await verifyUserToken(req))
         return res.status(400).send("Blad autentykacji");
     try {
@@ -38,9 +38,9 @@ router.post('/allorders', async (req, res) => {
         orders = await selectQuery(`SELECT * FROM orders ORDER BY date DESC LIMIT ${req.body.beginning},${req.body.numOfRows};`)
         rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders;`))[0]['COUNT(*)'];
         ordersProducts = await selectQuery(
-            `SELECT o.order_id,o.product_id ,p.title, p.title_img 
-            FROM orders_product as o join products as p on o.product_id=p.id 
-            where o.order_id BETWEEN ${orders[orders.length - 1].id} AND ${orders[0].id}`);
+            `SELECT o.orderId,o.productId ,p.title, p.titleImg, o.productAmount, o.productPrice
+            FROM orders_product as o join products as p on o.productId=p.productId 
+            where o.orderId BETWEEN ${orders[orders.length - 1].orderId} AND ${orders[0].orderId}`);
     } catch (err) {
         console.log(err);
         return res.status(400).send('Blad pobierania danych');
@@ -48,7 +48,7 @@ router.post('/allorders', async (req, res) => {
 
     for (order of orders) {
         order['products'] = [];
-        order.products.push(...ordersProducts.filter(i => order.id === i.order_id));
+        order.products.push(...ordersProducts.filter(i => order.orderId === i.orderId));
     }
     res.send({ rowsFound: rowsFound, orders: orders });
 })
@@ -58,7 +58,7 @@ router.post('/allorders', async (req, res) => {
 router.post('/order/newstatus', async (req, res) => {
     try {
         connection.query(
-            `UPDATE orders SET status='${req.body.newStatus}' where id=${req.body.orderId};`,
+            `UPDATE orders SET status='${req.body.newStatus}' where orderId=${req.body.orderId};`,
             (err) => {
                 if (err)
                     throw err;
@@ -76,14 +76,14 @@ router.post('/order/newstatus', async (req, res) => {
 router.post('/orders/details', async (req, res) => {
     let user, orders, products;
     try {
-        user = (await selectQuery(`SELECT username, email FROM users where id=${req.headers.userId};`))[0];
+        user = (await selectQuery(`SELECT username, email FROM users where userId=${req.headers.userId};`))[0];
         orders = (await selectQuery(
-            `SELECT o.id, o.user_id, o.date, o.status, o.name, o.surname, o.town, o.postal_code, o.street,
+            `SELECT o.orderId, o.userId, o.date, o.status, o.name, o.surname, o.town, o.postalCode, o.street,
             o.phone, d.name as deliveryName, d.price as deliveryPrice  FROM orders as o join 
-            delivery_types as d on o.delivery_type_id=d.id where o.id=${req.body.orderId}`))[0];
+            delivery_types as d on o.deliveryId=d.deliveryId where o.orderId=${req.body.orderId}`))[0];
         products = await selectQuery(
-            `SELECT o.product_id as id, o.product_amount as amount, o.product_price as price, p.title ,p.title_img
-        FROM orders_product as o join products as p on p.id=o.product_id where order_id=${req.body.orderId}`);
+            `SELECT o.productId as id, o.productAmount, o.productPrice, p.title ,p.titleImg
+        FROM orders_product as o join products as p on p.productId=o.productId where orderId=${req.body.orderId}`);
     } catch (err) {
         return res.status(400).send('Blad pobierania danych');
     }

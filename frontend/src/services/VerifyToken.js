@@ -31,7 +31,6 @@ const verifyToken = () => {
                 return res.data;
             })
             .catch(err => {
-                console.log("LIPA");
                 dispatch(logOutUser());
                 dispatch(verifyTokenError(err));
                 return err;

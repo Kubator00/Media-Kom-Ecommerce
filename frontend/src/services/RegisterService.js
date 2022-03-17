@@ -7,7 +7,6 @@ import {
 import Axios from "axios"
 
 const register = (email, username, password) => {
-    console.log(password);
     return async dispatch => {
         dispatch(registerInProgress());
         await Axios.post(routes.server + routes.users.register, {

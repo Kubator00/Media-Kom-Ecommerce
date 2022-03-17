@@ -18,7 +18,7 @@ const AdminOrderDetails = () => {
 
     const order = useSelector(state => state.adminOrderDetailsReducer.order);
     const inProgress = useSelector(state => state.adminOrderDetailsReducer.inprogress);
-  
+    
     if (order && !inProgress)
         return (
             <div className='orderdetails-container'>
@@ -51,12 +51,12 @@ const AdminOrderDetails = () => {
                     {order.products.map((product) => (
                         <div className='orderdetails-products-product'>
                             <Link to={`/product/${product.id}`} className='orderdetails-products-product-left'>
-                                <img src={`products/${product.title_img}`} className='orderdetails-products-product-img' />
+                                <img src={`products/${product.titleImg}`} className='orderdetails-products-product-img' />
                                 <span>{product.title}</span>
                             </Link>
                             <div className='orderdetails-products-product-right'>
-                                <span>{product.amount} szt.</span>
-                                <span>{product.price} zł</span>
+                                <span>{product.productAmount} szt.</span>
+                                <span>{product.productPrice} zł</span>
                             </div>
                         </div>
                     ))}

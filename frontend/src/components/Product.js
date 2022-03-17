@@ -5,70 +5,82 @@ import './Product.css'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart } from '../services/MyCartService'
-
+import { productFetch } from '../services/ProductService'
 
 
 
 const Product = () => {
     const { productId } = useParams();
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState(0);
-    const [titleImg, setTitleImg] = useState('');
-    const msg = useSelector((state) => state.cartReducer.msg);
 
     const dispatch = useDispatch()
     const addToCart1 = (productId, amount) => {
         dispatch(addToCart(productId, amount));
     };
 
-    async function read() {
-        await axios.post(`http://localhost:3010/products/details`, { 'id': productId })
-            .then(result => {
-                console.log(result);
-                setTitle(result.data.title);
-                setPrice(result.data.price);
-                setDescription(result.data.description);
-                setTitleImg(result.data.title_img);
-            });
-    }
-
     useEffect(async () => {
-        await read();
+        dispatch(productFetch(productId));
     }, [])
 
+    const productDetails = useSelector(state => state.productReducer.productDetails);
+    const productParameters = useSelector(state => state.productReducer.productParameters);
+    const msg = useSelector(state => state.cartReducer.msg);
 
-    return (
-        <div className="product-container">
-            <div className="section1">
-                <div className="product-photos-section">
-                    <img src={`../products/${titleImg}`} className={`product-img`} />
-                </div>
-                <div className="product-purchase">
-                    <div className="product-title">
-                        <h1>{title}</h1>
-                        <h1>{price}zł</h1>
+    if (productParameters && productDetails)
+        return (
+            <div className="product-container">
+                <div className="section1">
+                    <div className="product-photos-section">
+                        <img src={`../products/${productDetails.titleImg}`} className={`product-img`} />
                     </div>
-                    {msg && msg}
-                    <div className="product-buttons">
-                        <button className="product-button" id="product-cart-button" onClick={() => { addToCart1(productId, 1) }}>Dodaj do koszyka</button>
+                    <div className="product-purchase">
+                        <div className="product-title">
+                            <h1>{productDetails.title}</h1>
+                            <h1>{productDetails.price}zł</h1>
+                        </div>
+                        {msg && msg}
+                        <div className="product-buttons">
+                            <button className="product-button" id="product-cart-button" onClick={() => { addToCart1(productId, 1) }}>Dodaj do koszyka</button>
 
-                        <Link to={'/orderform'}
-                            state={{
-                                cart: [{ title: title, price: price, title_img: titleImg, amount: 1, id: productId }],
-                                productsAmount: price,
-                            }}
-                        >
-                            <button className="product-button" id="product-cart-button" >Kup Teraz</button>
-                        </Link>
+                            <Link to={'/orderform'}
+                                state={{
+                                    cart: [{ title: productDetails.title, price: productDetails.price, titleImg: productDetails.titleImg, productAmount: 1, productId: productDetails.productId }],
+                                    productAmount: productDetails.price,
+                                }}
+                            >
+                                <button className="product-button" id="product-cart-button" >Kup Teraz</button>
+                            </Link>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-            <h2>Opis:</h2>
-            {description}
-        </div >
-    );
+                <h2>Opis</h2>
+                {productDetails.description}
+                {productParameters.length > 0 &&
+                    <div class='product-parameter-container'>
+                        <h2>Specyfikacja</h2>
+                        {productParameters.map((parameter) => (
+                            <div class='product-parameter'>
+                                <div class='product-parameter-parameter'>
+                                    <label>
+                                        <h4>{parameter.parameterName}</h4>
+                                    </label>
+                                </div>
+                                <div class='product-parameter-parameter'>
+                                    <label>
+                                        {parameter.parameter}
+                                    </label>
+                                </div>
+                            </div>
+                        ))}
+                    </div >
+                }
+            </div >
+
+
+        );
+
+    return <> Ładowanie... </>
+
 };
 
 

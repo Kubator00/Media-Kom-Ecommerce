@@ -31,9 +31,10 @@ const OrderForm = () => {
         setDeliveryData(prevState => (
             {
                 ...prevState,
-                deliveryTypeId: delivery.id
+                deliveryTypeId: delivery.deliveryId
             }
         ));
+        console.log(deliveryData);
         setTotalAmount(productsAmount + delivery.price);
     }
 
@@ -48,7 +49,7 @@ const OrderForm = () => {
         event.preventDefault();
         let productsData = [];
         for (let prod of cart)
-            productsData.push({ id: prod.id, amount: prod.amount })
+            productsData.push({ productId: prod.productId, productAmount: prod.productAmount })
 
         let data = deliveryData;
         data['products'] = productsData;
@@ -63,9 +64,11 @@ const OrderForm = () => {
             <div class='orderform-placed-order'>
                 <span>{msg}</span>
                 <span>Wkrótce otrzymasz maila z danymi do płatności.</span>
-                <Link to='/myorders' class='orderform-form-details-button'>
-                    Moje zamówienia
-                </Link>
+                <span>
+                    <Link to='/myorders' class='orderform-form-details-button'>
+                        Moje zamówienia
+                    </Link>
+                </span>
             </div>
         );
 
@@ -79,7 +82,7 @@ const OrderForm = () => {
                         <div onChange={deliveryHandler} class='orderform-delivery'>
                             {deliveryTypes.map((delivery) => (
                                 <span>
-                                    <input type="radio" value={delivery.id} name="delivery-type" />{delivery.name} - {delivery.price} zł
+                                    <input type="radio" value={delivery.deliveryId} name="delivery-type" />{delivery.name} - {delivery.price} zł
                                 </span>
                             ))}
                         </div>
@@ -102,11 +105,11 @@ const OrderForm = () => {
                 <div className='orderform-cart-cart'>
                     {cart.map((product) => (
                         <Link to={{
-                            pathname: '/product:' + product.id
+                            pathname: '/product/' + product.productId
                         }} className="orderform-cart-product-link">
-                            <img src={`products/${product.title_img}`} className='orderform-img' />
+                            <img src={`products/${product.titleImg}`} className='orderform-img' />
                             <label>{product.title}</label><br />
-                            {product.amount}szt
+                            {product.productAmount}szt
                         </Link>
                     ))}
                 </div>

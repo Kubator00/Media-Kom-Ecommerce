@@ -114,7 +114,7 @@ const OrderForm = () => {
                     ))}
                 </div>
                 <div class="orderform-cart-container-totalAmountLabel">
-                    Całkowitka kwota: {totalAmount} zł
+                  <h3>Całkowitka kwota: {totalAmount} zł</h3>
                 </div>
             </div>
         </div>

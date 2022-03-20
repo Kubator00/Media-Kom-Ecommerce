@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route,useLocation } from 'react-router-dom';
 import ProdectedRoute from './ProtectedRoute';
 
 import Navbar from './components/Navbar';
@@ -19,6 +19,15 @@ import AdminPanel from './components/admin/AdminPanel';
 import AdminAllOrders from './components/admin/AdminAllOrders';
 import AdminOrderDetails from './components/admin/AdminOrdersDetails';
 import SearchProducts from './components/SearchProducts';
+import { useLayoutEffect } from 'react'
+
+const Wrapper = ({ children }) => {
+  const location = useLocation();
+  useLayoutEffect(() => {
+    document.documentElement.scrollTo(0, 0);
+  }, [location.pathname]);
+  return children
+}
 
 
 class App extends React.Component {
@@ -30,32 +39,34 @@ class App extends React.Component {
     return (
       <>
         <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<LogIn />} />
-            <Route path='/register' element={<Register />} />
+          <Wrapper>
+            <Navbar />
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/login' element={<LogIn />} />
+              <Route path='/register' element={<Register />} />
 
-            <Route element={<ProdectedRoute />}>
-              <Route path='mycart' element={<MyCart />} />
-              <Route path='myaccount' element={<MyAccount />} />
-              <Route path='myorders' element={<MyOrders />} />
-              <Route path='orderform' element={<OrderForm />} />
-              <Route path='myorders/order/:id' element={<OrderDetails />} />
-              <Route path='admin/panel' element={<AdminPanel />} />
-              <Route path='admin/allorders' element={<AdminAllOrders />} />
-              <Route path='admin/order/:id' element={<AdminOrderDetails />} />
-            </Route>
-            <Route path='/product/:productId' exact element={<Product />} />
-            <Route path="search">
-              <Route path='keyword/:keyword/category/:category' element={<SearchProducts />} />
-              <Route path='keyword/:keyword/category' element={<SearchProducts />} />
-              <Route path='keyword//category/:category' element={<SearchProducts />} />
-              <Route path='category/:category' element={<SearchProducts />} />
-            </Route>
+              <Route element={<ProdectedRoute />}>
+                <Route path='mycart' element={<MyCart />} />
+                <Route path='myaccount' element={<MyAccount />} />
+                <Route path='myorders' element={<MyOrders />} />
+                <Route path='orderform' element={<OrderForm />} />
+                <Route path='myorders/order/:id' element={<OrderDetails />} />
+                <Route path='admin/panel' element={<AdminPanel />} />
+                <Route path='admin/allorders' element={<AdminAllOrders />} />
+                <Route path='admin/order/:id' element={<AdminOrderDetails />} />
+              </Route>
+              <Route path='/product/:productId' exact element={<Product />} />
+              <Route path="search">
+                <Route path='keyword/:keyword/category/:category' element={<SearchProducts />} />
+                <Route path='keyword/:keyword/category' element={<SearchProducts />} />
+                <Route path='keyword//category/:category' element={<SearchProducts />} />
+                <Route path='category/:category' element={<SearchProducts />} />
+              </Route>
 
-          </Routes>
-           <Footer />
+            </Routes>
+            <Footer />
+          </Wrapper>
         </BrowserRouter>
 
       </>

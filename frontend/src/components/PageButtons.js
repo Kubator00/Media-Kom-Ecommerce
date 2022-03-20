@@ -18,6 +18,7 @@ const PageButtons = (props) => {
             return;
         setCurrentNumber(number);
         dispatch(reducerFunction(number * elementsOnPage - elementsOnPage, elementsOnPage));
+        window.scrollTo(0,0);
     }
     const inputHandler = (event) => {
         if (event.target.value === currentNumber)

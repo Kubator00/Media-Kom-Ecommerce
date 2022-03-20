@@ -25,6 +25,7 @@ function Footer() {
             </div>
             <div class="footer-author">
                 <label>&#xA9; Media-Kom 2022</label>
+                <label>Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a></label>
                 <label>Jakub Więcek</label>
             </div>
         </div>

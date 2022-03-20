@@ -68,7 +68,7 @@
     background-color: rgb(42, 128, 9);
 }
 
-@media only screen and (max-width: 800px) {
+@media (max-width: 800px) {
     .searchProducts-product-container {
         font-size: 13px;
     }
@@ -86,7 +86,7 @@
         font-size: 15px;
     }
 }
-@media only screen and (max-width: 600px) {
+@media (max-width: 600px) {
     .searchProducts-button {
         padding: 15px;
         font-size: 10px;

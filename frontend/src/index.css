@@ -4,7 +4,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(245,245,245);
+  background-color: white;
+  color: rgb(24, 24, 24);
+  scroll-behavior: smooth;
+  margin:0;
 }
 
 code {
@@ -13,8 +16,7 @@ code {
 }
 
 #root {
-  height: 100%;
-  margin-top: 0px;
+  margin:0;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -53,7 +53,7 @@ const AccountMenu = () => {
                 <div class="nav-dropdownMenu-container1">
                     <div class="nav-dropdownMenu-container" onClick={() => { clickHandler(!isClicked) }} onMouseEnter={() => { clickHandler(true) }} onMouseLeave={() => { clickHandler(false) }} >
                         <button class='nav-button' style={{ "border-bottom": "none" }}>
-                            <img src='./icons/user-solid.svg' class='icons' />
+                            <img src='./icons/user.svg' class='icons' />
                             Twoje konto
                         </button>
                         <div class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'}>
@@ -88,7 +88,7 @@ const AccountMenu = () => {
     return (
         <Link to="/login">
             <button class='nav-button'>
-                <img src='./icons/user-solid.svg' class='icons' />
+                <img src='./icons/user.svg' class='icons' />
                 Zaloguj się
             </button>
         </Link>
@@ -101,8 +101,8 @@ const Categories = () => {
     const dispatch = useDispatch();
 
     const showCategoryButton = () => {
-        if (window.innerWidth <= 1000) 
-            isMobileActiveSet(true);     
+        if (window.innerWidth <= 1000)
+            isMobileActiveSet(true);
         else
             isMobileActiveSet(false);
     }
@@ -163,12 +163,30 @@ function Navbar() {
     const redirect = useSelector((state) => state.searchProductsReducer.redirect);
     const searchValue = useSelector((state) => state.searchProductsReducer.keyword);
     const searchCategory = useSelector((state) => state.searchProductsReducer.category);
+    const [positionFixed, setPositionFixed] = useState(false);
 
+    const navPositionFixed = () => {
+        console.log(document.getElementById('nav').clientHeight);
+        console.log(window.innerHeight);
+        if (window.scrollY > document.getElementById('nav').clientHeight && window.innerHeight>document.getElementById('nav').clientHeight*2)
+            setPositionFixed(true);
+        if (window.scrollY <= 0)
+            setPositionFixed(false);
+
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', navPositionFixed);
+    }, [])
+
+    useEffect(() => {
+        console.log(positionFixed);
+    })
 
     return (
         <div class="nav-container">
             <div class="nav-container1">
-                <div className='nav-main'>
+                <div id='nav' className={positionFixed ? 'nav-main-fixed' : 'nav-main'}>
                     <div class="nav-left">
                         <Link to='/' class="nav-title">
                             <img src='logo.png' class='nav-logo' />
@@ -177,7 +195,7 @@ function Navbar() {
                     </div>
                     <div class="nav-right">
                         <button class='nav-button'>
-                            <img src='./icons/headphones-simple-solid.svg' class='icons' />
+                            <img src='./icons/headset.svg' class='icons' />
                             Kontakt
                         </button>
                         <AccountMenu />

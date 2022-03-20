@@ -80,7 +80,7 @@ input.login-login-form-control{
 }
 
 
-@media only screen and (max-width: 1150px) {
+@media (max-width: 1150px) {
     .login-container{
         flex-direction: column;
         width: 100%;

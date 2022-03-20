@@ -43,8 +43,8 @@ const Product = () => {
 
                             <Link to={'/orderform'}
                                 state={{
-                                    cart: [{ title: productDetails.title, price: productDetails.price, titleImg: productDetails.titleImg, productAmount: 1, productId: productDetails.productId }],
-                                    productAmount: productDetails.price,
+                                    cart: [{ title: productDetails.title, productPrice: productDetails.price, titleImg: productDetails.titleImg, productAmount: 1, productId: productDetails.productId }],
+                                    productsAmount: productDetails.price,
                                 }}
                             >
                                 <button className="product-button" id="product-cart-button" >Kup Teraz</button>

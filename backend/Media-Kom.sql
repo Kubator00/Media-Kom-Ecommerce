@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 17 Mar 2022, 22:19
+-- Czas generowania: 20 Mar 2022, 13:25
 -- Wersja serwera: 10.4.16-MariaDB
 -- Wersja PHP: 7.4.12
 
@@ -115,7 +115,7 @@ INSERT INTO `orders` (`orderId`, `userId`, `date`, `status`, `deliveryId`, `name
 (45, 1, '2022-02-27 17:51:47', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (50, 1, '2022-02-27 19:33:17', 'wysłane', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (51, 1, '2022-03-03 16:56:54', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(52, 1, '2022-03-03 20:42:14', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(52, 1, '2022-03-03 20:42:14', 'wysłane', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (53, 1, '2022-03-03 20:51:44', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (54, 1, '2022-03-03 21:13:15', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (55, 1, '2022-03-03 22:08:07', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
@@ -123,7 +123,8 @@ INSERT INTO `orders` (`orderId`, `userId`, `date`, `status`, `deliveryId`, `name
 (57, 1, '2022-03-04 13:41:22', 'anulowano', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (122, 1, '2022-03-17 19:37:19', 'anulowano', 1, 'Piotr ', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (123, 6, '2022-03-17 20:13:58', 'w przygotowaniu', 2, 'Piotr ', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(124, 1, '2022-03-17 21:50:17', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
+(124, 1, '2022-03-17 21:50:17', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(125, 1, '2022-03-19 16:50:48', 'w przygotowaniu', 1, 'Piotr ', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
 
 -- --------------------------------------------------------
 
@@ -173,7 +174,9 @@ INSERT INTO `orders_product` (`orderId`, `productId`, `productAmount`, `productP
 (122, 1, 1, 1300),
 (122, 4, 2, 1300),
 (123, 2, 1, 700),
-(124, 1, 1, 1300);
+(124, 1, 1, 1300),
+(125, 2, 2, 1300),
+(125, 1, 2, 1300);
 
 -- --------------------------------------------------------
 
@@ -211,7 +214,9 @@ INSERT INTO `products` (`productId`, `title`, `categoryId`, `description`, `pric
 --
 
 CREATE TABLE `products_details` (
+  `id` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
+  `displayNumber` int(11) NOT NULL,
   `parameterName` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
   `parameter` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
@@ -220,18 +225,27 @@ CREATE TABLE `products_details` (
 -- Zrzut danych tabeli `products_details`
 --
 
-INSERT INTO `products_details` (`productId`, `parameterName`, `parameter`) VALUES
-(1, 'Pamięć RAM', '8'),
-(1, 'Pamięć wewnętrzna', '256GB'),
-(1, 'Bateria', 'Li-Po 5000mAh'),
-(1, 'System operacyjny', 'Android 11'),
-(2, 'Rodzina procesorów', 'AMD Ryzen'),
-(2, 'Gniazdo procesora ', 'AM4'),
-(2, 'Taktowanie rdzenia', '3.6 GHz'),
-(2, 'Liczba rdzeni', '4'),
-(2, 'Liczba wątków', '8'),
-(2, 'Zintegrowana grafika', 'Radeon RX Vega 11'),
-(2, 'TDP', '65W');
+INSERT INTO `products_details` (`id`, `productId`, `displayNumber`, `parameterName`, `parameter`) VALUES
+(1, 1, 1, 'Pamięć RAM', '8'),
+(2, 1, 2, 'Pamięć wewnętrzna', '256GB'),
+(3, 1, 3, 'Bateria', 'Li-Po 5000mAh'),
+(4, 1, 4, 'System operacyjny', 'Android 11'),
+(5, 2, 1, 'Rodzina procesorów', 'AMD Ryzen'),
+(6, 2, 2, 'Gniazdo procesora ', 'AM4'),
+(7, 2, 3, 'Taktowanie rdzenia', '3.6 GHz'),
+(8, 2, 4, 'Liczba rdzeni', '4'),
+(9, 2, 5, 'Liczba wątków', '8'),
+(10, 2, 6, 'Zintegrowana grafika', 'Radeon RX Vega 11'),
+(11, 2, 7, 'TDP', '65W'),
+(12, 5, 1, 'Procesor', 'i5 8100u'),
+(13, 5, 3, 'Pamięć Ram', '8GB '),
+(14, 5, 4, 'Dysk ', '512GB'),
+(15, 5, 5, 'Rodzaj dysku', 'SSD'),
+(16, 5, 2, 'Taktowanie procesora', '1,8GHz'),
+(25, 6, 1, 'Procesor', 'Ryzen 5 3100u'),
+(26, 6, 2, 'Taktowanie procesora ', '2,5GHz'),
+(27, 6, 3, 'Ilość rdzeni', '4'),
+(28, 6, 4, 'Ilość wątków', '8');
 
 -- --------------------------------------------------------
 
@@ -298,7 +312,8 @@ CREATE TABLE `user_cart` (
 --
 
 INSERT INTO `user_cart` (`userId`, `productId`, `productAmount`) VALUES
-(6, 2, 4);
+(6, 2, 5),
+(1, 4, 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -342,6 +357,7 @@ ALTER TABLE `products`
 -- Indeksy dla tabeli `products_details`
 --
 ALTER TABLE `products_details`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `productId` (`productId`);
 
 --
@@ -383,7 +399,13 @@ ALTER TABLE `delivery_types`
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+
+--
+-- AUTO_INCREMENT dla tabeli `products_details`
+--
+ALTER TABLE `products_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`

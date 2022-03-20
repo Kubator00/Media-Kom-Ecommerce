@@ -11,19 +11,30 @@
     width: 100%;
     margin-bottom: 30px;
 }
+
 .nav-container1 {
     width: 100%;
     max-width: 2000px;
 }
 
 
-.nav-main {   
-    background-color: #f5f5f5;
+.nav-main {
+    background-color: white;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-
 }
+.nav-main-fixed {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    position: fixed;
+    right: 0px;
+    left: 0px;
+    top:0px;
+}
+
 
 .nav-left {
     width: 60%;
@@ -40,7 +51,6 @@
 .nav-login {
     display: flex;
     flex-direction: row;
-    background-color: lightgray;
     justify-content: space-between;
 }
 
@@ -104,12 +114,11 @@
 }
 
 .nav-button {
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f5f5f5;
-    color: black;
     width: 120px;
     height: 80px;
     font-size: 16px;
@@ -121,7 +130,6 @@
 .nav-button:hover {
     font-size: 105%;
     border: 3px solid #E8E8E8;
-    background-color: #ffffff;
 }
 
 .nav-dropdownMenu-show {
@@ -130,25 +138,24 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    z-index: 1;
+    z-index: 1000;
     width: 250px;
     min-width: 150px;
-    background-color: #f5f5f5;
+    background-color: white;
     margin-bottom: 60px;
 }
 
 .nav-dropdownMenu-link {
-    background-color: #fcfcfc;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    color: #595959;
     height: 40px;
     border: none;
     font-size: 15px;
     margin-right: 25px;
+    background-color: white;
 }
 
 .nav-dropdownMenu-link:hover {
@@ -157,7 +164,7 @@
 }
 
 
-.nav-dropdownMenu-icon{
+.nav-dropdownMenu-icon {
     width: 20px;
     height: 20px;
     margin-bottom: 5px;
@@ -183,18 +190,17 @@
     justify-content: flex-start;
     align-items: flex-start;
     border-bottom: 2px solid #E8E8E8;
-    background-color: #f5f5f5;
 }
-.nav-categoryButton-container{
+
+.nav-categoryButton-container {
     display: flex;
     width: 100%;
-    flex-direction: column;  
+    flex-direction: column;
     justify-content: center;
     align-items: flex-start;
 }
 
-.nav-categoryButton{
-    background-color: rgb(245, 245, 245);
+.nav-categoryButton {
     height: 60px;
     font-size: 15px;
     display: flex;
@@ -204,16 +210,19 @@
     border: none;
     margin-left: 0px;
 }
-.nav-categoryButton span{
+
+.nav-categoryButton span {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     height: 100%;
 }
-.nav-categoryButton label{
+
+.nav-categoryButton label {
     height: 20px;
 }
+
 .nav-category {
     display: flex;
     flex-direction: row;
@@ -236,10 +245,10 @@
 }
 
 .nav-category:hover {
-    background-color: #ffffff;
+    background-color: rgb(245, 245, 245);
 }
 
-@media only screen and (max-width: 1250px) {
+@media all and (max-width: 1250px) {
     .nav-logo {
         width: 250px;
     }
@@ -251,7 +260,7 @@
 }
 
 
-@media only screen and (max-width: 1000px) {
+@media all and (max-width: 1000px) {
     :root {
         --title-font-size: 15px;
     }
@@ -284,7 +293,11 @@
     .nav-container {
         justify-content: flex-start;
     }
-    .nav-main{
+
+    .nav-main {
+        flex-direction: column;
+    }
+    .nav-main-fixed{
         flex-direction: column;
     }
 
@@ -294,27 +307,29 @@
     }
 
     .nav-categories-container {
-        width:100%;
+        width: 100%;
         height: 100%;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
     }
-    .nav-categoryButton{
+
+    .nav-categoryButton {
         width: 200px;
         justify-content: flex-start;
     }
+
     .nav-category {
         height: 50px;
-        width:100%;
+        width: 100%;
         justify-content: center;
         align-items: center;
         justify-content: flex-start;
     }
-    
+
 }
 
-@media only screen and (max-width: 650px) {
+@media (max-width: 650px) {
 
 
 

@@ -23,7 +23,7 @@ const AdminOrderDetails = () => {
         return (
             <div className='orderdetails-container'>
                 <div className='orderdetails-details'>
-                    <h1>Zamówienie nr {order.id}</h1>
+                    <h1>Zamówienie nr {order.orderId}</h1>
                     <span>złożone {`${order.date.slice(8, 10)}.${order.date.slice(5, 7)}.${order.date.slice(0, 4)}`}</span>
                     <h2>Status</h2>
                     {order.status}

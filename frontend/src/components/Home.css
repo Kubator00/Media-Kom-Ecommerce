@@ -66,7 +66,7 @@
     padding: 2px; */
 }
 
-@media only screen and (max-width: 1750px) {
+@media (max-width: 1750px) {
     :root {
         --width-slider: 300px;
     }

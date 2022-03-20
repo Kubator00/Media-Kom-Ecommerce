@@ -8,7 +8,7 @@ router.post('/details', async (req, res) => {
     let product, parameters;
     try {
         product = (await selectQuery(`SELECT * from products WHERE productId=${req.body.productId}`))[0];
-        parameters = await selectQuery(`SELECT parameterName, parameter from products_details WHERE productId=${req.body.productId}`);
+        parameters = await selectQuery(`SELECT parameterName, parameter from products_details WHERE productId=${req.body.productId} ORDER BY displayNumber ASC`);
     }
     catch (err) {
         console.log(err);

@@ -38,7 +38,7 @@ const PageButtons = (props) => {
             <div class='pagebuttons'>
                 {
                     (lastNumber > 1) &&
-                    <img src='./icons/circle-chevron-left-solid.svg' class='pagebuttons-nextbutton' onClick={() => { clickHandler(currentNumber - 1) }} />
+                    <img src='./icons/angle-left.svg' class='pagebuttons-nextbutton' onClick={() => { clickHandler(currentNumber - 1) }} />
                 }
                 <button onClick={() => { clickHandler(1) }}
                     class={currentNumber === 1 ? 'pagebuttons-current-button' : 'pagebuttons-button'}>
@@ -76,7 +76,7 @@ const PageButtons = (props) => {
                             {lastNumber}
                         </button>
 
-                        <img src='./icons/circle-chevron-right-solid.svg' class='pagebuttons-nextbutton' onClick={() => { clickHandler(currentNumber + 1) }} />
+                        <img src='./icons/angle-right.svg' class='pagebuttons-nextbutton' onClick={() => { clickHandler(currentNumber + 1) }} />
 
                     </>
                 }

@@ -18,6 +18,9 @@ a{
     border-radius: 15px;
     border-color: #e8e8e8;
 }
+.userOrders-order:hover{
+    box-shadow: 1px 1px 5px#cacaca;
+}
 
 .userOrders-order-details {
     background-color:rgb(245, 245, 245);

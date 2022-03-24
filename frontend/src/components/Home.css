@@ -1,52 +1,20 @@
+
+@import url("./variable.css"); 
 :root {
     --height-slider: 400px;
     --width-slider: 370px;
-
 }
 
-.home-slider {
+.home-container,.home-slider,.home-slider-product-img-container,.home-slider-product{
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    max-width: 2000px;
-    width: 100%;
-
-}
-.home-slider-product-img-container1{
-    height: 70%;
-}
-.home-slider-product-img-container{
-    display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-.home-slider-product-img {
-    max-width: 70%;
-    max-height: 70%;
 }
 
-.home-slider-product {
-    height: var(--height-slider);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    text-align: center;
-    width: var(--width-slider);
-    margin: 5px;
-    padding: 10px;
-    border: 2px solid lightgray;
-}
-.home-slider-product label{
-    height: 15%;
-}
 .home-container {
     width: 100%;
     max-width: 2000px;
-    display: flex;
     flex-direction: column;
-    align-items: center;
     margin-top: -20px;
     min-height: 600px;
 }
@@ -55,16 +23,53 @@
     margin-left: 40px;
 }
 
+.home-slider {
+    justify-content: space-between;
+    max-width: 2000px;
+    width: 100%;
+    user-select: none; 
+}
+
+.home-slider-product {
+    height: var(--height-slider);
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    width: var(--width-slider);
+    margin: 5px;
+    padding: 10px;
+    border: 2px solid lightgray;
+    transition-duration: var(--transition-duration);
+}
+.home-slider-product:hover{
+    transform: scale(102%);
+}
+
+.home-slider-product-img-container1{
+    height: 70%;
+}
+
+.home-slider-product-img-container{
+    width: 100%;
+    height: 100%;
+}
+.home-slider-product-img {
+    max-width: 70%;
+    max-height: 70%;
+}
+
+.home-slider-product label{
+    height: 15%;
+}
+
 .home-slider-buttons {
     max-width: 30px;
     max-height: 30px;
-    /* border-radius: 7px;
-    border: none;
-    min-width: 40px;
-    z-index: 99;
-    margin-left: 0px;
-    padding: 2px; */
 }
+.home-slider-buttons:hover{
+    transform: scale(110%);
+}
+
 
 @media (max-width: 1750px) {
     :root {

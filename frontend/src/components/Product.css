@@ -45,6 +45,7 @@
     align-items: center;
     width: 100%;
     height: var(--product-photo-height);
+    user-select: none; 
 }
 
 .product-img {

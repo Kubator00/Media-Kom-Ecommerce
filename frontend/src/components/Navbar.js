@@ -52,13 +52,13 @@ const AccountMenu = () => {
             <>
                 <div class="nav-dropdownMenu-container1">
                     <div class="nav-dropdownMenu-container" onClick={() => { clickHandler(!isClicked) }} onMouseEnter={() => { clickHandler(true) }} onMouseLeave={() => { clickHandler(false) }} >
-                        <button class='nav-button' style={{ "border-bottom": "none" }}>
+                        <button class='nav-button' id="your-account" style={{ "border-bottom": "none" }}>
                             <img src='./icons/user.svg' class='icons' />
                             Twoje konto
                         </button>
                         <div class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'}>
                             <Link to="/myorders" className="nav-dropdownMenu-link">
-                                <img src='./account/clipboard.svg' class='nav-dropdownMenu-icon' /> Moje zamówienia
+                                <img src='./account/notebook.svg' class='nav-dropdownMenu-icon' /> Moje zamówienia
                             </Link>
                             <Link to="/myaccount" className="nav-dropdownMenu-link">
                                 <img src='./account/settings.svg' class='nav-dropdownMenu-icon' /> Ustawienia konta
@@ -125,7 +125,7 @@ const Categories = () => {
             <div class='nav-categories-container'>
                 <div class='nav-categoryButton' onClick={mobileCategoryHandler} onMouseEnter={mobileCategoryHandler} onMouseLeave={mobileCategoryHandler}>
                     <span>
-                        {<img src="./categories/bars.svg" class='nav-category-icons' />}
+                        {<img src="./icons/menu.svg" class='nav-category-icons' />}
                         <label>Kategorie</label>
                     </span>
                     {categoryButtonIsActive &&
@@ -164,47 +164,59 @@ function Navbar() {
     const searchValue = useSelector((state) => state.searchProductsReducer.keyword);
     const searchCategory = useSelector((state) => state.searchProductsReducer.category);
     const [positionFixed, setPositionFixed] = useState(false);
+    const [mobileSearch, setMobileSearch] = useState(false);
 
     const navPositionFixed = () => {
-        console.log(document.getElementById('nav').clientHeight);
-        console.log(window.innerHeight);
-        if (window.scrollY > document.getElementById('nav').clientHeight && window.innerHeight>document.getElementById('nav').clientHeight*2)
+        if (window.scrollY > document.getElementById('nav').clientHeight
+         && window.innerHeight > document.getElementById('nav').clientHeight * 3
+         && window.innerWidth > 1000)
             setPositionFixed(true);
         if (window.scrollY <= 0)
             setPositionFixed(false);
 
     }
+    const searchInput = () => {
+        if (window.innerWidth <= 1000)
+            setMobileSearch(true);
+        else
+            setMobileSearch(false);
+    }
 
     useEffect(() => {
+        window.addEventListener('resize', searchInput);
         window.addEventListener('scroll', navPositionFixed);
+        searchInput();
     }, [])
 
-    useEffect(() => {
-        console.log(positionFixed);
-    })
+
 
     return (
         <div class="nav-container">
-            <div class="nav-container1">
-                <div id='nav' className={positionFixed ? 'nav-main-fixed' : 'nav-main'}>
-                    <div class="nav-left">
-                        <Link to='/' class="nav-title">
-                            <img src='logo.png' class='nav-logo' />
-                        </Link>
-                        <SearchInput />
+            <div class={positionFixed? 'nav-container-fixed' : 'nav-container1' }>
+                <div id='nav' className='nav-main'>
+                    <div className='nav-up'>
+                        <div class="nav-left">
+                            <Link to='/'>
+                                <img src='logo.png' class='nav-logo' />
+                            </Link>
+                            {!mobileSearch && <SearchInput />}
+                        </div>
+                        <div class="nav-right">
+                            <button class='nav-button'>
+                                <img src='./icons/headset.svg' class='icons' />
+                                Kontakt
+                            </button>
+                            <AccountMenu />
+                        </div>
                     </div>
-                    <div class="nav-right">
-                        <button class='nav-button'>
-                            <img src='./icons/headset.svg' class='icons' />
-                            Kontakt
-                        </button>
-                        <AccountMenu />
+                    <div className='nav-down'>
+                        <Categories />
+                        {mobileSearch && <SearchInput />}
+                        {(redirect) &&
+                            <Navigate to=
+                                {`/search/keyword/${searchValue}/category/${searchCategory}`} class='nav-search-button' />}
                     </div>
                 </div>
-                <Categories />
-                {(redirect) &&
-                    <Navigate to=
-                        {`/search/keyword/${searchValue}/category/${searchCategory}`} class='nav-search-button' />}
             </div>
         </div>
     );

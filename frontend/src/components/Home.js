@@ -59,6 +59,7 @@ const Slider = () => {
                 element = element % elementOnScreen;
             tmpIndex.push(element);
         });
+        
         setIndex(tmpIndex);
     }
     const prevSlide = () => {
@@ -94,11 +95,11 @@ const Slider = () => {
         return (
             <section class='slider'>
                 <div class="home-slider">
-                    <img onClick={prevSlide} src='./icons/circle-chevron-left-solid.svg' class='home-slider-buttons' />
+                    <img onClick={prevSlide} src='./icons/angle-left.svg' class='home-slider-buttons' />
                     {displayProducts.map((product) => (
                         <Cart img={product.titleImg} title={product.title} price={product.price} id={product.productId} />
                     ))}
-                    <img onClick={nextSlide} src='./icons/circle-chevron-right-solid.svg' class='home-slider-buttons' />
+                    <img onClick={nextSlide} src='./icons/angle-right.svg' class='home-slider-buttons' />
                 </div>
             </section >
         );

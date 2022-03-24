@@ -1,0 +1,9 @@
+:root {
+    --background-color:#ffff;
+    --font-color:rgb(24,24,24);
+    --max-width: 2000px;
+    --min-width: 400px;
+    --min-height: 600px;
+    --border-color: #e8e8e8;
+    --transition-duration: 0.15s;
+}

@@ -51,11 +51,11 @@ const MyCart = () => {
                             <div className='mycart-price-label'>
                                 <h3> {`${product.price}zł`} </h3>
                                 <div className='mycart-price-changeAmount'>
-                                    <img src='./icons/circle-minus.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount - 1)) }} class="mycart-cart-icon" style={{ "margin-right": "3px", "margin-left": "3px" }} />
+                                    <img src='./icons/minus.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount - 1)) }} class="mycart-cart-icon" style={{ "margin-right": "3px", "margin-left": "3px" }} />
                                     <label>
                                         {`Ilość:  ${product.productAmount}  `}
                                     </label>
-                                    <img src='./icons/circle-plus.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount + 1)) }} class="mycart-cart-icon" style={{ "margin-left": "3px" }} />
+                                    <img src='./icons/add.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount + 1)) }} class="mycart-cart-icon" style={{ "margin-left": "3px" }} />
                                 </div>
                                 <img src='./icons/trash.svg' onClick={() => { dispatch(changeProductAmount(product.productId, 0)) }} class="mycart-cart-icon" style={{ "margin-left": "10px" }} />
                             </div>

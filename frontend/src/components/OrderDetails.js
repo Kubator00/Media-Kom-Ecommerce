@@ -37,7 +37,7 @@ const OrderDetails = () => {
                     <h2>Zamówienie</h2>
                     {order.products.map((product) => (
                         <div className='orderdetails-products-product'>
-                            <Link to={`/product/${product.id}`} className='orderdetails-products-product-left'>
+                            <Link to={`/product/${product.productId}`} className='orderdetails-products-product-left'>
                                 <img src={`products/${product.titleImg}`} className='orderdetails-products-product-img' />
                                 <span>{product.title}</span>
                             </Link>

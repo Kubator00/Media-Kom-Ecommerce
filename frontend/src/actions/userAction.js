@@ -27,7 +27,6 @@ export const loginInProgress = () => {
 }
 
 export const loginSuccess = (user) => {
-    console.log('b');
     return {
         type: USER_LOGIN_SUCESS,
         user: user

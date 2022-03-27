@@ -6,42 +6,49 @@
     max-width: 2000px;
     width: 100%;
     min-height: 600px;
+    font-size: 1rem;
 }
-
 
 
 .orderform-form-container {
-    width: 40%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
 }
+
 
 .orderform-delivery {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-
-.orderform-form-details label {
-    display: inline-flex;
-    width: 120px;
-    /* align-items: left; */
+ .orderform-form-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
 }
 
+
 .orderform-form-details input {
-    width: 200px;
-    border-radius: 7px;
+    width: 80%;
+    height: 30px;
+    border-radius: 10px;
     border-color: #c2c1c1;
     border-style: solid;
+}
+.form-errorMsg{
+    color:red;
+    font-size: 0.8rem;
 }
 
 .orderform-form-button-details-button-container {
     margin-top: 40px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .orderform-form-details-button {
@@ -74,7 +81,7 @@
 }
 
 .orderform-cart-container {
-    width: 30%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -89,8 +96,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     border-bottom: 2px solid #c2c1c1;
 }
 .orderform-cart-container-totalAmountLabel{
@@ -118,9 +125,10 @@
 .orderform-placed-order span{
     margin-bottom: 40px;
 }
-@media (max-width: 750px) {
+@media (max-width: 850px) {
     .orderform-container {
         flex-direction: column;
+        font-size: 0.7rem;
     }
 
     .orderform-form-container {

@@ -5,7 +5,7 @@ import {
 } from '../actions/productActionTypes'
 
 
-export const productReducer = (state = { inprogress: false, error: null, productDetails: {}, productParameters: [] }, action) => {
+export const productReducer = (state = { inprogress: true, error: null, productDetails: {}, productParameters: [] }, action) => {
     switch (action.type) {
         case PRODUCT_FETCH_IN_PROGRESS:
             return { ...state, inprogress: true };

@@ -49,7 +49,7 @@ const MyCart = () => {
                                 {product.title}
                             </Link>
                             <div className='mycart-price-label'>
-                                <h3> {`${product.price}zł`} </h3>
+                                <h3> {product.price.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })} </h3>
                                 <div className='mycart-price-changeAmount'>
                                     <img src='./icons/minus.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount - 1)) }} class="mycart-cart-icon" style={{ "margin-right": "3px", "margin-left": "3px" }} />
                                     <label>
@@ -66,7 +66,7 @@ const MyCart = () => {
                     <>
                         <span>
                             <h3> Całkowity koszt </h3>
-                            <h3> {totalAmount}zł </h3>
+                            <h3> {totalAmount.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })} </h3>
                         </span>
                         <Link to={'/orderform'}
                             state={{ cart: cart, productsAmount: totalAmount }}

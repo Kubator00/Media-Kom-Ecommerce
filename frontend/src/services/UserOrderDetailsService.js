@@ -15,7 +15,7 @@ export const userOrderDetails = (orderId) => {
             url: routes.server + routes.orders.details,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
             data: {
                 orderId: orderId

@@ -20,6 +20,7 @@ async function auth(req, res, next) {
 
     if (!await verifyUserToken(req))
         return res.status(400).send("Blad autentykacji");
+
     try {
         if (!await verifyIsAdmin(req))
             return res.status(400).send("Uzytkownik nie jest administratorem");
@@ -76,7 +77,7 @@ router.post('/order/newstatus', async (req, res) => {
 router.post('/orders/details', async (req, res) => {
     let user, orders, products;
     try {
-        user = (await selectQuery(`SELECT username, email FROM users where userId=${req.headers.userId};`))[0];
+        user = (await selectQuery(`SELECT email FROM users where userId=${req.headers.userId};`))[0];
         orders = (await selectQuery(
             `SELECT o.orderId, o.userId, o.date, o.status, o.name, o.surname, o.town, o.postalCode, o.street,
             o.phone, d.name as deliveryName, d.price as deliveryPrice  FROM orders as o join 
@@ -89,7 +90,6 @@ router.post('/orders/details', async (req, res) => {
     }
     let orderDetails = {
         ...orders,
-        username: user.username,
         userEmail: user.email,
         products: products
     }

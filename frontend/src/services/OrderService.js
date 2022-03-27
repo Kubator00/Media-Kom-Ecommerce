@@ -18,7 +18,7 @@ export const newOrder = (props) => {
             url: routes.server + routes.orders.new,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
             data: {
                 orderData: props
@@ -43,7 +43,7 @@ export const userOrders = (beginning, numOfRows) => {
             url: routes.server + routes.users.orders,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
             data: {
                 beginning: beginning,

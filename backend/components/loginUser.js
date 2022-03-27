@@ -2,9 +2,8 @@ const connection = require("../index").connection;
 const Joi = require('joi');
 
 module.exports.schema = Joi.object({
-    username: Joi.string()
-        .alphanum()
-        .min(3)
+    email: Joi.string()
+        .email()
         .required(),
     password: Joi.string()
         .alphanum()
@@ -14,7 +13,7 @@ module.exports.schema = Joi.object({
 
 module.exports.find = async (data, res) => {
     return new Promise((resolve) => {
-        connection.query(`SELECT * from users WHERE username='${data.username}';`,
+        connection.query(`SELECT * from users WHERE email='${data.email}';`,
             (error, results) => {
                 if (error)
                     return res.status(400).send('Wystąpił błąd');

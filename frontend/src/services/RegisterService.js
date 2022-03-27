@@ -6,12 +6,13 @@ import {
 } from "../actions/userAction"
 import Axios from "axios"
 
-const register = (email, username, password) => {
+const register = ( email, name, surname, password ) => {
     return async dispatch => {
         dispatch(registerInProgress());
         await Axios.post(routes.server + routes.users.register, {
             email: email,
-            username: username,
+            name: name,
+            surname: surname,
             password: password
         })
             .then((res) => {

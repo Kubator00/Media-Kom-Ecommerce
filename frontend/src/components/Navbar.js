@@ -50,47 +50,41 @@ const AccountMenu = () => {
     if (!inprogress && user.token)
         return (
             <>
-                <div class="nav-dropdownMenu-container1">
-                    <div class="nav-dropdownMenu-container" onClick={() => { clickHandler(!isClicked) }} onMouseEnter={() => { clickHandler(true) }} onMouseLeave={() => { clickHandler(false) }} >
-                        <button class='nav-button' id="your-account" style={{ "border-bottom": "none" }}>
-                            <img src='./icons/user.svg' class='icons' />
-                            Twoje konto
+                <div class="nav-dropdownMenu-container" onClick={() => { clickHandler(!isClicked) }} onMouseEnter={() => { clickHandler(true) }} onMouseLeave={() => { clickHandler(false) }} >
+                    <div class='nav-button' id="your-account" style={{ "border-bottom": "none" }}>
+                        <img src='./icons/user.svg' class='icons' />
+                        Twoje konto
+                    </div>
+                    <div class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'} id={isClicked && "accountMenu"}>
+                        <Link to="/myorders" className="nav-dropdownMenu-link">
+                            <img src='./account/notebook.svg' class='nav-dropdownMenu-icon' /> Moje zamówienia
+                        </Link>
+                        <Link to="/myaccount" className="nav-dropdownMenu-link">
+                            <img src='./account/settings.svg' class='nav-dropdownMenu-icon' /> Ustawienia konta
+                        </Link>
+                        {user.isAdmin === 1 &&
+                            <Link to="/admin/panel" className="nav-dropdownMenu-link">
+                                <img src='./account/admin.svg' class='nav-dropdownMenu-icon' />  Admin
+                            </Link>
+                        }
+                        <button onClick={() => { dispatch(logOutUser()) }} className="nav-dropdownMenu-link" >
+                            <img src='./account/logout.svg' class='nav-dropdownMenu-icon' style={{ "margin-left": "2px" }} /> Wyloguj się
                         </button>
-                        <div class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'}>
-                            <Link to="/myorders" className="nav-dropdownMenu-link">
-                                <img src='./account/notebook.svg' class='nav-dropdownMenu-icon' /> Moje zamówienia
-                            </Link>
-                            <Link to="/myaccount" className="nav-dropdownMenu-link">
-                                <img src='./account/settings.svg' class='nav-dropdownMenu-icon' /> Ustawienia konta
-                            </Link>
-                            {user.isAdmin === 1 &&
-                                <Link to="/admin/panel" className="nav-dropdownMenu-link">
-                                    <img src='./account/admin.svg' class='nav-dropdownMenu-icon' />  Admin
-                                </Link>
-                            }
-                            <button onClick={() => { dispatch(logOutUser()) }} className="nav-dropdownMenu-link" >
-                                <img src='./account/logout.svg' class='nav-dropdownMenu-icon' style={{ "margin-left": "2px" }} /> Wyloguj się
-                            </button>
-                        </div>
                     </div>
                 </div>
 
 
-                <Link to="/mycart" className="nav-cart">
-                    <button onClick class='nav-button' >
-                        <img src='./icons/cart-shopping-solid.svg' class='icons' />
-                        Koszyk
-                    </button>
+                <Link to="/mycart" class='nav-button'>
+                    <img src='./icons/cart-shopping-solid.svg' class='icons' />
+                    Koszyk
                 </Link>
             </>
         );
 
     return (
-        <Link to="/login">
-            <button class='nav-button'>
+        <Link to="/login" class='nav-button'>
                 <img src='./icons/user.svg' class='icons' />
                 Zaloguj się
-            </button>
         </Link>
     );
 }
@@ -101,7 +95,7 @@ const Categories = () => {
     const dispatch = useDispatch();
 
     const showCategoryButton = () => {
-        if (window.innerWidth <= 1000)
+        if (window.innerWidth <= 1350)
             isMobileActiveSet(true);
         else
             isMobileActiveSet(false);
@@ -129,19 +123,19 @@ const Categories = () => {
                         <label>Kategorie</label>
                     </span>
                     {categoryButtonIsActive &&
-                        <div class='nav-dropdownMenu-container1'>
-                            <div class="nav-dropdownMenu-container">
-                                <div class={"nav-dropdownMenu-show"}>
-                                    {categories.map((category) => (
-                                        <Link to={`/search/category/${category.name}`} class='nav-category'>
-                                            {<img src={category.img} class='nav-category-icons' />}
-                                            <label>{category.name}</label>
-                                        </Link>
-                                    ))
-                                    }
-                                </div>
+
+                        <div class="nav-dropdownMenu-container">
+                            <div class={"nav-dropdownMenu-show"}>
+                                {categories.map((category) => (
+                                    <Link to={`/search/category/${category.name}`} class='nav-category'>
+                                        {<img src={category.img} class='nav-category-icons' />}
+                                        <label>{category.name}</label>
+                                    </Link>
+                                ))
+                                }
                             </div>
                         </div>
+
                     }
                 </div>
             </div>
@@ -168,15 +162,15 @@ function Navbar() {
 
     const navPositionFixed = () => {
         if (window.scrollY > document.getElementById('nav').clientHeight
-         && window.innerHeight > document.getElementById('nav').clientHeight * 3
-         && window.innerWidth > 1000)
+            && window.innerHeight > document.getElementById('nav').clientHeight * 3
+            && window.innerWidth > 1350)
             setPositionFixed(true);
         if (window.scrollY <= 0)
             setPositionFixed(false);
 
     }
     const searchInput = () => {
-        if (window.innerWidth <= 1000)
+        if (window.innerWidth <= 1350)
             setMobileSearch(true);
         else
             setMobileSearch(false);
@@ -192,20 +186,20 @@ function Navbar() {
 
     return (
         <div class="nav-container">
-            <div class={positionFixed? 'nav-container-fixed' : 'nav-container1' }>
+            <div class={positionFixed ? 'nav-fixed' : 'nav'}>
                 <div id='nav' className='nav-main'>
                     <div className='nav-up'>
                         <div class="nav-left">
-                            <Link to='/'>
-                                <img src='logo.png' class='nav-logo' />
+                            <Link to='/' class='nav-logo'>
+                                <img src='logo.png' />
                             </Link>
                             {!mobileSearch && <SearchInput />}
                         </div>
                         <div class="nav-right">
-                            <button class='nav-button'>
+                            <Link to="#" class='nav-button'>
                                 <img src='./icons/headset.svg' class='icons' />
                                 Kontakt
-                            </button>
+                            </Link>
                             <AccountMenu />
                         </div>
                     </div>
@@ -214,7 +208,7 @@ function Navbar() {
                         {mobileSearch && <SearchInput />}
                         {(redirect) &&
                             <Navigate to=
-                                {`/search/keyword/${searchValue}/category/${searchCategory}`} class='nav-search-button' />}
+                                {`/search/keyword/${searchValue}/category/${searchCategory}`} />}
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ export const adminAllOrders = (beginning, numOfRows) => {
             url: routes.server + routes.admin.allOrders,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
             data: {
                 beginning: beginning,

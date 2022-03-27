@@ -8,19 +8,19 @@ import {
 import Axios from "axios"
 
 const logInUser = (props) => {
-    const { username, password } = props;
+    const { email, password } = props;
     return async dispatch => {
         dispatch(loginInProgress());
         await Axios.post(routes.server + routes.users.login, {
-            username: username,
+            email: email,
             password: password
         })
             .then((res) => {
                 if (res.data.token) {
-                    localStorage.setItem('username', res.data.username);
+                    localStorage.setItem('email', res.data.email);
+                    localStorage.setItem('name', res.data.name);
                     localStorage.setItem('token', res.data.token);
                     localStorage.setItem('isAdmin', res.data.isAdmin);
-                    console.log('a');
                     dispatch(loginSuccess(res.data));
                 }
                 else {

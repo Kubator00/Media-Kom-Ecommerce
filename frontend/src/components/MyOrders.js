@@ -29,7 +29,7 @@ const MyOrders = () => {
                             <span>Status: <b>{order.status}</b></span>
                             <span>Data zamówienia: {`${order.date.slice(8, 10)}.${order.date.slice(5, 7)}.${order.date.slice(0, 4)}`}</span>
                             <span>Nr zamówienia: {order.orderId}</span>
-                            <span>Łączna kwota: {order.totalAmount} zł</span>
+                            <span>Łączna kwota:  {order.totalAmount.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })} </span>
                         </div>
                         <div className='userOrders-order-products'>
                             {order.products.map((product) => (

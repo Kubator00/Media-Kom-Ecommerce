@@ -23,8 +23,13 @@ const Product = () => {
 
     const productDetails = useSelector(state => state.productReducer.productDetails);
     const productParameters = useSelector(state => state.productReducer.productParameters);
+    const inProgress = useSelector(state => state.productReducer.inprogress);
     const msg = useSelector(state => state.cartReducer.msg);
 
+    if(inProgress){
+        return <div>Ładowanie...</div>
+    }
+    
     if (productParameters && productDetails)
         return (
             <div className="product-container">
@@ -35,7 +40,7 @@ const Product = () => {
                     <div className="product-purchase">
                         <div className="product-title">
                             <h1>{productDetails.title}</h1>
-                            <h1>{productDetails.price}zł</h1>
+                            <h1>{productDetails.price.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</h1>
                         </div>
                         {msg && msg}
                         <div className="product-buttons">
@@ -53,8 +58,10 @@ const Product = () => {
                         </div>
                     </div>
                 </div>
-                <h2>Opis</h2>
-                {productDetails.description}
+                <div class='product-description'>
+                    <h2>Opis</h2>
+                    {productDetails.description}
+                </div>
                 {productParameters.length > 0 &&
                     <div class='product-parameter-container'>
                         <h2>Specyfikacja</h2>

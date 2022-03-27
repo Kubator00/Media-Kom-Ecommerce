@@ -17,7 +17,7 @@ export const fetchCart = () => {
             url: routes.server + routes.users.cart,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             }
         })
             .then((res) => {
@@ -45,7 +45,7 @@ export const addToCart = (productId, amount) => {
             url: routes.server + routes.cart.add,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
             data: {
                 amount: amount,
@@ -72,7 +72,7 @@ export const changeProductAmount = (productId, productAmount) => {
             url: routes.server + routes.cart.changeAmount,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
             data: {
                 productId: productId,

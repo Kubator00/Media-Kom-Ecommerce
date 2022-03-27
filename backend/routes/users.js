@@ -14,33 +14,36 @@ const selectQuery = require('../components/selectQuery')
 
 router.post('/token', async (req, res) => {
     try {
-        req.headers['userId'] = await getUserId(req)
+        req.headers['userId'] = await getUserId(req);
     } catch (err) {
         console.error(err);
+        return;
     }
+        
     if (!await verifyUserToken(req))
         return res.send(false);
-        
+
     return res.send(true);
 })
 
 router.post('/login', async (req, res) => {
-    const schemaValidate = login.schema.validate({ username: req.body.username, password: req.body.password });
+    const schemaValidate = login.schema.validate({ email: req.body.email, password: req.body.password });
+    console.log(schemaValidate.error);  
     if (schemaValidate.error)
         return res.send('Niepoprawne dane');
+
     const user = await login.find(req.body, res);
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass)
         return res.send('Niepoparwne hasło');
     const token = jwt.sign({ id: user.userId }, PRIVATE_KEY, { expiresIn: 20000 });
-    res.header('token', token).send({ 'username': user.username, 'token': token, 'isAdmin': user.isAdmin });
+    res.header('token', token).send({ 'email': user.email, 'name': user.name, 'token': token, 'isAdmin': user.isAdmin });
 })
 
 router.post('/register', async (req, res) => {
     const schemaValidate = register.schema.validate(
-        { username: req.body.username, password: req.body.password, email: req.body.email }
+        { name: req.body.name, surname: req.body.name, password: req.body.password, email: req.body.email }
     );
-    console.log(schemaValidate.error)
     if (schemaValidate.error)
         return res.status(400).send('Niepoprawne dane');
     const salt = await bcrypt.genSalt(10);
@@ -59,6 +62,7 @@ async function auth(req, res, next) {
     }
     if (!await verifyUserToken(req))
         return res.status(400).send("Blad autentykacji");
+    
     next();
 }
 

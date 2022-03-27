@@ -26,7 +26,6 @@ router.post('/new', async (req, res) => {
     const { name, surname, town, postalCode, street, phone, deliveryTypeId, products } = req.body.orderData;
     let delivery, prices;
     let productsIds = '';
-    console.log(products)
     products.forEach(product => {
         productsIds += `${product.productId},`
     });
@@ -41,10 +40,10 @@ router.post('/new', async (req, res) => {
        return res.status(400).send("Blad polaczenia z baza");
     }
     products.forEach(product => {
-        product['price'] = (prices.find((i) => i.id == product.id)).price;
+        product['price'] = (prices.find((i) => i.productId == product.productId))?.price;
     })
 
-
+    console.log(products);
     connection.beginTransaction((err) => {
         if (err)
             throw err;
@@ -60,8 +59,9 @@ router.post('/new', async (req, res) => {
                 });
             }
      
-            products.forEach(prod => {
-                connection.query(`INSERT INTO orders_product VALUES (${res.insertId},${prod.productId},${prod.productAmount},${prod.price})`, function (error) {
+            products.forEach(prod => {  
+                console.log(prod);
+                connection.query(`INSERT INTO orders_product VALUES (${res.insertId},${prod.productId},${prod.productAmount},${prod.price})`, function (err) {
                     if (err) {
                         return connection.rollback(function () {
                             throw err;

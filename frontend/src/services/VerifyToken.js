@@ -16,7 +16,7 @@ const verifyToken = () => {
             url: routes.server + routes.users.token,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
         })
             .then((res) => {

@@ -1,96 +1,80 @@
-import React, { Component } from 'react'
-import { Link, Navigate, Route } from "react-router-dom";
+import React from 'react'
+import { Link, Navigate, useLocation } from "react-router-dom";
 import './LogIn.css'
-import { useState, useEffect } from 'react'
-import Axios from "axios"
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import logInUser from '../services/LoginService'
-import MyInput from './MyInput';
-
-const mapStateToProps = (state) => {
-    return {
-        user: state.usersReducer.user,
-        error: state.usersReducer.error,
-        inProgress: state.usersReducer.inprogress,
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        logInUser: user => {
-            dispatch(logInUser(user));
-        }
-    }
-}
+import * as yup from 'yup';
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 
-class LogIn extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            user: {
-                username: "",
-                password: "",
-            },
-            isAuth: this.props.user.isLogIn,
-            msg: props.location?.state ? props.location.state.msg : undefined,
-        }
+function LogIn() {
+    let location = useLocation();
+    const user = useSelector(state => state.usersReducer.user);
+    const error = useSelector(state => state.usersReducer.error);
+    const inProgress = useSelector(state => state.usersReducer.inprogress);
+    const locationData = location?.state;
+    const msg = locationData ? locationData.msg : '';
 
-    }
-
-    changeHandler = event => {
-        this.setState(prevState => ({
-            user: {
-                ...prevState.user,
-                [event.target.name]: event.target.value
-            }
-        }));
+    const dispatch = useDispatch();
+    const logInHandler = async (props) => {
+        dispatch(logInUser(props));
     };
 
-    logInHandler = (event) => {
-        event.preventDefault();
-        this.props.logInUser(this.state.user);
-    };
 
-    componentDidUpdate() {
-        if (this.props.user.token) {
-            console.log(this.props.user);
-            this.setState({ isAuth: true });
-        }
-    }
-    render() {
-        if (localStorage.getItem('token')) {
-            return <Navigate to="/" />;
-        }
+    if (localStorage.getItem('token') || user.token)
+        return <Navigate to="/" />;
 
-        return (
-            <div class="login-container">
-                <div class="login-login-container">
-                    <div class="login-login-content">
-                        <h3>Zaloguj się</h3>
-                        {this.state.msg && this.state.msg}<br></br>
-                        {this.props.error && this.props.error}
-                        <form onSubmit={this.logInHandler} class="login-login-form" >
-                            <MyInput label="Nazwa uzytkownika" type="text" name="username" className="login-login-form-control" required onChange={this.changeHandler} />
-                            <MyInput label="Hasło" type="password" name="password" className="login-login-form-control" required onChange={this.changeHandler} />
-                            <button type="submit" class="login-button">
-                                Zaloguj sie
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <div class="login-register-container">
-                    <h3>Nie masz konta?</h3>
-                    <Link to="/register"  class="login-button">
-                        Zarejestruj się
-                    </Link>
+    // if (inProgress)
+    //     return <div>Ładowanie...</div>;
+
+    return (
+        <div class="login-container">
+            <div class="login-login-container">
+                <div class="login-login-content">
+                    <h3>Zaloguj się</h3>
+                    {msg && msg}<br></br>
+                    {error && error}
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: ''
+                        }}
+                        onSubmit={(values) => { logInHandler(values) }}
+                        validationSchema={validate}
+                    >
+
+                        <Form class="login-login-form" >
+                            <label htmlFor="email">Adres email</label>
+                            <ErrorMessage name='email' component="div" class='login-errorMsg' />
+                            <Field name="email" class="login-login-form-control" />
+                            <label htmlFor="username">Hasło</label>
+                            <ErrorMessage name='password' component="div" class='login-errorMsg' />
+                            <Field name="password" class="login-login-form-control" />
+                            <button type="submit" class="login-button">Zaloguj się</button>
+                        </Form>
+                    </Formik>
                 </div>
             </div>
-        );
+            <div class="login-register-container">
+                <h3>Nie masz konta?</h3>
+                <Link to="/register" class="login-button">
+                    Zarejestruj się
+                </Link>
+            </div>
+        </div>
+    );
 
-    }
+
 }
 
+export default LogIn;
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
+const validate = yup.object().shape({
+    email: yup.string()
+        .email('Email jest nieprawidłowy')
+        .required('Pole jest wymagane'),
+    password: yup.string()
+        .min(3, 'Hasło musi posiadać co najmniej 3 znaki')
+        .max(16, 'Hasło musi się składać z maksymalnie 16 znaków')
+        .required('Pole jest wymagane'),
+})

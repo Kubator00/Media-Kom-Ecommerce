@@ -3,6 +3,7 @@
 :root {
     --height-slider: 400px;
     --width-slider: 370px;
+    --font-size: 0.9rem;
 }
 
 .home-container,.home-slider,.home-slider-product-img-container,.home-slider-product{
@@ -17,6 +18,7 @@
     flex-direction: column;
     margin-top: -20px;
     min-height: 600px;
+    font-size: var(--font-size);
 }
 
 .home-container h1 {
@@ -84,6 +86,7 @@
 @media only screen and (max-width: 1250px) {
     :root {
         --width-slider: 200px;
+        --font-size: 0.8rem;
     }
 }
 @media only screen and (max-width: 1050px) {
@@ -94,6 +97,7 @@
 @media only screen and (max-width: 900px) {
     :root {
         --width-slider: 250px;
+        --font-size: 0.7rem;
     }
 }
 

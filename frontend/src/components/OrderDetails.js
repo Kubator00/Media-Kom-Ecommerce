@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './OrderDetails.css'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,7 @@ const OrderDetails = () => {
     const order = useSelector(state => state.userOrderDetailsReducer.order);
     const inProgress = useSelector(state => state.userOrderDetailsReducer.inprogress);
     const error = useSelector(state => state.userOrderDetailsReducer.error);
- 
+
     if (error)
         return <Navigate to='/' />;
 
@@ -43,16 +43,23 @@ const OrderDetails = () => {
                             </Link>
                             <div className='orderdetails-products-product-right'>
                                 <span>{product.productAmount} szt.</span>
-                                <span>{product.productPrice} zł</span>
+                                <span> {product.productPrice.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</span>
                             </div>
                         </div>
                     ))}
                 </div>
-                <div className='orderdetails-amount'>
-                    <span>Wartość koszyka: {order.cartAmount} zł</span>
-                    <span>Koszt dostawy: {order.deliveryPrice} zł</span>
-                    <span>Razem: {order.totalAmount} zł</span>
-                </div>
+                <ul className='orderdetails-amount'>
+                    <li>
+                        <ul>Wartość koszyka:</ul> <ul>{order.cartAmount.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</ul>
+                    </li>
+                    <li>
+                        <ul>Koszt dostawy: </ul> <ul>{order.deliveryPrice.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</ul>
+                    </li>
+                    <li>
+                        <ul>Razem:</ul> <ul>{order.totalAmount.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</ul>
+                    </li>
+
+                </ul >
             </div >
         );
 

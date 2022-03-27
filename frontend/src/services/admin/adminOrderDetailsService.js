@@ -15,7 +15,7 @@ export const adminOrderDetails = (orderId) => {
             url: routes.server + routes.admin.details,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
             data: {
                 orderId: orderId
@@ -42,7 +42,7 @@ export const changeOrderStatus = (orderId, newStatus) => {
             url: routes.server + routes.admin.newStatus,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),
-                "X-USERNAME": localStorage.getItem('username')
+                "X-EMAIL": localStorage.getItem('email')
             },
             data: {
                 orderId: orderId,

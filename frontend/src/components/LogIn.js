@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, Navigate, useLocation } from "react-router-dom";
 import './LogIn.css'
 import { useSelector, useDispatch } from "react-redux";
@@ -20,12 +20,15 @@ function LogIn() {
         dispatch(logInUser(props));
     };
 
+    useEffect(() => {
+        console.log(inProgress);
+    });
 
-    if (localStorage.getItem('token') || user.token)
+    if (localStorage.getItem('token'))
         return <Navigate to="/" />;
 
-    // if (inProgress)
-    //     return <div>Ładowanie...</div>;
+    if (inProgress)
+        return <div>Ładowanie...</div>;
 
     return (
         <div class="login-container">

@@ -17,7 +17,7 @@ router.post('/token', async (req, res) => {
         req.headers['userId'] = await getUserId(req);
     } catch (err) {
         console.error(err);
-        return;
+        return res.send(false);
     }
         
     if (!await verifyUserToken(req))

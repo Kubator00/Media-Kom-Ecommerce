@@ -53,7 +53,6 @@ export const verifyTokenInProgress = () => {
     };
 }
 export const verifyTokenSucess = () => {
-    console.log('ccc');
     return {
         type: VERIFY_TOKEN_SUCESS
     };

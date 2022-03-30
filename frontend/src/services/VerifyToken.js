@@ -20,14 +20,13 @@ const verifyToken = () => {
             },
         })
             .then((res) => {
-                console.log(res);
-                if (!res.data) {
-                    dispatch(logOutUser());
-                    dispatch(verifyTokenFailure('Sesja wygasła'));
-                }
-                else {
+                if (res.data) {
                     dispatch(verifyTokenSucess());
+                    return res.data;
                 }
+
+                dispatch(logOutUser());
+                dispatch(verifyTokenFailure('Sesja wygasła'));
                 return res.data;
             })
             .catch(err => {

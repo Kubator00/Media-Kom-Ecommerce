@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import './Navbar.css'
 import { useDispatch, useSelector } from "react-redux";
 import { logOutUser } from "../actions/userAction";
-import categories from './Category';
+import categories from './productsComponents/categoryData';
 import { productRedirect } from '../actions/searchAction'
 import { setKeyword, setCategory } from '../actions/searchAction'
 import verifyToken from "../services/VerifyToken";
@@ -56,10 +56,10 @@ const AccountMenu = () => {
                         Twoje konto
                     </div>
                     <div class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'} id={isClicked && "accountMenu"}>
-                        <Link to="/myorders" className="nav-dropdownMenu-link">
+                        <Link to="/orderslist" className="nav-dropdownMenu-link">
                             <img src='./account/notebook.svg' class='nav-dropdownMenu-icon' /> Moje zamówienia
                         </Link>
-                        <Link to="/myaccount" className="nav-dropdownMenu-link">
+                        <Link to="/account" className="nav-dropdownMenu-link">
                             <img src='./account/settings.svg' class='nav-dropdownMenu-icon' /> Ustawienia konta
                         </Link>
                         {user.isAdmin === 1 &&
@@ -74,7 +74,7 @@ const AccountMenu = () => {
                 </div>
 
 
-                <Link to="/mycart" class='nav-button'>
+                <Link to="/cart" class='nav-button'>
                     <img src='./icons/cart-shopping-solid.svg' class='icons' />
                     Koszyk
                 </Link>
@@ -117,7 +117,7 @@ const Categories = () => {
     if (isMobileActive)
         return (
             <div class='nav-categories-container'>
-                <div class='nav-categoryButton' onClick={mobileCategoryHandler} onMouseEnter={mobileCategoryHandler} onMouseLeave={mobileCategoryHandler}>
+                <div class='nav-categoryButton' onMouseEnter={mobileCategoryHandler} onMouseLeave={mobileCategoryHandler}>
                     <span>
                         {<img src="./icons/menu.svg" class='nav-category-icons' />}
                         <label>Kategorie</label>

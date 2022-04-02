@@ -6,19 +6,19 @@ import ProdectedRoute from './ProtectedRoute';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './components/Home'
-import LogIn from './components/LogIn';
-import Register from './components/Register';
+import LogIn from './components/loginComponents/LogIn';
+import Register from './components/loginComponents/Register';
 
-import MyAccount from './components/MyAccount';
-import Product from './components/Product';
-import MyCart from './components/MyCart';
-import OrderForm from './components/OrderForm';
-import MyOrders from './components/MyOrders';
-import OrderDetails from './components/OrderDetails';
-import AdminPanel from './components/admin/AdminPanel';
-import AdminAllOrders from './components/admin/AdminAllOrders';
-import AdminOrderDetails from './components/admin/AdminOrdersDetails';
-import SearchProducts from './components/SearchProducts';
+import UserAccount from './components/userComponents/Account'
+import Product from './components/productsComponents/Product';
+import UserCart from './components/userComponents/Cart';
+import OrderForm from './components/ordersComponents/OrderForm';
+import OrdersList from './components/ordersComponents/OrdersList';
+import OrderDetails from './components/ordersComponents/OrderDetails';
+import AdminPanel from './components/adminComponents/AdminPanel';
+import AdminAllOrders from './components/adminComponents/AdminAllOrders';
+import AdminOrderDetails from './components/adminComponents/AdminOrdersDetails';
+import SearchProducts from './components/productsComponents/SearchProducts';
 import { useLayoutEffect } from 'react'
 
 const Wrapper = ({ children }) => {
@@ -47,11 +47,11 @@ class App extends React.Component {
               <Route path='/register' element={<Register />} />
 
               <Route element={<ProdectedRoute />}>
-                <Route path='mycart' element={<MyCart />} />
-                <Route path='myaccount' element={<MyAccount />} />
-                <Route path='myorders' element={<MyOrders />} />
+                <Route path='cart' element={<UserCart />} />
+                <Route path='account' element={<UserAccount />} />
+                <Route path='ordersList' element={<OrdersList />} />
                 <Route path='orderform' element={<OrderForm />} />
-                <Route path='myorders/order/:id' element={<OrderDetails />} />
+                <Route path='orderslist/order/:id' element={<OrderDetails />} />
                 <Route path='admin/panel' element={<AdminPanel />} />
                 <Route path='admin/allorders' element={<AdminAllOrders />} />
                 <Route path='admin/order/:id' element={<AdminOrderDetails />} />

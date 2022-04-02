@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import MyInput from './MyInput';
 import './LogIn.css'
 import './Register.css'
-import register from '../services/RegisterService';
+import register from '../../services/RegisterService';
 import { Link } from "react-router-dom";
 import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from "formik";

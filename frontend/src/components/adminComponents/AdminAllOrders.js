@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import '../MyOrders.css'
+import '../ordersComponents/OrdersList.css'
 import { useDispatch, useSelector } from "react-redux";
 import { adminAllOrders } from '../../services/admin/adminAllOrders'
 import { Link } from 'react-router-dom';

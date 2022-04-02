@@ -3,9 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import './Product.css'
 import './searchProducts.css'
 import { useSelector, useDispatch } from "react-redux";
-import { productsSearch } from '../services/SearchService'
-import { addToCart } from '../services/MyCartService'
-import { productRedirect } from '../actions/searchAction'
+import { productsSearch } from '../../services/SearchService'
+import { addToCart } from '../../services/MyCartService'
+import { productRedirect } from '../../actions/searchAction'
+
+
+
 
 const SearchProducts = () => {
     const { keyword, category } = useParams();
@@ -14,9 +17,14 @@ const SearchProducts = () => {
     const inProgress = useSelector((state) => state.searchProductsReducer.inprogress);
     const products = useSelector((state) => state.searchProductsReducer.products);
     const [filteredProducts, setfilteredProducts] = useState(products);
+    const [showFilterButton, setShowFilterButton] = useState(false);
+
+    const [mobileFilterMenu, setMobileFilterMenu] = useState(false);
 
     const dispatch = useDispatch()
     useEffect(async () => {
+        window.addEventListener('resize', showFilterButtonF);
+        showFilterButtonF();
         dispatch(productRedirect(false));
         dispatch(productsSearch(keyword, category));
         setLoaded(true);
@@ -33,9 +41,14 @@ const SearchProducts = () => {
         setfilteredProducts(products);
     }, [products])
 
-    useEffect(() => {
-        console.log(filteredProducts);
-    })
+
+    const showFilterButtonF = () => {
+        if (window.innerWidth <= 1200) {
+            setShowFilterButton(true);
+        }
+        else
+            setShowFilterButton(false);
+    }
 
 
 
@@ -84,6 +97,7 @@ const SearchProducts = () => {
                     return 1;
                 return 0;
             })]);
+
     }
 
 
@@ -94,6 +108,7 @@ const SearchProducts = () => {
             </div>
         );
 
+
     if (filteredProducts?.length < 1)
         return (
             <div class='searchProducts-container'>
@@ -102,32 +117,71 @@ const SearchProducts = () => {
             </div>
         );
 
+
+
+
     if (filteredProducts?.length > 0)
         return (
             <div class='searchProducts-container'>
-                <div class='searchProducts-filterContainer'>
-                    <h2>Filtry</h2>
-                    <div class='searchProducts-filters'>
-                        <div class='searchProducts-filter'>
+                {mobileFilterMenu &&
+                    <div class="mobileFilter-container">
+                        <div className="mobileFilter-content">
+                            <span>
+                                <h2>Filtry</h2>
+                                <img src="./icons/cross.svg" class="searchProducts-filterIcon" onClick={() => setMobileFilterMenu(false)} />
+                            </span>
                             <h3>Sortowanie</h3>
                             <select class='nav-search-select' onChange={sortProducts}>
                                 <option defaultValue value='default'>Domyślnie</option>
                                 <option value='priceAscending'>Cena rosnąco</option>
                                 <option value='priceDescanding'>Cena malejąco</option>
                             </select>
-                        </div>
-                        <div class='searchProducts-filter'>
+
                             <h3>Cena</h3>
-                            <span>
-                                Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
-                                Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
-                            </span>
+
+                            Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
+                            Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
+                            <button onClick={filterPrice}>Filtruj</button>
                         </div>
                     </div>
-                    <button onClick={filterPrice}>Filtruj</button>
-                </div>
+                }
+
+
+                {!showFilterButton &&
+                    <div class='searchProducts-filterContainer'>
+                        <div class='searchProducts-filters'>
+                            <div class='searchProducts-filter'>
+                                <h3>Sortowanie</h3>
+                                <select class='nav-search-select' onChange={sortProducts}>
+                                    <option defaultValue value='default'>Domyślnie</option>
+                                    <option value='priceAscending'>Cena rosnąco</option>
+                                    <option value='priceDescanding'>Cena malejąco</option>
+                                </select>
+                            </div>
+                            <div class='searchProducts-filter'>
+                                <h3>Cena</h3>
+                                <span>
+                                    Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
+                                    Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
+                                </span>
+                            </div>
+                            <button onClick={filterPrice}>Filtruj</button>
+                        </div>
+                    </div>
+                }
+
+
+
+
                 <div class='searchProducts-productContainer'>
-                    <h1>{keyword ? `Wyniki wyszukiwania dla "${keyword}":` : category.toUpperCase()}</h1>
+                    <div class='searchProducts-nav'>
+                        {showFilterButton &&
+                            <div class='searchProducts-filterContainer' onClick={() => setMobileFilterMenu(true)}>
+                                <span><img src="./icons/filter.svg" class="searchProducts-filterIcon" />Filtry</span>
+                            </div>
+                        }
+                        <h1>{keyword ? `Wyniki wyszukiwania dla "${keyword}":` : category.toUpperCase()}</h1>
+                    </div>
                     {filteredProducts.map((product) => (
                         <Link to={`/product/${product.productId}`} class='searchProducts-product-container'>
                             <div class='searchProducts-product-left'>
@@ -145,10 +199,13 @@ const SearchProducts = () => {
                         </Link>
                     ))}
                 </div>
-            </div>
+            </div >
         );
 
 }
+
+
+
 
 
 export default SearchProducts;

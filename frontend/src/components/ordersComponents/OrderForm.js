@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import './OrderForm.css'
-import { newOrder } from '../services/OrderService'
+import { newOrder } from '../../services/OrderService'
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDeliveryTypes } from "../services/DeliveryTypesService"
-import MyInput from './MyInput';
+import { fetchDeliveryTypes } from "../../services/DeliveryTypesService"
 import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
@@ -45,7 +44,7 @@ const OrderForm = () => {
                 <span>{msg}</span>
                 <span>Wkrótce otrzymasz maila z danymi do płatności.</span>
                 <span>
-                    <Link to='/myorders' class='orderform-form-details-button'>
+                    <Link to='/orderslist' class='orderform-form-details-button'>
                         Moje zamówienia
                     </Link>
                 </span>

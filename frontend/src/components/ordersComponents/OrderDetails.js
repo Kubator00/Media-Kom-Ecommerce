@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import './OrderDetails.css'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { userOrderDetails } from '../services/UserOrderDetailsService'
+import { userOrderDetails } from '../../services/UserOrderDetailsService'
 
 
 const OrderDetails = () => {

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link, Redirect, Route } from "react-router-dom";
-import './MyAccount.css'
+import './Account.css'
 import { useState, useEffect } from 'react'
 import { connect } from "react-redux";
-import routes from "../services/api"
+import routes from "../../services/api"
 import Axios from "axios"
-import { logOutUser } from "../actions/userAction";
+import { logOutUser } from "../../actions/userAction";
 
-class MyAccount extends React.Component {
+class UserAccount extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -62,4 +62,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyAccount);
+export default connect(mapStateToProps, mapDispatchToProps)(UserAccount);

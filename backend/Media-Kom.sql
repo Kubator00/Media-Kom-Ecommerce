@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 20 Mar 2022, 13:25
+-- Czas generowania: 03 Kwi 2022, 00:50
 -- Wersja serwera: 10.4.16-MariaDB
 -- Wersja PHP: 7.4.12
 
@@ -121,10 +121,12 @@ INSERT INTO `orders` (`orderId`, `userId`, `date`, `status`, `deliveryId`, `name
 (55, 1, '2022-03-03 22:08:07', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (56, 1, '2022-03-04 13:10:47', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (57, 1, '2022-03-04 13:41:22', 'anulowano', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(122, 1, '2022-03-17 19:37:19', 'anulowano', 1, 'Piotr ', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(123, 6, '2022-03-17 20:13:58', 'w przygotowaniu', 2, 'Piotr ', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(124, 1, '2022-03-17 21:50:17', 'zakończono', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(125, 1, '2022-03-19 16:50:48', 'w przygotowaniu', 1, 'Piotr ', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789');
+(136, 1, '2022-03-25 15:56:47', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(137, 1, '2022-03-25 15:57:27', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(138, 1, '2022-03-25 15:58:33', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(139, 1, '2022-03-25 21:16:26', 'w przygotowaniu', 3, 'Piotr Truskawkiewicz', 'dsa', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(140, 1, '2022-03-25 22:29:44', 'anulowano', 2, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
+(141, 1, '2022-04-03 00:45:04', 'w przygotowaniu', 1, 'Adam', 'Zaręba', 'Łódz', '12-421', 'Piotrkowska 23', '123456789');
 
 -- --------------------------------------------------------
 
@@ -170,13 +172,30 @@ INSERT INTO `orders_product` (`orderId`, `productId`, `productAmount`, `productP
 (56, 2, 1, 700),
 (57, 5, 1, 3500),
 (57, 2, 1, 700),
-(122, 3, 4, 1300),
-(122, 1, 1, 1300),
-(122, 4, 2, 1300),
-(123, 2, 1, 700),
-(124, 1, 1, 1300),
-(125, 2, 2, 1300),
-(125, 1, 2, 1300);
+(136, 8, 1, 3900),
+(136, 4, 1, 3144),
+(136, 2, 1, 700),
+(137, 8, 1, 3900),
+(137, 4, 1, 3144),
+(137, 2, 1, 700),
+(138, 6, 1, 3990),
+(139, 3, 1, 1400),
+(140, 5, 3, 3500),
+(140, 3, 2, 1400),
+(140, 1, 2, 1300),
+(140, 4, 2, 3144),
+(140, 7, 2, 2750),
+(140, 8, 2, 3900),
+(140, 2, 2, 700),
+(140, 6, 2, 3990),
+(141, 5, 2, 3500),
+(141, 3, 2, 1400),
+(141, 1, 2, 1300),
+(141, 4, 2, 3144),
+(141, 7, 2, 2750),
+(141, 8, 2, 3900),
+(141, 2, 2, 700),
+(141, 6, 2, 3990);
 
 -- --------------------------------------------------------
 
@@ -279,7 +298,8 @@ INSERT INTO `recommended_products` (`productId`) VALUES
 
 CREATE TABLE `users` (
   `userId` int(11) NOT NULL,
-  `username` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
+  `name` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
+  `surname` varchar(30) COLLATE utf8mb4_polish_ci NOT NULL,
   `password` varchar(1024) COLLATE utf8mb4_polish_ci NOT NULL,
   `email` varchar(40) COLLATE utf8mb4_polish_ci NOT NULL,
   `isAdmin` tinyint(1) NOT NULL
@@ -289,11 +309,9 @@ CREATE TABLE `users` (
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`userId`, `username`, `password`, `email`, `isAdmin`) VALUES
-(1, 'Kubator', '$2b$10$tXUHn8x6b8BmH4ofCvnVkeDo5Uuth11goYgfHA6UYdYaLRVHfGMWi', 'kubator@gmail.com', 1),
-(6, 'Bartek', '$2b$10$5fcqGHfvHcafBRdegtAVJ.p9WZVCDEt0AP6xnV7u9t4AhvYGjxM0i', 'barteq@gmail.com', 0),
-(8, 'Jan', '$2b$10$awIdN0g1MtD4tLXoJI0rIeTqDLjCO3P7HuhGiFGcgL4EDlk1EGltm', 'jan@gasd.com', 0),
-(9, 'Bartek', '$2b$10$MupSTfpUZpBMU2V7CIf4aOhrNZVwL1rORB/OOsBiT0DG/YFgK90C2', 'kubator222@wp.pl', 0);
+INSERT INTO `users` (`userId`, `name`, `surname`, `password`, `email`, `isAdmin`) VALUES
+(1, 'Jakub', 'Piotrkowski', '$2b$10$m/FSSPvWIRereFlWn8x1Se0Bn6bvChMO42IGlHgnM3M2YWzit51H.', 'kubator@wp.pl', 1),
+(2, 'Bartek', 'Pawłowski', '$2b$10$NgbTtKs0lqaX4x4Crna6f.G7NV/nuxp3xI8mAC5TP/syEQlbUr82G', 'bartosz@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -312,8 +330,7 @@ CREATE TABLE `user_cart` (
 --
 
 INSERT INTO `user_cart` (`userId`, `productId`, `productAmount`) VALUES
-(6, 2, 5),
-(1, 4, 1);
+(1, 2, 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -376,8 +393,8 @@ ALTER TABLE `users`
 -- Indeksy dla tabeli `user_cart`
 --
 ALTER TABLE `user_cart`
-  ADD KEY `userId` (`userId`),
-  ADD KEY `productId` (`productId`);
+  ADD KEY `productId` (`productId`),
+  ADD KEY `userId` (`userId`);
 
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
@@ -399,7 +416,7 @@ ALTER TABLE `delivery_types`
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT dla tabeli `products_details`
@@ -411,7 +428,7 @@ ALTER TABLE `products_details`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -422,7 +439,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`deliveryId`) REFERENCES `delivery_types` (`deliveryId`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `orders_product`
@@ -453,8 +470,8 @@ ALTER TABLE `recommended_products`
 -- Ograniczenia dla tabeli `user_cart`
 --
 ALTER TABLE `user_cart`
-  ADD CONSTRAINT `user_cart_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_cart_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_cart_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_cart_ibfk_3` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

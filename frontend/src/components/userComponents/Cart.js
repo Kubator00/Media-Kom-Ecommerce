@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import './MyCart.css'
-import { fetchCart, changeProductAmount } from '../services/MyCartService'
+import './Cart.css'
+import { fetchCart, changeProductAmount } from '../../services/MyCartService'
 import { useDispatch, useSelector } from "react-redux";
 
 
 
-const MyCart = () => {
+const UserCart = () => {
     const cart = useSelector(state => state.cartReducer.cart);
     const totalAmount = useSelector(state => state.cartReducer.totalAmount);
 
@@ -84,4 +84,4 @@ const MyCart = () => {
 
 
 
-export default MyCart;
+export default UserCart;

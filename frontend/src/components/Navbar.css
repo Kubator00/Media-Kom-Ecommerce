@@ -20,6 +20,8 @@
     font-size: 0.8rem;
     right: none;
     left: none;
+    background-color: var(--background-color);
+    padding-bottom: 5px;
 }
 
 

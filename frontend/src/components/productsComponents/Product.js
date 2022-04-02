@@ -2,10 +2,9 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link, useParams } from "react-router-dom";
 import './Product.css'
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
-import { addToCart } from '../services/MyCartService'
-import { productFetch } from '../services/ProductService'
+import { addToCart } from '../../services/MyCartService'
+import { productFetch } from '../../services/ProductService'
 
 
 

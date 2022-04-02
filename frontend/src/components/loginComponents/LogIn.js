@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link, Navigate, useLocation } from "react-router-dom";
 import './LogIn.css'
 import { useSelector, useDispatch } from "react-redux";
-import logInUser from '../services/LoginService'
+import logInUser from '../../services/LoginService'
 import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 

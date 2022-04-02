@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import '../OrderDetails.css'
+import '../ordersComponents/OrderDetails.css'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 

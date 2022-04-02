@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import './MyOrders.css'
+import './OrdersList.css'
 import { useDispatch, useSelector } from "react-redux";
-import { userOrders } from '../services/OrderService'
+import { userOrders } from '../../services/OrderService'
 import { Link } from 'react-router-dom'
-import PageButtons from './PageButtons';
+import PageButtons from '../PageButtons';
 
 
-const MyOrders = () => {
+const OrdersList = () => {
     const orders = useSelector(state => state.userOrdersReducer.orders);
     const rowsFound = useSelector(state => state.userOrdersReducer.rowsFound);
     const dispatch = useDispatch();
@@ -55,4 +55,4 @@ const MyOrders = () => {
 }
 
 
-export default MyOrders;
+export default OrdersList;

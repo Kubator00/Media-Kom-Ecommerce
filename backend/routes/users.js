@@ -28,7 +28,7 @@ router.post('/token', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const schemaValidate = login.schema.validate({ email: req.body.email, password: req.body.password });
-    console.log(schemaValidate.error);  
+
     if (schemaValidate.error)
         return res.send('Niepoprawne dane');
 

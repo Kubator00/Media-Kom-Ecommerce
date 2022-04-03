@@ -94,7 +94,6 @@
 .nav-search {
     width: 100%;
     height: 30px;
-    /* border-right: 2px solid #cacaca; */
 }
 
 .nav-search-select {
@@ -385,9 +384,7 @@
     }
 
     .nav-button:hover {
-        /* transform:none; */
         border: none;
-
     }
 
     .nav-dropdownMenu-container1:hover {

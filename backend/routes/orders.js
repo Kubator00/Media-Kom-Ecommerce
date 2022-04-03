@@ -43,7 +43,6 @@ router.post('/new', async (req, res) => {
         product['price'] = (prices.find((i) => i.productId == product.productId))?.price;
     })
 
-    console.log(products);
     connection.beginTransaction((err) => {
         if (err)
             throw err;

@@ -109,80 +109,79 @@ const SearchProducts = () => {
         );
 
 
-    if (filteredProducts?.length < 1)
-        return (
-            <div class='searchProducts-container'>
-                <h1>{keyword ? `Wyniki wyszukiwania dla "${keyword}":` : category.toUpperCase()}</h1>
-                Brak wyników
-            </div>
-        );
 
 
 
-
-    if (filteredProducts?.length > 0)
-        return (
-            <div class='searchProducts-container'>
-                {mobileFilterMenu &&
-                    <div class="mobileFilter-container">
-                        <div className="mobileFilter-content">
+    return (
+        <div class='searchProducts-container'>
+            {mobileFilterMenu &&
+                <div class="mobileFilter-container">
+                    <ul className="mobileFilter-content">
+                        <li>
                             <span>
                                 <h2>Filtry</h2>
                                 <img src="./icons/cross.svg" class="searchProducts-filterIcon" onClick={() => setMobileFilterMenu(false)} />
                             </span>
+                        </li>
+                        <li>
                             <h3>Sortowanie</h3>
                             <select class='nav-search-select' onChange={sortProducts}>
                                 <option defaultValue value='default'>Domyślnie</option>
                                 <option value='priceAscending'>Cena rosnąco</option>
                                 <option value='priceDescanding'>Cena malejąco</option>
                             </select>
-
+                        </li>
+                        <li>
                             <h3>Cena</h3>
+                            <span>
+                                Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
+                                Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
+                            </span>
+                        </li>
+                        <li>
+                            <button onClick={filterPrice} class='searchProducts-filter-button'>Filtruj</button>
+                        </li>
+                    </ul>
+                </div>
+            }
 
-                            Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
-                            Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
-                            <button onClick={filterPrice}>Filtruj</button>
+
+            {!showFilterButton &&
+                <div class='searchProducts-filterContainer'>
+                    <ul class='searchProducts-filters'>
+                        <li class='searchProducts-filter'>
+                            <h3>Sortowanie</h3>
+                            <select class='nav-search-select' onChange={sortProducts}>
+                                <option defaultValue value='default'>Domyślnie</option>
+                                <option value='priceAscending'>Cena rosnąco</option>
+                                <option value='priceDescanding'>Cena malejąco</option>
+                            </select>
+                        </li>
+                        <li class='searchProducts-filter'>
+                            <h3>Cena</h3>
+                            <span>
+                                Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
+                                Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
+                            </span>
+                        </li>
+                        <li class='searchProducts-filter'>
+                            <button onClick={filterPrice} class='searchProducts-filter-button'>Filtruj</button>
+                        </li>
+                    </ul>
+                </div>
+            }
+
+            <div class='searchProducts-productContainer'>
+                <div class='searchProducts-nav'>
+                    {showFilterButton &&
+                        <div class='searchProducts-filterContainer' onClick={() => setMobileFilterMenu(true)}>
+                            <span><img src="./icons/filter.svg" class="searchProducts-filterIcon" />Filtry</span>
                         </div>
-                    </div>
-                }
-
-
-                {!showFilterButton &&
-                    <div class='searchProducts-filterContainer'>
-                        <div class='searchProducts-filters'>
-                            <div class='searchProducts-filter'>
-                                <h3>Sortowanie</h3>
-                                <select class='nav-search-select' onChange={sortProducts}>
-                                    <option defaultValue value='default'>Domyślnie</option>
-                                    <option value='priceAscending'>Cena rosnąco</option>
-                                    <option value='priceDescanding'>Cena malejąco</option>
-                                </select>
-                            </div>
-                            <div class='searchProducts-filter'>
-                                <h3>Cena</h3>
-                                <span>
-                                    Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
-                                    Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
-                                </span>
-                            </div>
-                            <button onClick={filterPrice}>Filtruj</button>
-                        </div>
-                    </div>
-                }
-
-
-
-
-                <div class='searchProducts-productContainer'>
-                    <div class='searchProducts-nav'>
-                        {showFilterButton &&
-                            <div class='searchProducts-filterContainer' onClick={() => setMobileFilterMenu(true)}>
-                                <span><img src="./icons/filter.svg" class="searchProducts-filterIcon" />Filtry</span>
-                            </div>
-                        }
-                        <h1>{keyword ? `Wyniki wyszukiwania dla "${keyword}":` : category.toUpperCase()}</h1>
-                    </div>
-                    {filteredProducts.map((product) => (
+                    }
+                    <h1>{keyword ? `Wyniki wyszukiwania dla "${keyword}":` : category.toUpperCase()}</h1>
+                </div>
+                {filteredProducts?.length > 0 ?
+                    filteredProducts.map((product) => (
                         <Link to={`/product/${product.productId}`} class='searchProducts-product-container'>
                             <div class='searchProducts-product-left'>
                                 <img src={`./products/${product.titleImg}`} class='searchProducts-product-left-img' />
@@ -197,10 +196,12 @@ const SearchProducts = () => {
                                 </Link>
                             </div>
                         </Link>
-                    ))}
-                </div>
-            </div >
-        );
+                    )) :
+                    <div> Brak wyników </div>
+                }
+            </div>
+        </div >
+    );
 
 }
 

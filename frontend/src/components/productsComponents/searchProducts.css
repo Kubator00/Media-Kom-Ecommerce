@@ -16,46 +16,68 @@
     align-items: center;
     width: 30%;
     border: 2px solid #E8E8E8;
+    margin-bottom: 25px;
+    list-style-type: none;
+    max-width: 290px;
+    padding: 15px;
 }
-
+.searchProducts-filterContainer ul{
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+}
 .searchProducts-filters {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-between;
     width: 100%;
-    margin-bottom: 25px;
 }
 
 .searchProducts-filterIcon {
     max-height: 20px;
     max-width: 20px;
 }
-
+.searchProducts-filter select{
+    min-width: 120px;   
+}
 .searchProducts-filter {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: space-around;
+    height: 100%;
+    margin-bottom: 20px;
     width: 100%;
-    height: 100px;
-    /* background-color: #E8E8E8; */
 }
 
 .searchProducts-filter span {
     width: 100%;
+    min-width: 250px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .searchProducts-filter-number {
-    width: 100px;
+    width: 80px;
     height: 20px;
     -webkit-appearance: none;
     -moz-appearance: textfield;
     border: 2px solid #E8E8E8;
     border-radius: 5px;
 }
+
+.searchProducts-filter-button{
+    padding: 10px 0px 10px 0px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background-color: #E8E8E8;
+}
+.searchProducts-filter-button:hover{
+    background-color: #c8c8c8;
+}
+
 .searchProducts-nav{
     width: 100%;
     display: flex;
@@ -165,13 +187,23 @@
     max-width: 600px;
     min-width: 300px;
     z-index: 1;
-}
-.modal-content span{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-
+    flex-direction: column;
 }
+.mobileFilter-content li{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+.mobileFilter-content li span{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-direction: row;
+}
+
 
 
 @media (max-width: 1200px) {
@@ -211,6 +243,7 @@
 
     .searchProducts-product-right {
         width: 50%;
+        margin-right: 0px;
     }
 
 

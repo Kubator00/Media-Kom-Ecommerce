@@ -50,12 +50,12 @@ const AccountMenu = () => {
     if (!inprogress && user.token)
         return (
             <>
-                <div class="nav-dropdownMenu-container" onClick={() => { clickHandler(!isClicked) }} onMouseEnter={() => { clickHandler(true) }} onMouseLeave={() => { clickHandler(false) }} >
-                    <div class='nav-button' id="your-account" style={{ "border-bottom": "none" }}>
+                <ul class="nav-dropdownMenu-container" onClick={() => { clickHandler(!isClicked) }} onMouseEnter={() => { clickHandler(true) }} onMouseLeave={() => { clickHandler(false) }} >
+                    <li class='nav-button' id="your-account" style={{ "border-bottom": "none" }}>
                         <img src='./icons/user.svg' class='icons' />
                         Twoje konto
-                    </div>
-                    <div class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'} id={isClicked && "accountMenu"}>
+                    </li>
+                    <ul class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'} id={isClicked && "accountMenu"}>
                         <Link to="/orderslist" className="nav-dropdownMenu-link">
                             <img src='./account/notebook.svg' class='nav-dropdownMenu-icon' /> Moje zamówienia
                         </Link>
@@ -70,8 +70,8 @@ const AccountMenu = () => {
                         <button onClick={() => { dispatch(logOutUser()) }} className="nav-dropdownMenu-link" >
                             <img src='./account/logout.svg' class='nav-dropdownMenu-icon' style={{ "margin-left": "2px" }} /> Wyloguj się
                         </button>
-                    </div>
-                </div>
+                    </ul>
+                </ul>
 
 
                 <Link to="/cart" class='nav-button'>

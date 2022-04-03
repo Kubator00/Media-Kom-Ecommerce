@@ -14,7 +14,6 @@ router.post('/details', async (req, res) => {
         console.log(err);
         return res.status(400).send('Błąd pobierania danych');
     }
-    console.log(parameters)
     return res.send({ product: product, productParameters: parameters });
 })
 

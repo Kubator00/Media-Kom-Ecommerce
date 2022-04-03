@@ -50,7 +50,6 @@ const OrderForm = () => {
                 </span>
             </div>
         );
-    console.log(deliveryTypes);
 
     return (
         <div class='orderform-container'>

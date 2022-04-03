@@ -1,7 +1,8 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Routes, Route,useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import ProdectedRoute from './ProtectedRoute';
+import AdminRoute from './AdminRoute';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -52,9 +53,6 @@ class App extends React.Component {
                 <Route path='ordersList' element={<OrdersList />} />
                 <Route path='orderform' element={<OrderForm />} />
                 <Route path='orderslist/order/:id' element={<OrderDetails />} />
-                <Route path='admin/panel' element={<AdminPanel />} />
-                <Route path='admin/allorders' element={<AdminAllOrders />} />
-                <Route path='admin/order/:id' element={<AdminOrderDetails />} />
               </Route>
               <Route path='/product/:productId' exact element={<Product />} />
               <Route path="search">
@@ -64,6 +62,12 @@ class App extends React.Component {
                 <Route path='category/:category' element={<SearchProducts />} />
               </Route>
 
+
+              <Route element={<AdminRoute />}>
+                <Route path='admin/panel' element={<AdminPanel />} />
+                <Route path='admin/allorders' element={<AdminAllOrders />} />
+                <Route path='admin/order/:id' element={<AdminOrderDetails />} />
+              </Route>
             </Routes>
             <Footer />
           </Wrapper>

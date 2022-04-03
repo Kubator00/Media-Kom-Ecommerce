@@ -1,64 +1,45 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
-import routes from "./services/api";
-import Axios from "axios";
+import { useState, useEffect } from 'react'
+import { Navigate, Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
 import verifyToken from "./services/VerifyToken";
-import {  connect } from 'react-redux';
-import { fetchUserInProgress } from "./actions/userAction";
+import usePrevious from "./customHooks/prevState";
 
-class AdminRoute extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            c: true,
-        }
-    }
-     componentDidMount() {
-         this.props.verifyUserToken({ username: localStorage.getItem('username'), token: localStorage.getItem('token') })
-    }
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.c === true) {
-            if (this.props.inProgress === false){
-                this.setState({ c: this.props.inProgress });
-            }
-        }
-    }
+const AdminRoute = (props) => {
+    const [isLoaded, setIsLoaded] = useState(true);
 
-    render() {
-        if (this.state.c === true) {
-            return <>Ładowanie...</>
-        }
-        return (
-            < Route {...this.props.rest} render={(props) => {
-                if (this.props.user.isAuth == true ) return <this.props.component {...props} />;
-                else return (
-                    <Redirect to={{
-                        pathname: '/login',
-                        state: { msg: 'Sesja wygasła' }
-                    }}/>
-                );
+    const inProgress = useSelector((state) => state.usersReducer.inprogress);
+    const user = useSelector((state) => state.usersReducer.user,);
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(verifyToken());
+    }, [])
+
+    const prevIsLoaded = usePrevious(isLoaded);
+    const prevInProgress = usePrevious(inProgress);
+
+    useEffect(() => {
+        if (prevIsLoaded === true)
+            if (inProgress === false && prevInProgress === true) {
+                setIsLoaded(false);
             }
-            }
-            />
-        );
-    };
+    })
+    
+    if (isLoaded == true)
+        return <>Ładowanie...</>;
+
+    if (!user.token || !user.isAdmin)
+        return <Navigate to={{
+            pathname: '/',
+            state: { msg: 'Sesja wygasła' }
+        }} />
+
+    return <Outlet />;
+
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.usersReducer.user,
-        inProgress: state.usersReducer.inprogress,
-    };
-};
-const mapDispatchToProps = dispatch => {
-    return {
-        verifyUserToken:  (props) => {
-             dispatch(verifyToken(props));
-        },
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminRoute);
+export default AdminRoute;
 

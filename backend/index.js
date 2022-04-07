@@ -6,14 +6,15 @@ const jwt = require('jsonwebtoken');
 
 
 const mysql = require('mysql');
-const connection = mysql.createConnection({
+const poolConnection = mysql.createPool({
+    connectionLimit : 10,
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'sklep'
+    database: 'media-kom'
 });
-connection.connect();
-module.exports.connection = connection;
+
+module.exports.poolConnection = poolConnection;
 const PRIVATE_KEY = 'PRIVATE_KEY_123';
 module.exports.PRIVATE_KEY = PRIVATE_KEY;
 

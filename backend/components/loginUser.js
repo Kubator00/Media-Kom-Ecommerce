@@ -1,5 +1,5 @@
-const connection = require("../index").connection;
 const Joi = require('joi');
+const poolConnection = require('../index').poolConnection;
 
 module.exports.schema = Joi.object({
     email: Joi.string()
@@ -11,18 +11,21 @@ module.exports.schema = Joi.object({
         .required(),
 });
 
-module.exports.find = async (data, res) => {
-    return new Promise((resolve) => {
+module.exports.find = async (data) => {
+    return new Promise((resolve, reject) => {
+    poolConnection.getConnection(async (err, connection) => {
+        if (err) {
+            reject(err);
+        }
         connection.query(`SELECT * from users WHERE email='${data.email}';`,
             (error, results) => {
+                connection.release();
                 if (error)
-                    return res.status(400).send('Wystąpił błąd');
-                if (results.length > 0) {
+                    reject(error);
+                if (results.length > 0)
                     resolve(results[0]);
-                }
-                else {
-                    return res.send('Niepoprawny email');
-                }
+                resolve(null);
             });
+        });
     })
 }

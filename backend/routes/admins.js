@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require("../index").connection;
+const pool = require("../index").pool;
 const verifyUserToken = require('../components/verifyUserToken')
 const verifyIsAdmin = require('../components/verifyIsAdmin')
 const getUserId = require('../components/getUserId');
@@ -61,7 +61,7 @@ router.post('/allorders', async (req, res) => {
 
 router.post('/order/newstatus', async (req, res) => {
     try {
-        connection.query(
+        pool.query(
             `UPDATE orders SET status='${req.body.newStatus}' where orderId=${req.body.orderId};`,
             (err) => {
                 if (err)

@@ -1,4 +1,4 @@
-const connection = require("../index").connection;
+const poolConnection = require("../index").poolConnection;
 const Joi = require('joi');
 
 module.exports.schema = Joi.object({
@@ -21,13 +21,19 @@ module.exports.schema = Joi.object({
         .required(),
 });
 
-module.exports.register = async (data, hashedPassword, res) => {
-    return new Promise(() => {
-        connection.query(`INSERT INTO users (name, surname, password, email) VALUES('${data.name}','${data.surname}','${hashedPassword}','${data.email}');`,
-            (error) => {
-                if (error)
-                    return res.status(400).send('Wystąpił błąd');
-                return res.status(200).send('Zarejestrowano pomyślnie');
-            });
-    })
+module.exports.register = async (data, hashedPassword) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.getConnection(async (err, connection) => {
+            if (err) {
+                reject(err);
+            }
+            connection.query(`INSERT INTO users (name, surname, password, email) VALUES('${data.name}','${data.surname}','${hashedPassword}','${data.email}');`,
+                (err) => {
+                    connection.release();
+                    if (err)
+                        reject(err);
+                    resolve('Zarejstrowano pomyślnie');
+                });
+        });
+    });
 }

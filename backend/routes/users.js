@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require("../index").connection;
+const poolConnection = require("../index").poolConnection;
 const verifyUserToken = require('../components/verifyUserToken')
 const jwt = require('jsonwebtoken');
 const getUserId = require('../components/getUserId');
@@ -19,7 +19,7 @@ router.post('/token', async (req, res) => {
         console.error(err);
         return res.send(false);
     }
-        
+
     if (!await verifyUserToken(req))
         return res.send(false);
 
@@ -28,16 +28,21 @@ router.post('/token', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const schemaValidate = login.schema.validate({ email: req.body.email, password: req.body.password });
-
     if (schemaValidate.error)
         return res.send('Niepoprawne dane');
 
-    const user = await login.find(req.body, res);
+    try {
+        var user = await login.find(req.body);
+    } catch (err) {
+        return res.status(500).send("Błąd połączenia z bazą danych");
+    }
+
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass)
         return res.send('Niepoparwne hasło');
     const token = jwt.sign({ id: user.userId }, PRIVATE_KEY, { expiresIn: 20000 });
     res.header('token', token).send({ 'email': user.email, 'name': user.name, 'token': token, 'isAdmin': user.isAdmin });
+    console.log(poolConnection);
 })
 
 router.post('/register', async (req, res) => {
@@ -48,7 +53,13 @@ router.post('/register', async (req, res) => {
         return res.status(400).send('Niepoprawne dane');
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    await register.register(req.body, hashedPassword, res);
+    let msg;
+    try {
+        msg = await register.register(req.body, hashedPassword, res);
+    } catch (err) {
+        return res.status(500).send("Błąd połączenia z bazą danych");
+    }
+    res.send(msg);
 });
 
 router.use(auth)
@@ -62,7 +73,7 @@ async function auth(req, res, next) {
     }
     if (!await verifyUserToken(req))
         return res.status(400).send("Blad autentykacji");
-    
+
     next();
 }
 

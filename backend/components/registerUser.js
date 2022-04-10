@@ -1,4 +1,4 @@
-const poolConnection = require("../index").poolConnection;
+const {poolConnection} = require('../index');
 const Joi = require('joi');
 
 module.exports.schema = Joi.object({
@@ -24,9 +24,8 @@ module.exports.schema = Joi.object({
 module.exports.register = async (data, hashedPassword) => {
     return new Promise((resolve, reject) => {
         poolConnection.getConnection(async (err, connection) => {
-            if (err) {
+            if (err)
                 reject(err);
-            }
             connection.query(`INSERT INTO users (name, surname, password, email) VALUES('${data.name}','${data.surname}','${hashedPassword}','${data.email}');`,
                 (err) => {
                     connection.release();

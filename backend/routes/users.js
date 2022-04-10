@@ -14,7 +14,7 @@ const selectQuery = require('../components/selectQuery')
 
 router.post('/token', async (req, res) => {
     try {
-        req.headers['userId'] = await getUserId(req);
+        req.headers['userId'] = (await getUserId(req)).toString();
     } catch (err) {
         console.error(err);
         return res.send(false);
@@ -27,16 +27,17 @@ router.post('/token', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
+    console.log(req.body);
     const schemaValidate = login.schema.validate({ email: req.body.email, password: req.body.password });
     if (schemaValidate.error)
         return res.send('Niepoprawne dane');
 
+    let user;
     try {
-        var user = await login.find(req.body);
+        user = await login.find(req.body);
     } catch (err) {
         return res.status(500).send("Błąd połączenia z bazą danych");
     }
-
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass)
         return res.send('Niepoparwne hasło');

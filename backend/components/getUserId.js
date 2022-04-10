@@ -1,13 +1,19 @@
-const connection = require('../index').connection;
+const {poolConnection} = require('../index');
+
 
 module.exports = async (req) => {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT userId from users WHERE email='${req.headers['x-email']}'`, (error, result) => {
-            if (error)
-                return reject(error);
-            if (result.length < 1)
-                return reject("User authentication failed");
-            return resolve(result[0].userId);
-        })
+        poolConnection.getConnection((err, connection) => {
+            if (err)
+                reject(err);
+            connection.query(`SELECT userId from users WHERE email='${req.headers['x-email']}'`, (error, result) => {
+                connection.release();
+                if (error)
+                    reject(error);
+                if (result?.length < 1)
+                    reject("User authentication failed");
+                resolve(result[0].userId);
+            });
+        });
     })
 }

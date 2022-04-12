@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
         return res.status(400).send("Blad laczenia z baza");
     }
     let result = [];
-    for (product of products) {
+    for (let product of products) {
         if (req.body.keyword) {
             if ((product.title.toLowerCase()).includes(req.body.keyword.toLowerCase()))
                 result.push(product);

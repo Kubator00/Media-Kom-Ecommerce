@@ -5,18 +5,15 @@ const verifyUserToken = require('../components/verifyUserToken')
 const verifyIsAdmin = require('../components/verifyIsAdmin')
 const getUserId = require('../components/getUserId');
 const selectQuery = require('../components/selectQuery')
-
-
-
-
+const {poolConnection} = require("../index");
 
 
 router.use(auth)
+
 async function auth(req, res, next) {
     try {
         req.headers['userId'] = await getUserId(req)
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return res.status(400).send("Nie znaleziono uzytkownika w bazie");
     }
@@ -27,8 +24,7 @@ async function auth(req, res, next) {
     try {
         if (!await verifyIsAdmin(req))
             return res.status(400).send("Uzytkownik nie jest administratorem");
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return res.status(400).send("Blad autentykacji");
     }
@@ -50,31 +46,31 @@ router.post('/allorders', async (req, res) => {
         return res.status(400).send('Blad pobierania danych');
     }
 
-    for (order of orders) {
+    for (let order of orders) {
         order['products'] = [];
         order.products.push(...ordersProducts.filter(i => order.orderId === i.orderId));
     }
-    res.send({ rowsFound: rowsFound, orders: orders });
+    res.send({rowsFound: rowsFound, orders: orders});
 })
-
 
 
 router.post('/order/newstatus', async (req, res) => {
     try {
-        pool.query(
-            `UPDATE orders SET status='${req.body.newStatus}' where orderId=${req.body.orderId};`,
-            (err) => {
-                if (err)
-                    throw err;
-            });
-    }
-    catch (err) {
+        poolConnection.getConnection(async (err, connection) => {
+            if (err) throw err;
+            connection.query(
+                `UPDATE orders SET status='${req.body.newStatus}' where orderId=${req.body.orderId};`,
+                (err) => {
+                    if (err)
+                        throw err;
+                });
+        })
+    } catch (err) {
         console.log(err);
         return res.status(400).send('Blad aktualizacji danych');
     }
     res.send("Zaktualizowano")
 })
-
 
 
 router.post('/orders/details', async (req, res) => {

@@ -1,13 +1,19 @@
-const pool = require("../index").pool;
+const {poolConnection} = require("../index");
+
 module.exports = async (query) => {
     return new Promise((resolve, reject) => {
-        pool.query(query,
-            (err, res) => {
-                if (err) {
-                    console.log(err);
-                    return reject(err);
-                }
-                return resolve(res);
-            });
+        poolConnection.getConnection((err, connection) => {
+            if(err)
+                throw err;
+            connection.query(query,
+                (err, res) => {
+                connection.release();
+                    if (err) {
+                        console.log(err);
+                        return reject(err);
+                    }
+                    return resolve(res);
+                });
+        })
     })
 }

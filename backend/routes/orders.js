@@ -1,26 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const connection = require("../index").connection;
-const verifyUserToken = require('../components/verifyUserToken')
-const getUserId = require('../components/getUserId');
 const selectQuery = require('../components/selectQuery')
+const userAuthorization = require ('../components/userAuthorization')
+const newOrder = require('../components/newOrder')
 
 
-
-router.use(auth)
-async function auth(req, res, next) {
-    try {
-        req.headers['userId'] = await getUserId(req)
-    }
-    catch (err) {
-        console.error(err);
-        return res.status(400).send("Nie znaleziono uzytkownika w bazie");
-    }
-    if (!await verifyUserToken(req))
-        return res.status(400).send("Blad autentykacji");
-    next();
-}
-
+router.use(userAuthorization)
 
 router.post('/new', async (req, res) => {
     const { name, surname, town, postalCode, street, phone, deliveryTypeId, products } = req.body.orderData;
@@ -40,43 +25,10 @@ router.post('/new', async (req, res) => {
        return res.status(400).send("Blad polaczenia z baza");
     }
     products.forEach(product => {
-        product['price'] = (prices.find((i) => i.productId == product.productId))?.price;
+        product['price'] = (prices.find((i) => i.productId === product.productId))?.price;
     })
 
-    connection.beginTransaction((err) => {
-        if (err)
-            throw err;
-        connection.query(
-            `INSERT INTO orders 
-        (userId, status, deliveryId, name, surname, town, postalCode, street, phone) 
-        VALUES (${req.headers.userId},'w przygotowaniu',${deliveryTypeId}, '${name}', '${surname}',
-        '${town}', '${postalCode}', '${street}', '${phone}');`, (err, res) => {
-
-            if (err) {
-                return connection.rollback(function () {
-                    throw err;
-                });
-            }
-     
-            products.forEach(prod => {  
-                console.log(prod);
-                connection.query(`INSERT INTO orders_product VALUES (${res.insertId},${prod.productId},${prod.productAmount},${prod.price})`, function (err) {
-                    if (err) {
-                        return connection.rollback(function () {
-                            throw err;
-                        });
-                    }
-                });
-            });
-            connection.commit(function (err) {
-                if (err) {
-                    return connection.rollback(function () {
-                        throw err;
-                    });
-                }
-            });
-        });
-    });
+    await newOrder(req);
 
     return res.send('Zamówienie złożono pomyślnie');
 
@@ -97,7 +49,7 @@ router.post('/details', async (req, res) => {
         console.log(err);
         return res.status(400).send('Blad pobierania danych');
     }
-    if (orders.userId != req.headers.userId)
+    if (orders.userId !== req.headers.userId)
         return res.status(400).send('Zamówienie nie należy do użytkownika');
 
     res.send({

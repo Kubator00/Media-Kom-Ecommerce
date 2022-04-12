@@ -10,24 +10,24 @@ const Joi = require('joi');
 const login = require('../components/loginUser');
 const register = require('../components/registerUser');
 const selectQuery = require('../components/selectQuery')
-
+const userAuthorization = require ('../components/userAuthorization')
 
 router.post('/token', async (req, res) => {
     try {
-        req.headers['userId'] = (await getUserId(req)).toString();
+        req.headers['userId'] = await getUserId(req);
     } catch (err) {
-        console.error(err);
+        console.log('Nieprawidłowe id uzytkownika');
         return res.send(false);
     }
 
-    if (!await verifyUserToken(req))
+    if (!await verifyUserToken(req)) {
+        console.log('Nieprawidłowy token użytkownika');
         return res.send(false);
-
+    }
     return res.send(true);
 })
 
 router.post('/login', async (req, res) => {
-    console.log(req.body);
     const schemaValidate = login.schema.validate({ email: req.body.email, password: req.body.password });
     if (schemaValidate.error)
         return res.send('Niepoprawne dane');
@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
         return res.send('Niepoparwne hasło');
     const token = jwt.sign({ id: user.userId }, PRIVATE_KEY, { expiresIn: 20000 });
     res.header('token', token).send({ 'email': user.email, 'name': user.name, 'token': token, 'isAdmin': user.isAdmin });
-    console.log(poolConnection);
+
 })
 
 router.post('/register', async (req, res) => {
@@ -63,20 +63,7 @@ router.post('/register', async (req, res) => {
     res.send(msg);
 });
 
-router.use(auth)
-async function auth(req, res, next) {
-    try {
-        req.headers['userId'] = await getUserId(req)
-    }
-    catch (err) {
-        console.error(err);
-        return res.status(400).send("Nie znaleziono uzytkownika w bazie");
-    }
-    if (!await verifyUserToken(req))
-        return res.status(400).send("Blad autentykacji");
-
-    next();
-}
+router.use(userAuthorization);
 
 router.post('/orders', async (req, res) => {
     let rowsFound, orders, ordersProducts;
@@ -94,7 +81,7 @@ router.post('/orders', async (req, res) => {
         return res.status(400).send('Blad pobierania danych');
     }
 
-    for (order of orders) {
+    for (let order of orders) {
         order['products'] = [];
         order.products.push(...ordersProducts.filter(i => order.orderId === i.orderId));
     }

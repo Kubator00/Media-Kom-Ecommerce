@@ -5,7 +5,8 @@ import {
     ADMIN_ORDER_DETAILS_IN_PROGRESS,
     ADMIN_ORDER_DETAILS_SUCCESS,
     ADMIN_ORDER_DETAILS_ERROR,
-    ADMIN_ORDERS_RESET
+    ADMIN_ORDERS_RESET,
+    ADMIN_ORDER_FILTER
 } from './adminOrderActionTypes'
 
 
@@ -54,5 +55,14 @@ export const adminOrderDetailsError = (err) => {
     return {
         type: ADMIN_ORDER_DETAILS_ERROR,
         error: err
+    };
+}
+
+
+export const adminOrderFilter = (filterName,filterData)=>{
+    return{
+        type: ADMIN_ORDER_FILTER,
+        filterName: filterName,
+        filter: filterData
     };
 }

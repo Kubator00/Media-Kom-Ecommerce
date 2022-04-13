@@ -1,41 +1,54 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useParams } from "react-router-dom";
+import React, {useState, useEffect} from 'react'
+import {Link, useParams} from "react-router-dom";
 import './Product.css'
 import './searchProducts.css'
-import { useSelector, useDispatch } from "react-redux";
-import { productsSearch } from '../../services/SearchService'
-import { addToCart } from '../../services/MyCartService'
-import { productRedirect } from '../../actions/searchAction'
-
-
+import {useSelector, useDispatch} from "react-redux";
+import {productsSearch} from '../../services/SearchService'
+import {addToCart} from '../../services/MyCartService'
+import {productRedirect} from '../../actions/searchAction'
+import PageButtons from "../PageButtons";
+import prevState from "../../customHooks/prevState";
 
 
 const SearchProducts = () => {
-    const { keyword, category } = useParams();
-
-    const [loaded, setLoaded] = useState(false);
+    const {keyword, category} = useParams();
+    const [firstLoad, setFirstLoad] = useState(false);
     const inProgress = useSelector((state) => state.searchProductsReducer.inprogress);
     const products = useSelector((state) => state.searchProductsReducer.products);
+    const rowsFound = useSelector((state) => state.searchProductsReducer.rowsFound);
     const [filteredProducts, setfilteredProducts] = useState(products);
     const [showFilterButton, setShowFilterButton] = useState(false);
-
     const [mobileFilterMenu, setMobileFilterMenu] = useState(false);
+    const elementsOnPage = 2;
+    const [details, setDetails] = useState({
+        keyword: keyword,
+        category: category,
+        filter: null,
+        limit: {beginning: 0, numOfRows: elementsOnPage}
+    })
 
     const dispatch = useDispatch()
     useEffect(async () => {
         window.addEventListener('resize', showFilterButtonF);
         showFilterButtonF();
-        dispatch(productRedirect(false));
-        dispatch(productsSearch(keyword, category));
-        setLoaded(true);
     }, [])
 
 
     useEffect(() => {
-        dispatch(productRedirect(false));
-        dispatch(productsSearch(keyword, category));
-
+        console.log(details)
+        setDetails((prevState) => ({
+            ...prevState,
+            keyword: keyword,
+            category: category
+        }))
     }, [keyword, category])
+
+    useEffect(() => {
+        dispatch(productRedirect(false));
+        dispatch(productsSearch(details));
+        setFirstLoad(true);
+    }, [details])
+
 
     useEffect(() => {
         setfilteredProducts(products);
@@ -45,11 +58,9 @@ const SearchProducts = () => {
     const showFilterButtonF = () => {
         if (window.innerWidth <= 1200) {
             setShowFilterButton(true);
-        }
-        else
+        } else
             setShowFilterButton(false);
     }
-
 
 
     const [priceFilter, setPriceFiter] = useState({
@@ -65,51 +76,34 @@ const SearchProducts = () => {
     }
 
     const filterPrice = () => {
-        const a = products.filter((b) => { return b.price >= priceFilter.from && b.price <= priceFilter.to });
-        console.log(a);
-        setfilteredProducts(a);
+        setDetails((prevState) => ({
+            ...prevState,
+            filter: {...prevState.filter, price: {from: priceFilter.from, to: priceFilter.to}}
+        }));
     }
 
     const sortProducts = (event) => {
-        if (event.target.value === 'priceAscending')
-            setfilteredProducts(tmp => [...tmp.sort((a, b) => {
-                if (a.price < b.price)
-                    return 1;
-                if (a.price > b.price)
-                    return -1;
-                return 0;
-            })]);
-
-        else if (event.target.value === 'priceDescanding')
-            setfilteredProducts(tmp => [...tmp.sort((a, b) => {
-                if (a.price < b.price)
-                    return -1;
-                if (a.price > b.price)
-                    return 1;
-                return 0;
-            })]);
-
+        if (event.target.value === 'default')
+            setDetails((prevState) => ({
+                    ...prevState,
+                    filter: {...prevState.filter, sort: null}
+                }
+            ));
         else
-            setfilteredProducts(tmp => [...tmp.sort((a, b) => {
-                if (a.productId < b.productId)
-                    return -1;
-                if (a.productId > b.productId)
-                    return 1;
-                return 0;
-            })]);
-
+            setDetails((pervState) => ({
+                    ...pervState,
+                    filter: {...prevState.filter, sort: event.target.value}
+                }
+            ));
     }
 
 
-    if (loaded === false || inProgress)
+    if (firstLoad === false || inProgress)
         return (
             <div class='searchProducts-container'>
                 Ładowanie...
             </div>
         );
-
-
-
 
 
     return (
@@ -120,22 +114,25 @@ const SearchProducts = () => {
                         <li>
                             <span>
                                 <h2>Filtry</h2>
-                                <img src="./icons/cross.svg" class="searchProducts-filterIcon" onClick={() => setMobileFilterMenu(false)} />
+                                <img src="./icons/cross.svg" class="searchProducts-filterIcon"
+                                     onClick={() => setMobileFilterMenu(false)}/>
                             </span>
                         </li>
                         <li>
                             <h3>Sortowanie</h3>
                             <select class='nav-search-select' onChange={sortProducts}>
                                 <option defaultValue value='default'>Domyślnie</option>
-                                <option value='priceAscending'>Cena rosnąco</option>
-                                <option value='priceDescanding'>Cena malejąco</option>
+                                <option value='price asc'>Cena rosnąco</option>
+                                <option value='price desc'>Cena malejąco</option>
                             </select>
                         </li>
                         <li>
                             <h3>Cena</h3>
                             <span>
-                                Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
-                                Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
+                                Od <input type='number' class='searchProducts-filter-number' placeholder='Od'
+                                          onChange={priceFilterHandler} name="from" value={priceFilter.from}/>
+                                Do <input type='number' class='searchProducts-filter-number' placeholder='Do'
+                                          onChange={priceFilterHandler} name="to" value={priceFilter.to}/>
                             </span>
                         </li>
                         <li>
@@ -153,15 +150,17 @@ const SearchProducts = () => {
                             <h3>Sortowanie</h3>
                             <select class='nav-search-select' onChange={sortProducts}>
                                 <option defaultValue value='default'>Domyślnie</option>
-                                <option value='priceAscending'>Cena rosnąco</option>
-                                <option value='priceDescanding'>Cena malejąco</option>
+                                <option value='price asc'>Cena rosnąco</option>
+                                <option value='price desc'>Cena malejąco</option>
                             </select>
                         </li>
                         <li class='searchProducts-filter'>
                             <h3>Cena</h3>
                             <span>
-                                Od <input type='number' class='searchProducts-filter-number' placeholder='Od' onChange={priceFilterHandler} name="from" value={priceFilter.from} />
-                                Do <input type='number' class='searchProducts-filter-number' placeholder='Do' onChange={priceFilterHandler} name="to" value={priceFilter.to} />
+                                Od <input type='number' class='searchProducts-filter-number' placeholder='Od'
+                                          onChange={priceFilterHandler} name="from" value={priceFilter.from}/>
+                                Do <input type='number' class='searchProducts-filter-number' placeholder='Do'
+                                          onChange={priceFilterHandler} name="to" value={priceFilter.to}/>
                             </span>
                         </li>
                         <li class='searchProducts-filter'>
@@ -175,7 +174,7 @@ const SearchProducts = () => {
                 <div class='searchProducts-nav'>
                     {showFilterButton &&
                         <div class='searchProducts-filterContainer' onClick={() => setMobileFilterMenu(true)}>
-                            <span><img src="./icons/filter.svg" class="searchProducts-filterIcon" />Filtry</span>
+                            <span><img src="./icons/filter.svg" class="searchProducts-filterIcon"/>Filtry</span>
                         </div>
                     }
                     <h1>{keyword ? `Wyniki wyszukiwania dla "${keyword}":` : category.toUpperCase()}</h1>
@@ -184,7 +183,7 @@ const SearchProducts = () => {
                     filteredProducts.map((product) => (
                         <Link to={`/product/${product.productId}`} class='searchProducts-product-container'>
                             <div class='searchProducts-product-left'>
-                                <img src={`./products/${product.titleImg}`} class='searchProducts-product-left-img' />
+                                <img src={`./products/${product.titleImg}`} class='searchProducts-product-left-img'/>
                                 <div class='searchProducts-product-left-label'>
                                     <label>{product.title}</label>
                                     <h4>{product.price} zł</h4>
@@ -192,21 +191,25 @@ const SearchProducts = () => {
                             </div>
                             <div class='searchProducts-product-right'>
                                 <Link to='#'>
-                                    <button class="searchProducts-button" onClick={() => { dispatch(addToCart(product.productId, 1)) }}>Dodaj do koszyka</button>
+                                    <button class="searchProducts-button" onClick={() => {
+                                        dispatch(addToCart(product.productId, 1))
+                                    }}>Dodaj do koszyka
+                                    </button>
                                 </Link>
                             </div>
                         </Link>
                     )) :
                     <div> Brak wyników </div>
                 }
+
+                <PageButtons rowsFound={rowsFound} elementsOnPage={elementsOnPage} reducerFunction={productsSearch}
+                             argsFunction={details}/>
+
             </div>
-        </div >
+        </div>
     );
 
 }
-
-
-
 
 
 export default SearchProducts;

@@ -2,7 +2,7 @@ import React, { useEffect,useState } from 'react'
 import '../ordersComponents/OrderDetails.css'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-
+import orderStatus from "../orderStatus";
 
 import { adminOrderDetails, changeOrderStatus } from '../../services/admin/adminOrderDetailsService'
 
@@ -40,11 +40,9 @@ const AdminOrderDetails = () => {
                 </div>
                 <div className='orderdetails-buttons'>
                     <h2>Zmiana statusu</h2>
-                    <button onClick={() => { dispatch(changeOrderStatus(id, 'w przygotowaniu')) }}>W przygotowaniu</button>
-                    <button onClick={() => { dispatch(changeOrderStatus(id, 'wysłane')) }}>Wysłane</button>
-                    <button onClick={() => { dispatch(changeOrderStatus(id, 'zakończono')) }}>Zakończono</button>
-                    <button onClick={() => { dispatch(changeOrderStatus(id, 'zwrócono')) }}>Zwrócono</button>
-                    <button onClick={() => { dispatch(changeOrderStatus(id, 'anulowano')) }}>Anulowano</button>
+                    {orderStatus.map((status)=>
+                        <button onClick={() => { dispatch(changeOrderStatus(id, status)) }}>{status} </button>
+                    )}
                 </div>
                 <div className='orderdetails-products'>
                     <h2>Zamówienie</h2>

@@ -13,10 +13,11 @@ export const productsSearchInProgress = () => {
     };
 }
 
-export const productsSearchSuccess = (products) => {
+export const productsSearchSuccess = (res) => {
     return {
         type: PRODUCTS_SEARCH_SUCCESS,
-        products: products
+        products: res.products,
+        rowsFound: res.rowsFound
     };
 }
 

@@ -35,7 +35,8 @@ export const newOrder = (props) => {
     }
 }
 
-export const userOrders = (beginning, numOfRows) => {
+export const userOrders = (props) => {
+    console.log(props)
     return async dispatch => {
         dispatch(userOrdersInProgress());
         await Axios({
@@ -46,16 +47,19 @@ export const userOrders = (beginning, numOfRows) => {
                 "X-EMAIL": localStorage.getItem('email')
             },
             data: {
-                beginning: beginning,
-                numOfRows: numOfRows
+                limit:{
+                    beginning: props.limit.beginning,
+                    numOfRows: props.limit.numOfRows
+                },
+                filter:{
+                    status: props.filter?.status ? props.filter.status : null
+                }
             }
         })
             .then((res) => {
-                console.log(res.data.orders)
                 res.data.orders.forEach(element => {
                     element.totalAmount = element.products.reduce((sum, a) => sum + a.productPrice * a.productAmount, 0);
                 });
-
                 dispatch(userOrdersSuccess(res.data.orders, res.data.rowsFound));
                 return res.data.orders;
             })

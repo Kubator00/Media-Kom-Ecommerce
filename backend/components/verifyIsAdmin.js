@@ -4,6 +4,7 @@ module.exports = async (req) => {
         poolConnection.getConnection(async (err, connection) => {
             if (err) reject(err);
             connection.query(`SELECT isAdmin from users WHERE email='${req.headers['x-email']}'`, (error, result) => {
+                connection.release();
                 if (error)
                     return reject(error);
                 if (result.length < 1)

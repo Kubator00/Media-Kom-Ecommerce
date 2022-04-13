@@ -9,7 +9,31 @@ a{
     flex-direction: column;
     font-size: 1rem;
 }
-
+.userOrders-filter{
+    width: 290px;
+}
+.userOrders-dropdownMenu{
+    display: none;
+}
+.userOrders-dropdownMenu-activeButton{
+    display: flex;
+    flex-direction: row;
+}
+.userOrders-dropdownMenu-label{
+    margin-left: 10px;
+    padding-left: 10px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    width: 200px;
+}
+.userOrders-filter-button{
+    padding: 10px;
+    background-color: #136eaa;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    width: 120px;
+}
 .userOrders-order {
     width: 100%;
     display: flex;

@@ -45,9 +45,9 @@ const AccountMenu = () => {
     }
     const dispatch = useDispatch();
     const user = useSelector((state) => state.usersReducer.user);
-    const inprogress = useSelector((state) => state.usersReducer.inprogress);
+    const inProgress = useSelector((state) => state.usersReducer.inprogress);
 
-    if (!inprogress && user.token)
+    if (!inProgress && user.token)
         return (
             <>
                 <ul class="nav-dropdownMenu-container" onClick={() => { clickHandler(!isClicked) }} onMouseEnter={() => { clickHandler(true) }} onMouseLeave={() => { clickHandler(false) }} >
@@ -162,7 +162,7 @@ function Navbar() {
 
     const navPositionFixed = () => {
         if (window.scrollY > document.getElementById('nav').clientHeight
-            && window.innerHeight > document.getElementById('nav').clientHeight * 3
+            && window.innerHeight > document.getElementById('nav').clientHeight
             && window.innerWidth > 1350)
             setPositionFixed(true);
         if (window.scrollY <= 0)

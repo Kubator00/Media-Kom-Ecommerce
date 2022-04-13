@@ -7,8 +7,8 @@ import {
 } from '../../actions/adminOrderAction'
 
 
-
-export const adminAllOrders = (beginning, numOfRows) => {
+export const adminAllOrders = (props) => {
+    console.log(props.limit)
     return async dispatch => {
         dispatch(adminOrdersInProgress());
         await Axios({
@@ -19,8 +19,13 @@ export const adminAllOrders = (beginning, numOfRows) => {
                 "X-EMAIL": localStorage.getItem('email')
             },
             data: {
-                beginning: beginning,
-                numOfRows: numOfRows,
+                limit: {
+                    beginning: props.limit.beginning,
+                    numOfRows: props.limit.numOfRows,
+                },
+                filter: {
+                    status: props.filter?.status ? props.filter.status : null
+                }
             }
         })
             .then((res) => {

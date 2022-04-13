@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const pool = require("../index").pool;
 const verifyUserToken = require('../components/verifyUserToken')
 const verifyIsAdmin = require('../components/verifyIsAdmin')
 const getUserId = require('../components/getUserId');
@@ -34,9 +33,16 @@ async function auth(req, res, next) {
 
 router.post('/allorders', async (req, res) => {
     let orders, rowsFound, ordersProducts;
+
     try {
-        orders = await selectQuery(`SELECT * FROM orders ORDER BY date DESC LIMIT ${req.body.beginning},${req.body.numOfRows};`)
-        rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders;`))[0]['COUNT(*)'];
+        if (req.body.filter?.status && req.body.filter.status.length>0) {
+            const filter = req.body.filter.status.map(i => `'${i}'`);
+            orders = await selectQuery(`SELECT * FROM orders WHERE STATUS IN (${filter}) ORDER BY date DESC LIMIT ${req.body.limit.beginning},${req.body.limit.numOfRows} `);
+            rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders WHERE STATUS IN (${filter}) `))[0]['COUNT(*)'];
+        } else {
+            orders = await selectQuery(`SELECT * FROM orders ORDER BY date DESC LIMIT ${req.body.limit.beginning},${req.body.limit.numOfRows};`);
+            rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders;`))[0]['COUNT(*)'];
+        }
         ordersProducts = await selectQuery(
             `SELECT o.orderId,o.productId ,p.title, p.titleImg, o.productAmount, o.productPrice
             FROM orders_product as o join products as p on o.productId=p.productId 
@@ -64,6 +70,7 @@ router.post('/order/newstatus', async (req, res) => {
                     if (err)
                         throw err;
                 });
+            connection.release();
         })
     } catch (err) {
         console.log(err);

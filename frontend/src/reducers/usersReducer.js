@@ -25,7 +25,6 @@ const initialState = {
 };
 
 const usersReducer = (state = initialState, action) => {
-    console.log(action);
     switch (action.type) {
         case USER_LOGOUT:
             console.log('wylogowanie');

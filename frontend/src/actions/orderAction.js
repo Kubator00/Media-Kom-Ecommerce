@@ -5,6 +5,7 @@ import {
     USER_ORDERS_IN_PROGRESS,
     USER_ORDERS_SUCCESS,
     USER_ORDERS_ERROR,
+    USER_ORDERS_FILTER,
     USER_ORDER_DETAILS_IN_PROGRESS,
     USER_ORDER_DETAILS_SUCCESS,
     USER_ORDER_DETAILS_ERROR,
@@ -39,7 +40,6 @@ export const userOrdersInProgress = () => {
 }
 
 export const userOrdersSuccess = (orders, rowsFound) => {
-    console.log(orders);
     return {
         type: USER_ORDERS_SUCCESS,
         orders: orders,
@@ -53,6 +53,13 @@ export const userOrdersError = () => {
     };
 }
 
+export const userOrdersFilter = (filterName, filterData) => {
+    return {
+        type: USER_ORDERS_FILTER,
+        filterName: filterName,
+        filter: filterData
+    };
+}
 
 
 export const userOrderDetailsInProgress = () => {

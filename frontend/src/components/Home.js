@@ -43,7 +43,11 @@ const Slider = () => {
         window.addEventListener('resize', handleResize);
         handleResize();
         await read();
+        return () => {
+            window.removeEventListener('resize',handleResize);
+        }
     }, [])
+
     const handleResize = () => {
         if (window.innerWidth <= 700)
             return setelementOnScreen(1);

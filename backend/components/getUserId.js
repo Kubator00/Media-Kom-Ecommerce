@@ -12,7 +12,7 @@ module.exports = async (req) => {
                     reject(error);
                 if (result?.length < 1)
                     reject("User authentication failed");
-                resolve(result[0].userId);
+                resolve(result[0]?.userId);
             });
         });
     })

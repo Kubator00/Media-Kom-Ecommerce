@@ -10,7 +10,7 @@ const Joi = require('joi');
 const login = require('../components/loginUser');
 const register = require('../components/registerUser');
 const selectQuery = require('../components/selectQuery')
-const userAuthorization = require ('../components/userAuthorization')
+const userAuthorization = require('../components/userAuthorization')
 
 router.post('/token', async (req, res) => {
     try {
@@ -28,7 +28,7 @@ router.post('/token', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    const schemaValidate = login.schema.validate({ email: req.body.email, password: req.body.password });
+    const schemaValidate = login.schema.validate({email: req.body.email, password: req.body.password});
     if (schemaValidate.error)
         return res.send('Niepoprawne dane');
 
@@ -41,14 +41,14 @@ router.post('/login', async (req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass)
         return res.send('Niepoparwne hasło');
-    const token = jwt.sign({ id: user.userId }, PRIVATE_KEY, { expiresIn: 20000 });
-    res.header('token', token).send({ 'email': user.email, 'name': user.name, 'token': token, 'isAdmin': user.isAdmin });
+    const token = jwt.sign({id: user.userId}, PRIVATE_KEY, {expiresIn: 20000});
+    res.header('token', token).send({'email': user.email, 'name': user.name, 'token': token, 'isAdmin': user.isAdmin});
 
 })
 
 router.post('/register', async (req, res) => {
     const schemaValidate = register.schema.validate(
-        { name: req.body.name, surname: req.body.name, password: req.body.password, email: req.body.email }
+        {name: req.body.name, surname: req.body.name, password: req.body.password, email: req.body.email}
     );
     if (schemaValidate.error)
         return res.status(400).send('Niepoprawne dane');
@@ -66,12 +66,19 @@ router.post('/register', async (req, res) => {
 router.use(userAuthorization);
 
 router.post('/orders', async (req, res) => {
+    console.log(req.body.limit)
     let rowsFound, orders, ordersProducts;
     try {
-        rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders where userId=${req.headers.userId};`))[0]['COUNT(*)'];
+        const filter = req.body.filter?.status.map(i => `'${i}'`);
+        if (req.body.filter?.status && req.body.filter.status.length > 0) {
+            rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders where userId=${req.headers.userId} AND status IN (${filter})`))[0]['COUNT(*)'];
+            orders = await selectQuery(`SELECT orderId, date, status FROM orders where userId=${req.headers.userId}  AND status IN (${filter})  ORDER BY date DESC LIMIT ${req.body.limit.beginning},${req.body.limit.numOfRows}`);
+        } else {
+            rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders where userId=${req.headers.userId};`))[0]['COUNT(*)'];
+            orders = await selectQuery(`SELECT orderId, date, status FROM orders where userId=${req.headers.userId} ORDER BY date DESC LIMIT ${req.body.limit.beginning},${req.body.limit.numOfRows};`);
+        }
         if (rowsFound < 1)
-            return res.send({ orders: [] });
-        orders = await selectQuery(`SELECT orderId, date, status FROM orders where userId=${req.headers.userId} ORDER BY date DESC LIMIT ${req.body.beginning},${req.body.numOfRows};`);
+            return res.send({orders: []});
         ordersProducts = await selectQuery(
             `SELECT o.orderId,o.productId, o.productAmount, o.productPrice, p.title, p.titleImg
             FROM orders_product as o join products as p on o.productId=p.productId 
@@ -85,7 +92,7 @@ router.post('/orders', async (req, res) => {
         order['products'] = [];
         order.products.push(...ordersProducts.filter(i => order.orderId === i.orderId));
     }
-    res.send({ rowsFound: rowsFound, orders: orders });
+    res.send({rowsFound: rowsFound, orders: orders});
 })
 
 

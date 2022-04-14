@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import '../ordersComponents/OrdersList.css'
+import '../ordersComponents/OrderList.css'
 import {useDispatch, useSelector} from "react-redux";
 import {adminAllOrders} from '../../services/admin/adminAllOrders'
 import {adminOrdersReset} from '../../actions/adminOrderAction'
 import DisplayOrderList from "../DisplayOrderList"
 
-const AdminAllOrders = () => {
+const AdminAllOrdersList = () => {
     const dispatch = useDispatch();
     const orders = useSelector(state => state.adminAllOrdersReducer.orders);
     const rowsFound = useSelector(state => state.adminAllOrdersReducer.rowsFound);
@@ -29,5 +29,5 @@ const AdminAllOrders = () => {
 }
 
 
-export default AdminAllOrders;
+export default AdminAllOrdersList;
 

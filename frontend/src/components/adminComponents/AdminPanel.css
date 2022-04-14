@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    min-height: 600px;
+    min-height: 800px;
 }
 .adminpanel-link{
     display: flex;
@@ -17,6 +17,7 @@
     height: 60px;
     border-radius: 15px;
     font-size: 25px;
+    margin-bottom: 50px;
 }
 
 @media (max-width: 800px) {

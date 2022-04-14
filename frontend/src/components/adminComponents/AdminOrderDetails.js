@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import '../ordersComponents/OrderDetails.css'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import orderStatus from "../orderStatus";
 

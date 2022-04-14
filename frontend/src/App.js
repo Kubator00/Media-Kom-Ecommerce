@@ -14,11 +14,12 @@ import UserAccount from './components/userComponents/Account'
 import Product from './components/productsComponents/Product';
 import UserCart from './components/userComponents/Cart';
 import OrderForm from './components/ordersComponents/OrderForm';
-import OrdersList from './components/ordersComponents/OrdersList';
+import OrderList from './components/ordersComponents/OrderList';
 import OrderDetails from './components/ordersComponents/OrderDetails';
 import AdminPanel from './components/adminComponents/AdminPanel';
-import AdminAllOrders from './components/adminComponents/AdminAllOrders';
-import AdminOrderDetails from './components/adminComponents/AdminOrdersDetails';
+import AdminAllOrdersList from './components/adminComponents/AdminAllOrdersList';
+import AdminOrderDetails from './components/adminComponents/AdminOrderDetails';
+import AdminAddNewProduct from './components/adminComponents/AddNewProduct';
 import SearchProducts from './components/productsComponents/SearchProducts';
 import { useLayoutEffect } from 'react'
 
@@ -50,7 +51,7 @@ class App extends React.Component {
               <Route element={<ProdectedRoute />}>
                 <Route path='cart' element={<UserCart />} />
                 <Route path='account' element={<UserAccount />} />
-                <Route path='ordersList' element={<OrdersList />} />
+                <Route path='ordersList' element={<OrderList />} />
                 <Route path='orderform' element={<OrderForm />} />
                 <Route path='orderslist/order/:id' element={<OrderDetails />} />
               </Route>
@@ -65,7 +66,8 @@ class App extends React.Component {
 
               <Route element={<AdminRoute />}>
                 <Route path='admin/panel' element={<AdminPanel />} />
-                <Route path='admin/allorders' element={<AdminAllOrders />} />
+                <Route path='admin/allorders' element={<AdminAllOrdersList />} />
+                <Route path='admin/addproduct' element={<AdminAddNewProduct />} />
                 <Route path='admin/order/:id' element={<AdminOrderDetails />} />
               </Route>
             </Routes>

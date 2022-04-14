@@ -10,6 +10,7 @@ export default {
     orders: {
         new: 'orders/new',
         details: 'orders/details'
+
     },
     cart: {
         changeAmount: 'cart/editamount',

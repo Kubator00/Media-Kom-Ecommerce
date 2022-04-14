@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import './OrdersList.css'
+import './OrderList.css'
 import {useDispatch, useSelector} from "react-redux";
 import DisplayOrderList from '../DisplayOrderList'
 import {userOrders} from '../../services/OrderService'
 
-const OrdersList = () => {
+const OrderList = () => {
     const dispatch = useDispatch();
     const orders = useSelector(state => state.userOrdersReducer.orders);
     const rowsFound = useSelector(state => state.userOrdersReducer.rowsFound);
@@ -26,4 +26,4 @@ const OrdersList = () => {
 }
 
 
-export default OrdersList;
+export default OrderList;

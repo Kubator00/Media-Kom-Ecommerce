@@ -1,0 +1,62 @@
+.editProduct-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.editProduct-form-container{
+    display: flex;
+    flex-direction: column;
+}
+.editProduct-parameter-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.editProduct-parameter-container label, input{
+    margin-right: 10px;
+}
+
+.editProduct-parameter{
+    display: flex;
+    flex-direction: row;
+}
+.editProduct-deleteParameter-button{
+    padding: 5px;
+    width: 130px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color: red;
+    cursor: pointer;
+}
+.editProduct-addParameter-button{
+    height: 50px;
+    margin: 20px 0 20px 0;
+    width: 130px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color: #29aa3a;
+    cursor: pointer;
+}
+.editProduct-button{
+    background-color: #1285d1;
+    color: white;
+    width: 300px;
+    height: 60px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+}
+.editProduct-form-select{
+    width: 150px;
+    padding: 10px;
+}
+.editProduct-form-control{
+    width: 300px;
+    height: 30px;
+    border: 2px solid #c2c2c2;
+    border-radius: 10px;
+}

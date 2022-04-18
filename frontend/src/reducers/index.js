@@ -6,6 +6,8 @@ import { adminAllOrdersReducer, adminOrderDetailsReducer } from "./adminOrderRed
 import { searchProductsReducer } from "./searchReducer";
 import { deliveryTypesReducer } from "./deliveryReducer";
 import { productReducer } from "./productReducer";
+import {adminAddProductReducer, adminEditProductReducer} from "./adminProductReducer";
+
 export default combineReducers({
     usersReducer,
     cartReducer,
@@ -16,5 +18,7 @@ export default combineReducers({
     adminOrderDetailsReducer,
     searchProductsReducer,
     deliveryTypesReducer,
-    productReducer
+    productReducer,
+    adminAddProductReducer,
+    adminEditProductReducer
 })

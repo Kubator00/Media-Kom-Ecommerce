@@ -18,7 +18,7 @@ const initialState = {
     msg: '',
     error: null,
     user: {
-        username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
+        name: localStorage.getItem('name') ? localStorage.getItem('name') : '',
         isAdmin: localStorage.getItem('isAdmin') ? parseInt(localStorage.getItem('isAdmin'), 10) : null,
         token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
     }

@@ -12,11 +12,10 @@ export const fetchDeliveryTypes = () => {
         await Axios.post(routes.server + routes.delivery.types)
             .then((res) => {
                 dispatch(deliveryTypesSucess(res.data.deliveryTypes));
-                return res;
+                return res.data.deliveryTypes;
             })
             .catch((err) => {
                 dispatch(deliveryTypesError(err));
-                return err;
             });
     };
 }

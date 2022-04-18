@@ -21,9 +21,8 @@ export const productFetch = (productId) => {
                     return res.data;
                 }
             })
-            .catch(error => {
-                dispatch(productFetchError("Wystąpił błąd przy pobieraniu danych"));
-                return error;
+            .catch(err => {
+                dispatch(productFetchError(err.response?.data));
             });
 
     };

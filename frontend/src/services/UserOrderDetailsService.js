@@ -22,14 +22,13 @@ export const userOrderDetails = (orderId) => {
             }
         })
             .then((res) => {
-                console.log(res.data);
                 res.data['cartAmount'] = res.data.products.reduce((sum, element) => sum + element.productPrice * element.productAmount, 0);
                 res.data['totalAmount'] = res.data.cartAmount + res.data.deliveryPrice;
-                return dispatch(userOrderDetailsSuccess(res.data));
+                dispatch(userOrderDetailsSuccess(res.data));
+                return res.data;
             })
             .catch((err) => {
-                console.log(err);
-                return dispatch(userOrderDetailsError(err));
+                dispatch(userOrderDetailsError(err.response?.data));
             })
     };
 };

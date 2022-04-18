@@ -22,13 +22,12 @@ export const adminOrderDetails = (orderId) => {
             }
         })
             .then((res) => {
-                console.log(res.data.products);
                 res.data['cartAmount'] = res.data.products.reduce((sum, element) => sum + element.productPrice * element.productAmount, 0);
                 res.data['totalAmount'] = res.data.cartAmount + res.data.deliveryPrice;
                 return dispatch(adminOrderDetailsSuccess(res.data));
             })
             .catch((err) => {
-                return dispatch(adminOrderDetailsError(err));
+                return dispatch(adminOrderDetailsError(err.response?.data));
             })
     };
 };
@@ -49,11 +48,12 @@ export const changeOrderStatus = (orderId, newStatus) => {
                 newStatus: newStatus
             }
         })
-            .then(() => {
-                return dispatch(adminOrderDetails(orderId));
+            .then((res) => {
+                dispatch(adminOrderDetails(orderId));
+                return res;
             })
             .catch((err) => {
-                return dispatch(adminOrderDetailsError(err));
+                dispatch(adminOrderDetailsError(err.response?.data));
             })
     };
 }

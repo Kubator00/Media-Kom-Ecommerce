@@ -36,8 +36,7 @@ export const adminAllOrders = (props) => {
                 return res;
             })
             .catch((err) => {
-                dispatch(adminOrdersError(err));
-                return err;
+                dispatch(adminOrdersError(err.response?.data));
             })
     };
 };

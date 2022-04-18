@@ -6,9 +6,10 @@ const jwt = require('jsonwebtoken');
 const getUserId = require('../components/getUserId');
 const PRIVATE_KEY = require('../index').PRIVATE_KEY;
 const bcrypt = require('bcrypt');
-const Joi = require('joi');
 const login = require('../components/loginUser');
 const register = require('../components/registerUser');
+const loginSchema = require('../components/validationSchemas/loginSchema');
+const registrationSchema = require('../components/validationSchemas/registrationSchema');
 const selectQuery = require('../components/selectQuery')
 const userAuthorization = require('../components/userAuthorization')
 
@@ -28,7 +29,7 @@ router.post('/token', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    const schemaValidate = login.schema.validate({email: req.body.email, password: req.body.password});
+    const schemaValidate = loginSchema.validate({email: req.body.email, password: req.body.password});
     if (schemaValidate.error)
         return res.send('Niepoprawne dane');
 
@@ -40,14 +41,14 @@ router.post('/login', async (req, res) => {
     }
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass)
-        return res.send('Niepoparwne hasło');
+        return res.send('Niepoprawny login lub hasło');
     const token = jwt.sign({id: user.userId}, PRIVATE_KEY, {expiresIn: 20000});
     res.header('token', token).send({'email': user.email, 'name': user.name, 'token': token, 'isAdmin': user.isAdmin});
 
 })
 
 router.post('/register', async (req, res) => {
-    const schemaValidate = register.schema.validate(
+    const schemaValidate = registrationSchema.validate(
         {name: req.body.name, surname: req.body.name, password: req.body.password, email: req.body.email}
     );
     if (schemaValidate.error)
@@ -56,6 +57,8 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     let msg;
     try {
+        if ((await selectQuery(`SELECT * FROM users where email='${req.body.email}'`))?.length > 0)
+            return res.status(500).send("Konto z podanym adresem e-mail już istnieje");
         msg = await register.register(req.body, hashedPassword, res);
     } catch (err) {
         return res.status(500).send("Błąd połączenia z bazą danych");

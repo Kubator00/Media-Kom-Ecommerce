@@ -1,15 +1,5 @@
-const Joi = require('joi');
 const {poolConnection} = require('../index');
 
-module.exports.schema = Joi.object({
-    email: Joi.string()
-        .email()
-        .required(),
-    password: Joi.string()
-        .alphanum()
-        .min(3)
-        .required(),
-});
 
 module.exports.find = async (data) => {
     return new Promise((resolve, reject) => {

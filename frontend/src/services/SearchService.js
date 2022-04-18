@@ -17,11 +17,11 @@ export const productsSearch = (props) => {
             limit: props.limit ? props.limit : null
         })
             .then((res) => {
-                if (res)
-                    return dispatch(productsSearchSuccess(res.data));
+                dispatch(productsSearchSuccess(res.data));
+                return res.data;
             })
             .catch((err) => {
-                return dispatch(productsSearchError(err));
+                dispatch(productsSearchError(err.response?.data));
             })
     }
 }

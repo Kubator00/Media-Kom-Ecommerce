@@ -68,12 +68,12 @@ const Product = () => {
                             <div class='product-parameter'>
                                 <div class='product-parameter-parameter'>
                                     <label>
-                                        <h4>{parameter.parameterName}</h4>
+                                        <h4>{parameter.name}</h4>
                                     </label>
                                 </div>
                                 <div class='product-parameter-parameter'>
                                     <label>
-                                        {parameter.parameter}
+                                        {parameter.description}
                                     </label>
                                 </div>
                             </div>

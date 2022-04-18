@@ -22,9 +22,8 @@ const register = ( email, name, surname, password ) => {
                     return res.data;
                 }
             })
-            .catch(error => {
-                dispatch(registerError("Wystąpił błąd przy rejestacji"));
-                return error;
+            .catch(err => {
+                dispatch(registerError(err.response?.data));
             });
 
     };

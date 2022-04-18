@@ -35,8 +35,8 @@ function LogIn() {
             <div class="login-login-container">
                 <div class="login-login-content">
                     <h3>Zaloguj się</h3>
-                    {msg && msg}<br></br>
-                    {error && error}
+                    {msg && <h4 style={{"color":"green"}}>{msg}</h4>}<br/>
+                    {error && <h4 style={{"color":"red"}}>{error}</h4>}
                     <Formik
                         initialValues={{
                             email: '',

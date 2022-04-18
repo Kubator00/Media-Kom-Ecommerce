@@ -12,6 +12,7 @@ router.use(userAuthorization)
 
 
 router.post('/add', async (req, res) => {
+
     poolConnection.getConnection((err, connection) => {
         connection.query(
             `IF (SELECT COUNT(*) FROM user_cart WHERE userId = ${req.headers.userId} AND productId=${req.body.productId} > 0) THEN

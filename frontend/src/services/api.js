@@ -19,7 +19,10 @@ export default {
     admin: {
         allOrders: 'admin/allorders',
         newStatus: 'admin/order/newstatus',
-        details: 'admin/orders/details'
+        details: 'admin/orders/details',
+        addProduct: 'admin/addproduct',
+        deleteProduct: 'admin/deleteproduct',
+        editProduct: 'admin/editproduct',
     },
     search: 'search',
     delivery: {

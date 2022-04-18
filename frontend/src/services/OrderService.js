@@ -29,8 +29,7 @@ export const newOrder = (props) => {
                 return res;
             })
             .catch((err) => {
-                dispatch(newOrderError(err));
-                return err;
+                dispatch(newOrderError(err.response?.data));
             })
     }
 }

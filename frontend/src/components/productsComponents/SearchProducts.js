@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Link, useParams} from "react-router-dom";
 import './Product.css'
-import './searchProducts.css'
+import './SearchProducts.css'
 import {useSelector, useDispatch} from "react-redux";
 import {productsSearch} from '../../services/SearchService'
 import {addToCart} from '../../services/MyCartService'

@@ -142,4 +142,7 @@
         --margin-purchase-section: 0px;
         --product-title-font-size: 15px;
     }
+    .product-button {
+        padding: 10px;
+    }
 }

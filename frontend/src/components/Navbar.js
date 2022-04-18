@@ -46,7 +46,6 @@ const AccountMenu = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.usersReducer.user);
     const inProgress = useSelector((state) => state.usersReducer.inprogress);
-
     if (!inProgress && user.token)
         return (
             <>
@@ -56,6 +55,9 @@ const AccountMenu = () => {
                         Twoje konto
                     </li>
                     <ul class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'} id={isClicked && "accountMenu"}>
+                        <li>
+                            <h4>{`Witaj, ${user.name}`}</h4>
+                        </li>
                         <Link to="/orderslist" className="nav-dropdownMenu-link">
                             <img src='./account/notebook.svg' class='nav-dropdownMenu-icon' /> Moje zamówienia
                         </Link>

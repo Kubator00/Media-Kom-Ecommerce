@@ -26,12 +26,10 @@ export const fetchCart = () => {
                 if (res.data.length > 0)
                     sum = res.data.reduce((sum, a) => sum + a.price * a.productAmount, 0);
                 dispatch(cartSuccess(res.data, sum));
-                return res;
+                return res.data;
             })
             .catch(err => {
-                console.log(err);
-                dispatch(cartError(err));
-                return err;
+                dispatch(cartError(err.response?.data));
             })
     };
 }

@@ -28,9 +28,8 @@ const logInUser = (props) => {
                 }
                 return res.data;
             })
-            .catch(error => {
-                dispatch(loginError(error));
-                return error;
+            .catch(err => {
+                dispatch(loginError(err.response?.data));
             });
 
     };

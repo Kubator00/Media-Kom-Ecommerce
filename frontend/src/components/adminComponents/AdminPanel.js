@@ -11,11 +11,15 @@ class AdminPanel extends React.Component {
     render() {
         return (
             <div class='adminpanel-conatiner'>
+                <h1>Panel administracyjny</h1>
                 <Link to='/admin/allorders' class='adminpanel-link'>
                     Wszystkie zamówienia
                 </Link>
                 <Link to='/admin/addproduct' class='adminpanel-link'>
                     Dodaj nowy produkt
+                </Link>
+                <Link to='/admin/editproduct/list' class='adminpanel-link'>
+                    Edytuj produkt
                 </Link>
             </div>
         );

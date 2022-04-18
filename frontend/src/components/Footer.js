@@ -17,11 +17,11 @@ function Footer() {
                 <div class='footer-contact'>
                     <h3>Kontakt</h3>
                     <span>
-                        <img src="./icons/address-book.svg" class="footer-contact-icons" /> 34 472 21 00
+                        <img src="./icons/address-book.svg" class="footer-contact-icons" /> 34 123 45 67
                     </span>
                     <span>
                         <img src="./icons/location.svg" class="footer-contact-icons" />
-                        ul. Politechniczna 22a, Łódź
+                        ul. Politechniczna 999a, Łódź
                     </span>
                     <span>
                         <img src="./icons/envelope.svg" class="footer-contact-icons" />

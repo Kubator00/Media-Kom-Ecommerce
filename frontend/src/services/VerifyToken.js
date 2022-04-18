@@ -24,15 +24,13 @@ const verifyToken = () => {
                     dispatch(verifyTokenSucess());
                     return res.data;
                 }
-
                 dispatch(logOutUser());
                 dispatch(verifyTokenFailure('Sesja wygasła'));
                 return res.data;
             })
             .catch(err => {
                 dispatch(logOutUser());
-                dispatch(verifyTokenError(err));
-                return err;
+                dispatch(verifyTokenError(err.response?.data));
             })
     };
 }

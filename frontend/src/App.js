@@ -19,7 +19,9 @@ import OrderDetails from './components/ordersComponents/OrderDetails';
 import AdminPanel from './components/adminComponents/AdminPanel';
 import AdminAllOrdersList from './components/adminComponents/AdminAllOrdersList';
 import AdminOrderDetails from './components/adminComponents/AdminOrderDetails';
-import AdminAddNewProduct from './components/adminComponents/AddNewProduct';
+import AdminAddProduct from './components/adminComponents/AdminAddProduct';
+import AdminProductList from './components/adminComponents/AdminProductList';
+import AdminEditProduct from './components/adminComponents/AdminEditProduct';
 import SearchProducts from './components/productsComponents/SearchProducts';
 import { useLayoutEffect } from 'react'
 
@@ -67,7 +69,9 @@ class App extends React.Component {
               <Route element={<AdminRoute />}>
                 <Route path='admin/panel' element={<AdminPanel />} />
                 <Route path='admin/allorders' element={<AdminAllOrdersList />} />
-                <Route path='admin/addproduct' element={<AdminAddNewProduct />} />
+                <Route path='admin/addproduct' element={<AdminAddProduct />} />
+                <Route path='admin/editproduct/list' element={<AdminProductList />} />
+                <Route path='admin/editproduct/:productId' element={<AdminEditProduct />} />
                 <Route path='admin/order/:id' element={<AdminOrderDetails />} />
               </Route>
             </Routes>

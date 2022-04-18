@@ -2,8 +2,6 @@ const express = require('express')
 const app = express()
 const port = 3010
 const cors = require('cors')
-const jwt = require('jsonwebtoken');
-
 
 const mysql = require('mysql');
 const poolConnection = mysql.createPool({
@@ -17,11 +15,6 @@ const poolConnection = mysql.createPool({
 module.exports.poolConnection = poolConnection;
 const PRIVATE_KEY = 'PRIVATE_KEY_123';
 module.exports.PRIVATE_KEY = PRIVATE_KEY;
-
-const getUserId = require('./components/getUserId');
-const verifyUserToken = require('./components/verifyUserToken');
-const verifyIsAdmin = require('./components/verifyIsAdmin');
-
 
 app.use(cors());
 app.use(express.json())

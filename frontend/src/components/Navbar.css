@@ -173,6 +173,10 @@
     margin-bottom: 60px;
     animation-name: dropdownmenuappear;
     animation-duration: var(--transition-duration);
+    background-color: white;
+}
+.nav-dropdownMenu-show h4{
+    margin: 13px 0 13px 10px;
 }
 
 .nav-dropdownMenu-link {

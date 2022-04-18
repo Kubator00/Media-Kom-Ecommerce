@@ -5,8 +5,10 @@ const verifyIsAdmin = require('../components/verifyIsAdmin')
 const getUserId = require('../components/getUserId');
 const selectQuery = require('../components/selectQuery')
 const {poolConnection} = require("../index");
-
-
+const addProduct = require('../components/addProduct')
+const deleteProduct = require('../components/deleteProduct')
+const editProduct = require('../components/editProduct')
+const addProductSchema = require('../components/validationSchemas/admin/addProductSchema')
 router.use(auth)
 
 async function auth(req, res, next) {
@@ -35,7 +37,7 @@ router.post('/allorders', async (req, res) => {
     let orders, rowsFound, ordersProducts;
 
     try {
-        if (req.body.filter?.status && req.body.filter.status.length>0) {
+        if (req.body.filter?.status && req.body.filter.status.length > 0) {
             const filter = req.body.filter.status.map(i => `'${i}'`);
             orders = await selectQuery(`SELECT * FROM orders WHERE STATUS IN (${filter}) ORDER BY date DESC LIMIT ${req.body.limit.beginning},${req.body.limit.numOfRows} `);
             rowsFound = (await selectQuery(`SELECT COUNT(*) FROM orders WHERE STATUS IN (${filter}) `))[0]['COUNT(*)'];
@@ -102,5 +104,58 @@ router.post('/orders/details', async (req, res) => {
     res.send(orderDetails);
 });
 
+router.post('/addproduct', async (req, res) => {
+    const schemaValidate = addProductSchema.validate({
+        categoryName: req.body.categoryName,
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        titleImagePath: req.body.titleImagePath
+    });
+    if (schemaValidate.error)
+        return res.send('Niepoprawne dane');
+
+    let productId;
+    try {
+        req.body['categoryId'] = (await selectQuery(`SELECT categoryId from categories where categoryName=LOWER('${req.body.categoryName}')`))[0]['categoryId'];
+        productId = await addProduct(req);
+    } catch (err) {
+        console.log(err);
+        return  res.status(400).send("Błąd dodawania produktu");
+    }
+    res.send({msg: "Produkt dodano pomyślnie", 'productId': productId})
+})
+
+router.post('/editproduct', async (req, res) => {
+    const schemaValidate = addProductSchema.validate({
+        categoryName: req.body.categoryName,
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        titleImagePath: req.body.titleImagePath
+    });
+    if (schemaValidate.error)
+        return res.status(400).send('Niepoprawne dane');
+
+    try {
+        req.body['categoryId'] = (await selectQuery(`SELECT categoryId from categories where categoryName=LOWER('${req.body.categoryName}')`))[0]['categoryId'];
+        await editProduct(req);
+    } catch (err) {
+        console.log(err);
+        return  res.status(400).send("Błąd edycji produktu");
+    }
+    res.send({msg: "Produkt dodano pomyślnie"})
+})
+
+router.post('/deleteproduct', async (req, res) => {
+    try {
+        await deleteProduct(req.body.productId);
+    } catch (err) {
+        console.log(err);
+        return res.status(400).send("Błąd usuwania produktu");
+
+    }
+    res.send({msg: "Produkt usuniety pomyślnie"})
+})
 
 module.exports = router;

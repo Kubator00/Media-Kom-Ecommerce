@@ -36,7 +36,7 @@ const Register = () => {
         <div class="login-container">
             <div class="login-login-content">
                 <h3> Zarejestruj się </h3>
-                {error && error}
+                {error && <h4 style={{"color":"red"}}>{error}</h4>}
                 <Formik
                     initialValues={{
                         email: "",

@@ -13,7 +13,7 @@ const poolConnection = mysql.createPool({
 });
 
 module.exports.poolConnection = poolConnection;
-const PRIVATE_KEY = 'PRIVATE_KEY_123';
+const PRIVATE_KEY = 'PRIVATE_KEY_123'; //should be an environment variable
 module.exports.PRIVATE_KEY = PRIVATE_KEY;
 
 app.use(cors());
@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 
 
 const usersRoute = require('./routes/users')
-const adminsRoute = require('./routes/admins')
+const adminsRoute = require('./routes/admin/admin')
 const cartRoute = require('./routes/cart')
 const orderRoute = require('./routes/orders')
 const searchRoute = require('./routes/search')

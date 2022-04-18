@@ -11,7 +11,7 @@ router.post('/details', async (req, res) => {
         parameters = await selectQuery(`SELECT name, description from products_details WHERE productId=${req.body.productId} ORDER BY displayNumber ASC`);
     } catch (err) {
         console.log(err);
-        return res.status(400).send('Błąd pobierania danych');
+        return res.status(500).send('Błąd pobierania danych');
     }
     return res.send({product: product, productParameters: parameters});
 })
@@ -21,7 +21,7 @@ router.post('/recommended', async (req, res) => {
     try {
         products = await selectQuery(`SELECT p.productId, p.title, p.price, p.titleImg FROM recommended_products as r join products as p on r.productId=p.productId`);
     } catch {
-        return res.status(400).send('Błąd pobierania danych');
+        return res.status(500).send('Błąd pobierania danych');
     }
     return res.send({products:products});
 })

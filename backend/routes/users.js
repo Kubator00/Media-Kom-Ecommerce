@@ -52,7 +52,7 @@ router.post('/register', async (req, res) => {
         {name: req.body.name, surname: req.body.name, password: req.body.password, email: req.body.email}
     );
     if (schemaValidate.error)
-        return res.status(400).send('Niepoprawne dane');
+        return res.status(500).send('Niepoprawne dane');
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     let msg;
@@ -69,7 +69,6 @@ router.post('/register', async (req, res) => {
 router.use(userAuthorization);
 
 router.post('/orders', async (req, res) => {
-    console.log(req.body.limit)
     let rowsFound, orders, ordersProducts;
     try {
         const filter = req.body.filter?.status.map(i => `'${i}'`);
@@ -88,7 +87,7 @@ router.post('/orders', async (req, res) => {
             where o.orderId BETWEEN ${orders[orders.length - 1].orderId} AND ${orders[0].orderId}`);
     } catch (err) {
         console.log(err);
-        return res.status(400).send('Blad pobierania danych');
+        return res.status(500).send('Blad pobierania danych');
     }
 
     for (let order of orders) {
@@ -108,7 +107,7 @@ router.post('/cart', async (req, res) => {
         on c.productId=p.productId WHERE userId=${req.headers.userId}`);
     } catch (err) {
         console.log(err);
-        return res.status(400).send('Blad pobierania danych');
+        return res.status(500).send('Blad pobierania danych');
     }
     res.send(cart);
 })

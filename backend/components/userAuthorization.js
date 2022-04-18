@@ -6,9 +6,9 @@ module.exports = async (req, res, next) => {
     }
     catch (err) {
         console.error(err);
-        return res.status(400).send("Nie znaleziono uzytkownika w bazie");
+        return res.status(500).send("Nie znaleziono uzytkownika w bazie");
     }
     if (!await verifyUserToken(req))
-        return res.status(400).send("Blad autentykacji");
+        return res.status(500).send("Blad autentykacji");
     next();
 }

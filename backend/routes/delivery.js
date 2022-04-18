@@ -8,7 +8,7 @@ router.post('/types', async (req, res) => {
     try {
         result = await selectQuery(`SELECT * FROM delivery_types where available=1`);
     } catch (err) {
-        return res.status(400).send('Błąd pobierania danych');
+        return res.status(500).send('Błąd pobierania danych');
     }
     return res.send({deliveryTypes: result});
 })

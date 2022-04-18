@@ -13,16 +13,16 @@ export default {
 
     },
     cart: {
-        changeAmount: 'cart/editamount',
+        changeAmount: 'cart/edit',
         add: 'cart/add',
     },
     admin: {
-        allOrders: 'admin/allorders',
-        newStatus: 'admin/order/newstatus',
-        details: 'admin/orders/details',
-        addProduct: 'admin/addproduct',
-        deleteProduct: 'admin/deleteproduct',
-        editProduct: 'admin/editproduct',
+        allOrders: 'admin/order/all',
+        newStatus: 'admin/order/status',
+        details: 'admin/order/details',
+        addProduct: 'admin/product/add',
+        deleteProduct: 'admin/product/delete',
+        editProduct: 'admin/product/edit',
     },
     search: 'search',
     delivery: {

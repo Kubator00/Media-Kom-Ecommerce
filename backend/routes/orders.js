@@ -22,7 +22,7 @@ router.post('/new', async (req, res) => {
     }
     catch(err){
         console.log(err);
-       return res.status(400).send("Blad polaczenia z baza");
+       return res.status(500).send("Blad polaczenia z baza");
     }
     products.forEach(product => {
         product['price'] = (prices.find((i) => i.productId === product.productId))?.price;
@@ -47,10 +47,10 @@ router.post('/details', async (req, res) => {
         FROM orders_product as o join products as p on p.productId=o.productId where orderId=${req.body.orderId}`);
     } catch (err) {
         console.log(err);
-        return res.status(400).send('Blad pobierania danych');
+        return res.status(500).send('Blad pobierania danych');
     }
     if (orders.userId !== req.headers.userId)
-        return res.status(400).send('Zamówienie nie należy do użytkownika');
+        return res.status(500).send('Zamówienie nie należy do użytkownika');
 
     res.send({
         ...orders,

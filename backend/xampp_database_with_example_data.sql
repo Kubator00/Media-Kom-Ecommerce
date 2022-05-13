@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 03 Kwi 2022, 00:50
+-- Czas generowania: 13 Maj 2022, 22:10
 -- Wersja serwera: 10.4.16-MariaDB
 -- Wersja PHP: 7.4.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `sklep`
+-- Baza danych: `media-kom`
 --
 
 DELIMITER $$
@@ -55,11 +55,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`categoryId`, `categoryName`) VALUES
-(1, 'laptopy'),
-(2, 'telefony'),
-(3, 'telewizory'),
-(4, 'podzespoły komputerowe'),
-(5, 'akcesoria');
+(1, 'Laptopy'),
+(2, 'Telefony'),
+(3, 'Telewizory'),
+(4, 'Podzespoły komputerowe'),
+(5, 'Akcesoria');
 
 -- --------------------------------------------------------
 
@@ -126,7 +126,13 @@ INSERT INTO `orders` (`orderId`, `userId`, `date`, `status`, `deliveryId`, `name
 (138, 1, '2022-03-25 15:58:33', 'w przygotowaniu', 1, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (139, 1, '2022-03-25 21:16:26', 'w przygotowaniu', 3, 'Piotr Truskawkiewicz', 'dsa', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
 (140, 1, '2022-03-25 22:29:44', 'anulowano', 2, 'Piotr', 'Truskawkiewicz', 'Łódź', '91-321', 'Piotrkowska 22', '123456789'),
-(141, 1, '2022-04-03 00:45:04', 'w przygotowaniu', 1, 'Adam', 'Zaręba', 'Łódz', '12-421', 'Piotrkowska 23', '123456789');
+(141, 1, '2022-04-03 00:45:04', 'anulowano', 1, 'Adam', 'Zaręba', 'Łódz', '12-421', 'Piotrkowska 23', '123456789'),
+(142, 1, '2022-04-16 23:17:08', 'zakończono', 1, 'Patrick', 'Zdyszkowski', 'Łódź', '21-141', 'Sierakowicka 12', '1234567879'),
+(143, 1, '2022-04-18 21:03:44', 'zakończono', 1, 'Patryk', 'Zdiszkowski', ' Łódź', '123-45', 'Piotrkowska 23123', '213214214'),
+(144, 1, '2022-05-03 13:02:26', 'wysłane', 1, 'Jakub', 'Ostrowski', 'Łódź', '93-123', 'Piotrkowska 11', '123456789'),
+(145, 1, '2022-05-12 16:38:44', 'w przygotowaniu', 1, 'Wojciech', 'Papuszka', 'Warszawa', '12-133', 'Piotrkowska 22', '12321412'),
+(146, 5, '2022-05-13 17:18:49', 'wysłane', 1, 'Piotrek', 'Witkowski', 'Polna', '21-321', 'Mireckiego 22', '1321231231'),
+(147, 5, '2022-05-13 17:19:59', 'wysłane', 2, 'Miras', 'Wujcicki', 'Warszawa', '94-123', 'Armi 321b', '231412413121');
 
 -- --------------------------------------------------------
 
@@ -195,7 +201,22 @@ INSERT INTO `orders_product` (`orderId`, `productId`, `productAmount`, `productP
 (141, 7, 2, 2750),
 (141, 8, 2, 3900),
 (141, 2, 2, 700),
-(141, 6, 2, 3990);
+(141, 6, 2, 3990),
+(142, 2, 2, 700),
+(142, 46, 2, 1200),
+(142, 52, 2, 4000),
+(143, 52, 1, 4000),
+(144, 46, 1, 1200),
+(144, 1, 1, 1300),
+(144, 7, 1, 2750),
+(145, 46, 1, 1200),
+(145, 1, 1, 1300),
+(145, 7, 1, 2750),
+(146, 7, 1, 2750),
+(146, 1, 1, 1300),
+(146, 5, 1, 3500),
+(146, 6, 1, 3990),
+(147, 4, 1, 3144);
 
 -- --------------------------------------------------------
 
@@ -218,13 +239,16 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`productId`, `title`, `categoryId`, `description`, `price`, `titleImg`) VALUES
 (1, 'Redmi 10X Pro 5G 8/256GB', 2, '48px super telefon ekstra fajny', 1300.00, 'id1_1.png'),
-(2, 'AMD RYZEN 2400G 3.6GHz VEGA 11', 4, 'Procesor ze zintegrowaną kartą graficzną Vega 11 \r\n4 RDZENIE 8 WĄTKÓW 3.6GHz', 700.00, 'id2_1.png'),
+(2, 'AMD RYZEN 2400G 3.6GHz VEGA 11', 4, 'Procesor ze zintegrowaną kartą graficzną Vega 11 \r\n4 RDZENIE 8 WĄTKÓW 3.6GHz', 720.00, 'id2_1.png'),
 (3, 'Redmi Note 10S 6/128GB Fioletowy', 2, 'Redmi Note 10S teraz napędzany mocą Helio G95! Inteligentny aparat główny 64MP uchwyci wspaniałe scenerie. Odporna na zachlapania obudowa, piękny wyświetlacz oraz bardzo pojemna bateria 5000mAh.', 1400.00, 'id3_1.png'),
 (4, 'LG 65″ 4K NanoCell DVB-T2', 3, 'Telewizor LG oferuje krystalicznie czysty obraz z technologią NanoCell', 3144.00, 'id4_1.png'),
 (5, 'Microsoft Surface i5/8GB/512 Platinum', 1, '8GB Ramu, płaski laptop, dysk SSD m2 512GB, błyszczący led IPS, Windows 11', 3500.00, 'id5_1.png'),
 (6, 'HP Pavilion 15', 1, 'Procesor i5-1130G\r\nPamięć Ram 32GB\r\nDysk SDD 512GB\r\nWindows 11', 3990.00, 'id6_1.png'),
 (7, 'Samsung AU8002 Crystal UHD 4K Smart TV 55\"', 3, 'Smukły design, krystaliczne żywe kolory 60Hz, AndroidTV', 2750.00, 'id7_1.png'),
-(8, 'LG 55” NanoCell 4K 2021', 3, 'Krystaliczny czysty obraz, Smart TV, osty i wyrazisty obraz', 3900.00, 'id8_1.png');
+(8, 'LG 55” NanoCell 4K 2021', 3, 'Krystaliczny czysty obraz, Smart TV, osty i wyrazisty obraz', 3960.00, 'id8_1.png'),
+(46, 'AMD RYZEN 2600', 4, 'Procesor drugiej generacji ZEN 2 pozwala na wydajną grę w najnowsze gry, zapewnia wspaniałą pracę w środowiskach deweloperskich oraz przy renderowaniu. ', 1200.00, 'id2_1.png'),
+(52, 'MSI MEG Z590 GODLIKE ', 4, 'Płyta główna dla gamingowych komputerów ', 4000.00, 'MSI MEG Z590 GODLIKE .png'),
+(55, 'MSI MEG X570 ACE', 4, 'Płyta główna do komputera dla graczy na procesorze Ryzen', 1999.00, 'MSI MEG X570 ACE.png');
 
 -- --------------------------------------------------------
 
@@ -236,26 +260,15 @@ CREATE TABLE `products_details` (
   `id` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `displayNumber` int(11) NOT NULL,
-  `parameterName` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
-  `parameter` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL
+  `name` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `products_details`
 --
 
-INSERT INTO `products_details` (`id`, `productId`, `displayNumber`, `parameterName`, `parameter`) VALUES
-(1, 1, 1, 'Pamięć RAM', '8'),
-(2, 1, 2, 'Pamięć wewnętrzna', '256GB'),
-(3, 1, 3, 'Bateria', 'Li-Po 5000mAh'),
-(4, 1, 4, 'System operacyjny', 'Android 11'),
-(5, 2, 1, 'Rodzina procesorów', 'AMD Ryzen'),
-(6, 2, 2, 'Gniazdo procesora ', 'AM4'),
-(7, 2, 3, 'Taktowanie rdzenia', '3.6 GHz'),
-(8, 2, 4, 'Liczba rdzeni', '4'),
-(9, 2, 5, 'Liczba wątków', '8'),
-(10, 2, 6, 'Zintegrowana grafika', 'Radeon RX Vega 11'),
-(11, 2, 7, 'TDP', '65W'),
+INSERT INTO `products_details` (`id`, `productId`, `displayNumber`, `name`, `description`) VALUES
 (12, 5, 1, 'Procesor', 'i5 8100u'),
 (13, 5, 3, 'Pamięć Ram', '8GB '),
 (14, 5, 4, 'Dysk ', '512GB'),
@@ -264,7 +277,45 @@ INSERT INTO `products_details` (`id`, `productId`, `displayNumber`, `parameterNa
 (25, 6, 1, 'Procesor', 'Ryzen 5 3100u'),
 (26, 6, 2, 'Taktowanie procesora ', '2,5GHz'),
 (27, 6, 3, 'Ilość rdzeni', '4'),
-(28, 6, 4, 'Ilość wątków', '8');
+(28, 6, 4, 'Ilość wątków', '8'),
+(82, 8, 0, 'Rozmiar ekranu', '55`'),
+(85, 1, 0, 'Pamięć RAM', '8'),
+(86, 1, 1, 'Pamięć wewnętrzna', '256GB'),
+(87, 1, 2, 'Bateria', 'Li-Po 5000mAh'),
+(88, 1, 3, 'System operacyjny', 'Android 11'),
+(89, 1, 4, 'Rozmiar ekranu', '6.00\''),
+(91, 4, 0, 'Rozmiar ekranu', '65\''),
+(92, 4, 1, 'Rozdzielczość ekranu', '3840 × 2160 '),
+(98, 3, 0, 'Aparat', '13MPx'),
+(99, 3, 1, 'Rozmiar ekranu', '6,5\''),
+(100, 3, 2, 'Pamięć Ram', '6GB'),
+(101, 3, 3, 'Pamięć wewnętrzna', '128GB'),
+(102, 3, 4, 'Procesor', 'Helio G95'),
+(103, 52, 0, 'Format', 'E-ATX'),
+(104, 52, 1, 'Gniazdo procesora', 'Socket 1200'),
+(105, 52, 2, 'Chipset', 'Intel Z590'),
+(106, 52, 3, 'Architektura procesora', 'Comet-Lake Rocket-Lake'),
+(107, 52, 4, 'Liczba banków pamięci', '4'),
+(108, 52, 5, 'Maksymalna obsługiwana pamięć', '128GB'),
+(137, 55, 0, 'Format', 'ATX'),
+(138, 55, 1, 'Gniazdo procesora ', 'AM4'),
+(139, 55, 2, 'Chipset ', 'AMD X570'),
+(140, 55, 3, 'Ilość banków pamięci', '4'),
+(141, 55, 4, 'Maksymalna obsługiwana pamięć', '128GB'),
+(142, 55, 5, 'Łączność bezprzewodowa', 'Wi-fi, Bluetooth'),
+(143, 55, 6, 'Układ audio', 'Realtek ALC 1220'),
+(154, 2, 0, 'Rodzina procesorów', 'AMD Ryzen'),
+(155, 2, 1, 'Gniazdo procesora ', 'AM4'),
+(156, 2, 2, 'Taktowanie rdzenia', '3.6 GHz'),
+(157, 2, 3, 'Liczba rdzeni', '4'),
+(158, 2, 4, 'Liczba wątków', '8'),
+(159, 2, 5, 'Zintegrowana grafika', 'Radeon RX Vega 11'),
+(160, 2, 6, 'TDP', '65W'),
+(161, 46, 0, 'Ilość rdzeni', '6'),
+(162, 46, 1, 'Ilość wątków', '12'),
+(163, 46, 2, 'Taktowanie procesora', '3,6GHZ'),
+(164, 46, 3, 'TDP', '125W'),
+(165, 46, 4, 'Zintegrowana grafika', 'Nie');
 
 -- --------------------------------------------------------
 
@@ -310,8 +361,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userId`, `name`, `surname`, `password`, `email`, `isAdmin`) VALUES
-(1, 'Jakub', 'Piotrkowski', '$2b$10$m/FSSPvWIRereFlWn8x1Se0Bn6bvChMO42IGlHgnM3M2YWzit51H.', 'kubator@wp.pl', 1),
-(2, 'Bartek', 'Pawłowski', '$2b$10$NgbTtKs0lqaX4x4Crna6f.G7NV/nuxp3xI8mAC5TP/syEQlbUr82G', 'bartosz@gmail.com', 0);
+(1, 'Jakub', 'Piotrkowski', '$2b$10$MqkcWv8.t6CfJwVW5nu2G.o.zb/rtNILC9qkmofRt/6KJEmrTYfme', 'kubator@wp.pl', 1),
+(2, 'Bartek', 'Pawłowski', '$2b$10$NgbTtKs0lqaX4x4Crna6f.G7NV/nuxp3xI8mAC5TP/syEQlbUr82G', 'bartosz@gmail.com', 0),
+(5, 'Piotrek', 'Witczak', '$2b$10$yQQtbeJ.BW2pjbjp.MXyluFgWyBJgMFsJq5UTtURAIcQD9MFwOvy2', 'piotrek@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -330,7 +382,8 @@ CREATE TABLE `user_cart` (
 --
 
 INSERT INTO `user_cart` (`userId`, `productId`, `productAmount`) VALUES
-(1, 2, 1);
+(5, 4, 1),
+(1, 8, 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -360,8 +413,8 @@ ALTER TABLE `orders`
 -- Indeksy dla tabeli `orders_product`
 --
 ALTER TABLE `orders_product`
-  ADD KEY `productId` (`productId`),
-  ADD KEY `orders_product_ibfk_1` (`orderId`);
+  ADD KEY `orders_product_ibfk_1` (`orderId`),
+  ADD KEY `productId` (`productId`);
 
 --
 -- Indeksy dla tabeli `products`
@@ -393,8 +446,8 @@ ALTER TABLE `users`
 -- Indeksy dla tabeli `user_cart`
 --
 ALTER TABLE `user_cart`
-  ADD KEY `productId` (`productId`),
-  ADD KEY `userId` (`userId`);
+  ADD KEY `userId` (`userId`),
+  ADD KEY `productId` (`productId`);
 
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
@@ -416,19 +469,25 @@ ALTER TABLE `delivery_types`
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+
+--
+-- AUTO_INCREMENT dla tabeli `products`
+--
+ALTER TABLE `products`
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT dla tabeli `products_details`
 --
 ALTER TABLE `products_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -470,8 +529,8 @@ ALTER TABLE `recommended_products`
 -- Ograniczenia dla tabeli `user_cart`
 --
 ALTER TABLE `user_cart`
-  ADD CONSTRAINT `user_cart_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_cart_ibfk_3` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_cart_ibfk_3` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_cart_ibfk_4` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -50,7 +50,7 @@ router.post('/details', async (req, res) => {
         return res.status(500).send('Blad pobierania danych');
     }
     if (orders.userId !== req.headers.userId)
-        return res.status(500).send('Zamówienie nie należy do użytkownika');
+        return res.status(400).send('Zamówienie nie należy do użytkownika');
 
     res.send({
         ...orders,

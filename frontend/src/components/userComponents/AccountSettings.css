@@ -1,0 +1,26 @@
+.settings-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 2000px;
+    width: 100%;
+    font-size: 1rem;
+}
+.settings-header{
+    width: 60%;
+}
+
+.settings-container p{
+    font-size: 0.8rem;
+}
+.settings-form{
+    border: 2px solid #c2c2c2;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60%;
+    margin-bottom: 20px;
+}

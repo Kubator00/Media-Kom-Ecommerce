@@ -32,7 +32,7 @@ const Slider = () => {
 
 
     async function read() {
-        await axios.post(`http://localhost:3010/products/recommended`)
+        await axios.get(`http://localhost:3010/products/recommended`)
             .then(result => {
                 setProducts(result.data?.products);
             })

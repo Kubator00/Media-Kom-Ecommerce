@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 })
 
 
-const usersRoute = require('./routes/users')
+const usersRoute = require('./routes/users/users')
 const adminsRoute = require('./routes/admin/admin')
 const cartRoute = require('./routes/cart')
 const orderRoute = require('./routes/orders')

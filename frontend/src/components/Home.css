@@ -13,11 +13,12 @@
 }
 
 .home-container {
+    justify-content: flex-start;
     width: 100%;
     max-width: 2000px;
     flex-direction: column;
     margin-top: -20px;
-    min-height: 600px;
+    min-height: 900px;
     font-size: var(--font-size);
 }
 

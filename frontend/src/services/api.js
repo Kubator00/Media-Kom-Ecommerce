@@ -6,6 +6,11 @@ export default {
         token: 'users/token',
         orders: 'users/orders',
         cart: 'users/cart',
+        account: 'users/account',
+        change: {
+            email: 'users/change/email',
+            password: 'users/change/password',
+        }
     },
     orders: {
         new: 'orders/new',
@@ -28,7 +33,7 @@ export default {
     delivery: {
         types: 'delivery/types',
     },
-    products:{
+    products: {
         details: 'products/details'
     }
 

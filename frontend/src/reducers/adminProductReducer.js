@@ -30,7 +30,6 @@ export const adminEditProductReducer = (state = {
     error: null,
     msg: null,
 }, action) => {
-    console.log(action)
     switch (action.type) {
         case ADMIN_EDIT_PRODUCT_IN_PROGRESS:
             return {...state, inprogress: true};

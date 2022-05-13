@@ -7,21 +7,20 @@ import {
 } from "../actions/productAction"
 
 
-export const productFetch = (productId) => {
-   
+export const productFetch = (id) => {
+
     return async dispatch => {
         dispatch(productFetchInProgress());
-        await Axios.post(routes.server + routes.products.details, {
-            productId: productId,
-        })
+        //routes.server + routes.products.details?id=id
+        await Axios.get(routes.server + routes.products.details, {params: {id: id}})
             .then((res) => {
-                console.log(res.data);
                 if (res.data) {
-                    dispatch(productFetchSuccess(res.data.product,res.data.productParameters));
+                    dispatch(productFetchSuccess(res.data.product, res.data.productParameters));
                     return res.data;
                 }
             })
             .catch(err => {
+                console.log(err);
                 dispatch(productFetchError(err.response?.data));
             });
 

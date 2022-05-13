@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const connection = require("../index").connection;
 const selectQuery = require("../components/selectQuery");
 
-router.post('/types', async (req, res) => {
+router.get('/types', async (req, res) => {
     let result;
     try {
         result = await selectQuery(`SELECT * FROM delivery_types where available=1`);

@@ -4,6 +4,8 @@ const verifyUserToken = require('../../components/verifyUserToken')
 const verifyIsAdmin = require('../../components/verifyIsAdmin')
 const getUserId = require('../../components/getUserId');
 router.use(auth)
+
+
 async function auth(req, res, next) {
     try {
         req.headers['userId'] = await getUserId(req)

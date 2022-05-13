@@ -9,7 +9,7 @@ import Axios from "axios"
 export const fetchDeliveryTypes = () => {
     return async dispatch => {
         dispatch(deliveryTypesInProgress);
-        await Axios.post(routes.server + routes.delivery.types)
+        await Axios.get(routes.server + routes.delivery.types)
             .then((res) => {
                 dispatch(deliveryTypesSucess(res.data.deliveryTypes));
                 return res.data.deliveryTypes;

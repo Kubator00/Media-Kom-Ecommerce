@@ -52,7 +52,7 @@ function LogIn() {
                             <Field name="email" class="login-login-form-control" />
                             <label htmlFor="username">Hasło</label>
                             <ErrorMessage name='password' component="div" class='login-errorMsg' />
-                            <Field name="password" class="login-login-form-control" />
+                            <Field type="password" name="password" class="login-login-form-control" />
                             <button type="submit" class="login-button">Zaloguj się</button>
                         </Form>
                     </Formik>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Link, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import './Product.css'
 import './SearchProducts.css'
 import {useSelector, useDispatch} from "react-redux";
@@ -11,7 +11,9 @@ import prevState from "../../customHooks/prevState";
 
 
 const SearchProducts = () => {
-    const {keyword, category} = useParams();
+    const queryParams = new URLSearchParams(useLocation().search);
+    const keyword = queryParams.get("keyword")
+    const category = queryParams.get("category")
     const [firstLoad, setFirstLoad] = useState(false);
     const inProgress = useSelector((state) => state.searchProductsReducer.inprogress);
     const products = useSelector((state) => state.searchProductsReducer.products);
@@ -96,6 +98,12 @@ const SearchProducts = () => {
                 }
             ));
     }
+    if (!keyword && !category)
+        return (
+            <div class='searchProducts-container'>
+                Brak wyników
+            </div>
+        );
 
 
     if (firstLoad === false || inProgress)
@@ -190,7 +198,7 @@ const SearchProducts = () => {
                                 </div>
                             </div>
                             <div class='searchProducts-product-right'>
-                                <Link to='#'>
+                                <Link to='/cart'>
                                     <button class="searchProducts-button" onClick={() => {
                                         dispatch(addToCart(product.productId, 1))
                                     }}>Dodaj do koszyka

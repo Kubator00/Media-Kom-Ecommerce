@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const poolConnection = require("../index").poolConnection;
-const verifyUserToken = require('../components/verifyUserToken')
+const verifyUserToken = require('../../components/verifyUserToken')
 const jwt = require('jsonwebtoken');
-const getUserId = require('../components/getUserId');
-const PRIVATE_KEY = require('../index').PRIVATE_KEY;
+const getUserId = require('../../components/getUserId');
+const PRIVATE_KEY = require('../../index').PRIVATE_KEY;
 const bcrypt = require('bcrypt');
-const login = require('../components/loginUser');
-const register = require('../components/registerUser');
-const loginSchema = require('../components/validationSchemas/loginSchema');
-const registrationSchema = require('../components/validationSchemas/registrationSchema');
-const selectQuery = require('../components/selectQuery')
-const userAuthorization = require('../components/userAuthorization')
+const login = require('../../components/loginUser');
+const register = require('../../components/registerUser');
+const loginSchema = require('../../components/validationSchemas/users/loginSchema');
+const registrationSchema = require('../../components/validationSchemas/users/registrationSchema');
+const selectQuery = require('../../components/selectQuery')
+const userAuthorization = require('../../components/userAuthorization')
 
 router.post('/token', async (req, res) => {
     try {
@@ -39,9 +38,12 @@ router.post('/login', async (req, res) => {
     } catch (err) {
         return res.status(500).send("Błąd połączenia z bazą danych");
     }
-    const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass)
+    if (!user)
+        return res.status(400).send("Nie znaleziono użytkownika");
+
+    if (!await bcrypt.compare(req.body.password, user.password))
         return res.send('Niepoprawny login lub hasło');
+
     const token = jwt.sign({id: user.userId}, PRIVATE_KEY, {expiresIn: 20000});
     res.header('token', token).send({'email': user.email, 'name': user.name, 'token': token, 'isAdmin': user.isAdmin});
 
@@ -52,13 +54,13 @@ router.post('/register', async (req, res) => {
         {name: req.body.name, surname: req.body.name, password: req.body.password, email: req.body.email}
     );
     if (schemaValidate.error)
-        return res.status(500).send('Niepoprawne dane');
+        return res.status(400).send('Niepoprawne dane');
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     let msg;
     try {
         if ((await selectQuery(`SELECT * FROM users where email='${req.body.email}'`))?.length > 0)
-            return res.status(500).send("Konto z podanym adresem e-mail już istnieje");
+            return res.status(400).send("Konto z podanym adresem e-mail już istnieje");
         msg = await register.register(req.body, hashedPassword, res);
     } catch (err) {
         return res.status(500).send("Błąd połączenia z bazą danych");
@@ -111,5 +113,21 @@ router.post('/cart', async (req, res) => {
     }
     res.send(cart);
 })
+
+router.post('/account', async (req, res) => {
+    let account;
+    try {
+        account = (await selectQuery(
+            `SELECT name, surname, email FROM users where userId=${req.headers['userId']}`))[0];
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('Blad pobierania danych');
+    }
+    res.send({account: account});
+})
+
+const change = require('./change')
+router.use('/change', change);
+
 
 module.exports = router;

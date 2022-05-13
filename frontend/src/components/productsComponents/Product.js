@@ -1,15 +1,14 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { Link, useParams } from "react-router-dom";
+import {useEffect} from 'react'
+import {Link, useParams} from "react-router-dom";
 import './Product.css'
-import { useSelector, useDispatch } from 'react-redux'
-import { addToCart } from '../../services/MyCartService'
-import { productFetch } from '../../services/ProductService'
-
+import {useSelector, useDispatch} from 'react-redux'
+import {addToCart} from '../../services/MyCartService'
+import {productFetch} from '../../services/ProductService'
 
 
 const Product = () => {
-    const { productId } = useParams();
+    const {productId} = useParams();
 
     const dispatch = useDispatch()
     const addToCart1 = (productId, amount) => {
@@ -25,33 +24,47 @@ const Product = () => {
     const inProgress = useSelector(state => state.productReducer.inprogress);
     const msg = useSelector(state => state.cartReducer.msg);
 
-    if(inProgress){
+    if (inProgress) {
         return <div>Ładowanie...</div>
     }
-    
+
     if (productParameters && productDetails)
         return (
             <div className="product-container">
                 <div className="section1">
                     <div className="product-photos-section">
-                        <img src={`../products/${productDetails.titleImg}`} className={`product-img`} />
+                        <img src={`../products/${productDetails.titleImg}`} className={`product-img`}/>
                     </div>
                     <div className="product-purchase">
                         <div className="product-title">
                             <h1>{productDetails.title}</h1>
-                            <h1>{productDetails.price.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</h1>
+                            <h1>
+                                {productDetails.price.toLocaleString('pl-PL', {
+                                    style: 'currency',
+                                    currency: 'PLN'
+                                })}
+                            </h1>
                         </div>
                         {msg && msg}
                         <div className="product-buttons">
-                            <button className="product-button" id="product-cart-button" onClick={() => { addToCart1(productId, 1) }}>Dodaj do koszyka</button>
+                            <button className="product-button" id="product-cart-button" onClick={() => {
+                                addToCart1(productId, 1)
+                            }}>Dodaj do koszyka
+                            </button>
 
                             <Link to={'/orderform'}
-                                state={{
-                                    cart: [{ title: productDetails.title, productPrice: productDetails.price, titleImg: productDetails.titleImg, productAmount: 1, productId: productDetails.productId }],
-                                    productsAmount: productDetails.price,
-                                }}
+                                  state={{
+                                      cart: [{
+                                          title: productDetails.title,
+                                          productPrice: productDetails.price,
+                                          titleImg: productDetails.titleImg,
+                                          productAmount: 1,
+                                          productId: productDetails.productId
+                                      }],
+                                      productsAmount: productDetails.price,
+                                  }}
                             >
-                                <button className="product-button" id="product-cart-button" >Kup Teraz</button>
+                                <button className="product-button" id="product-cart-button">Kup Teraz</button>
                             </Link>
 
                         </div>
@@ -65,22 +78,22 @@ const Product = () => {
                     <div class='product-parameter-container'>
                         <h2>Specyfikacja</h2>
                         {productParameters.map((parameter) => (
-                            <div class='product-parameter'>
-                                <div class='product-parameter-parameter'>
-                                    <label>
-                                        <h4>{parameter.name}</h4>
-                                    </label>
-                                </div>
-                                <div class='product-parameter-parameter'>
-                                    <label>
+                            <ul class='product-parameter'>
+                                <li class='product-parameter-parameter'>
+                                    <span>
+                                        <h3>{parameter.name}</h3>
+                                    </span>
+                                </li>
+                                <li class='product-parameter-parameter'>
+                                    <span>
                                         {parameter.description}
-                                    </label>
-                                </div>
-                            </div>
+                                    </span>
+                                </li>
+                            </ul>
                         ))}
-                    </div >
+                    </div>
                 }
-            </div >
+            </div>
 
 
         );
@@ -88,7 +101,6 @@ const Product = () => {
     return <> Ładowanie... </>
 
 };
-
 
 
 export default (Product);

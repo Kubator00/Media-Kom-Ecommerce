@@ -55,15 +55,6 @@ input.login-login-form-control{
     border-radius: 10px;
 }
 
-.login-register-container{
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    justify-content: flex-start;
-    align-items: center;
-    min-height: 300px;
-}
-
 .login-button{
     display: flex;
     flex-direction: column;
@@ -87,6 +78,17 @@ input.login-login-form-control{
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.login-register-container{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 300px;
+}
+
+
 
 @media (max-width: 1150px) {
     .login-container{

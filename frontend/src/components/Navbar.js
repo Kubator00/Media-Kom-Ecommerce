@@ -66,20 +66,20 @@ const AccountMenu = () => {
                             <h4>{`Witaj, ${user.name}`}</h4>
                         </li>
                         <Link to="/orderslist" className="nav-dropdownMenu-link">
-                            <img src='./account/notebook.svg' class='nav-dropdownMenu-icon'/> Moje zamówienia
+                            <img src='./icons/account/notebook.svg' class='nav-dropdownMenu-icon'/> Moje zamówienia
                         </Link>
                         <Link to="/account" className="nav-dropdownMenu-link">
-                            <img src='./account/settings.svg' class='nav-dropdownMenu-icon'/> Ustawienia konta
+                            <img src='./icons/account/settings.svg' class='nav-dropdownMenu-icon'/> Ustawienia konta
                         </Link>
                         {user.isAdmin === 1 &&
                             <Link to="/admin/panel" className="nav-dropdownMenu-link">
-                                <img src='./account/admin.svg' class='nav-dropdownMenu-icon'/> Admin
+                                <img src='./icons//account/admin.svg' class='nav-dropdownMenu-icon'/> Admin
                             </Link>
                         }
                         <button onClick={() => {
                             dispatch(logOutUser())
                         }} className="nav-dropdownMenu-link">
-                            <img src='./account/logout.svg' class='nav-dropdownMenu-icon'
+                            <img src='./icons/account/logout.svg' class='nav-dropdownMenu-icon'
                                  style={{"margin-left": "2px"}}/> Wyloguj się
                         </button>
                     </ul>

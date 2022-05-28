@@ -21,7 +21,7 @@ const OrderDetails = () => {
 
     if (order && !inProgress)
         return (
-            <div className='orderdetails-container'>
+            <div className='page-content'>
                 <div className='orderdetails-details'>
                     <h1>Zamówienie nr {order.orderId}</h1>
                     <span>złożone {`${order.date.slice(8, 10)}.${order.date.slice(5, 7)}.${order.date.slice(0, 4)}`}</span>

@@ -3,7 +3,6 @@ import routes from "./api"
 import {
     verifyTokenInProgress,
     verifyTokenSucess,
-    verifyTokenFailure,
     verifyTokenError,
     logOutUser
 } from "../actions/userAction"
@@ -25,7 +24,7 @@ const verifyToken = () => {
                     return res.data;
                 }
                 dispatch(logOutUser());
-                dispatch(verifyTokenFailure('Sesja wygasła'));
+                dispatch(verifyTokenError('Sesja wygasła'));
                 return res.data;
             })
             .catch(err => {

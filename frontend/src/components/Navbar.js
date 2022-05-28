@@ -7,6 +7,8 @@ import categories from './productsComponents/categoryData';
 import {productRedirect} from '../actions/searchAction'
 import {setKeyword, setCategory} from '../actions/searchAction'
 import verifyToken from "../services/VerifyToken";
+import userAuthorizationReducer from "../reducers/userAuthorizationReducer";
+import userAuthenticationReducer from "../reducers/userAuthenticationReducer";
 
 const SearchInput = () => {
 
@@ -44,8 +46,8 @@ const AccountMenu = () => {
         isClickedSet(p);
     }
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.usersReducer.user);
-    const inProgress = useSelector((state) => state.usersReducer.inprogress);
+    const user = useSelector((state) => state.userAuthenticationReducer.user);
+    const inProgress = useSelector((state) => state.userAuthorizationReducer.inprogress);
     if (!inProgress && user.token)
         return (
             <>

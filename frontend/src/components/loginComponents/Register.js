@@ -11,9 +11,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const Register = () => {
 
-    const inProgress = useSelector(state => state.usersReducer.inprogress);
-    const error = useSelector(state => state.usersReducer.error);
-    const msg = useSelector(state => state.usersReducer.msg);
+    const inProgress = useSelector(state => state.userAuthenticationReducer.inprogress);
+    const error = useSelector(state => state.userAuthenticationReducer.error);
+    const msg = useSelector(state => state.userAuthenticationReducer.msg);
     const dispatch = useDispatch();
 
     const registerHandler = (data) => {

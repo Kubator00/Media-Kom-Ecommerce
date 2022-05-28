@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import usersReducer from "./usersReducer";
+import userAuthenticationReducer from "./userAuthenticationReducer";
 import cartReducer from "./cartReducer";
 import { newOrderReducer, userOrdersReducer, userOrderDetailsReducer } from "./orderReducer";
 import { adminAllOrdersReducer, adminOrderDetailsReducer } from "./adminOrderReducer";
@@ -8,9 +8,11 @@ import { deliveryTypesReducer } from "./deliveryReducer";
 import { productReducer } from "./productReducer";
 import {adminAddProductReducer, adminEditProductReducer} from "./adminProductReducer";
 import {userAccountDetailsReducer, userChangeEmailReducer,userChangePasswordReducer} from "./userAccountDetailsReducer";
+import userAuthorizationReducer from "./userAuthorizationReducer";
 
 export default combineReducers({
-    usersReducer,
+    userAuthenticationReducer,
+    userAuthorizationReducer,
     cartReducer,
     newOrderReducer,
     userOrdersReducer,

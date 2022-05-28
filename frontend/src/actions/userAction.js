@@ -16,7 +16,10 @@ import {
     USER_INFO_ERROR,
     USER_CHANGE_EMAIL_IN_PROGRESS,
     USER_CHANGE_EMAIL_SUCCESS,
-    USER_CHANGE_EMAIL_ERROR, USER_CHANGE_PASSWORD_ERROR, USER_CHANGE_PASSWORD_SUCCESS, USER_CHANGE_PASSWORD_IN_PROGRESS
+    USER_CHANGE_EMAIL_ERROR,
+    USER_CHANGE_PASSWORD_ERROR,
+    USER_CHANGE_PASSWORD_SUCCESS,
+    USER_CHANGE_PASSWORD_IN_PROGRESS
 } from "./usersActionType";
 
 export const logOutUser = () => {
@@ -58,16 +61,13 @@ export const verifyTokenInProgress = () => {
         type: VERIFY_TOKEN_IN_PROGRESS
     };
 }
+
 export const verifyTokenSucess = () => {
     return {
         type: VERIFY_TOKEN_SUCESS
     };
 }
-export const verifyTokenFailure = () => {
-    return {
-        type: VERIFY_TOKEN_FAILURE
-    };
-}
+
 export const verifyTokenError = (error) => {
     return {
         type: VERIFY_TOKEN_ERROR,
@@ -108,7 +108,7 @@ export const userInfoSuccess = (accountDetails) => {
         type: USER_INFO_SUCCESS,
         name: accountDetails.name,
         surname: accountDetails.surname,
-        email:accountDetails.email
+        email: accountDetails.email
     };
 }
 

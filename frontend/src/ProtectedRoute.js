@@ -5,11 +5,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import verifyToken from "./services/VerifyToken";
 import usePrevious from "./customHooks/prevState";
 
+
 const ProdectedRoute = (props) => {
     const [isLoaded, setIsLoaded] = useState(true);
 
-    const inProgress = useSelector((state) => state.usersReducer.inprogress);
-    const user = useSelector((state) => state.usersReducer.user,);
+    const inProgress = useSelector((state) => state.userAuthorizationReducer.inprogress);
+    const user = useSelector((state) => state.userAuthenticationReducer.user,);
 
     const dispatch = useDispatch()
     useEffect(() => {

@@ -40,7 +40,7 @@ const OrderForm = () => {
 
     if (msg)
         return (
-            <div class='orderform-placed-order'>
+            <div class='orderform-placed-order page-content'>
                 <span>{msg}</span>
                 <span>Wkrótce otrzymasz maila z danymi do płatności.</span>
                 <span>
@@ -52,7 +52,7 @@ const OrderForm = () => {
         );
 
     return (
-        <div class='orderform-container'>
+        <div class='orderform-container page-content'>
                 <Formik
                     initialValues={{
                         name: "",

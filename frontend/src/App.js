@@ -23,6 +23,7 @@ import AdminAddProduct from './components/adminComponents/AdminAddProduct';
 import AdminProductList from './components/adminComponents/AdminProductList';
 import AdminEditProduct from './components/adminComponents/AdminEditProduct';
 import SearchProducts from './components/productsComponents/SearchProducts';
+import NotFound from './components/NotFound';
 import {useLayoutEffect} from 'react'
 
 const Wrapper = ({children}) => {
@@ -69,6 +70,9 @@ class App extends React.Component {
                                 <Route path='admin/editproduct/:productId' element={<AdminEditProduct/>}/>
                                 <Route path='admin/order/:id' element={<AdminOrderDetails/>}/>
                             </Route>
+
+                            <Route path="*" element={<NotFound/>} />
+
                         </Routes>
                         <Footer/>
                     </Wrapper>

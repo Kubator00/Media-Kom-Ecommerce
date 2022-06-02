@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 
 const NotFound = () => {
 
     return (
-        <div className="">
+        <div>
             Strony nie znaleziono
         </div>
     );

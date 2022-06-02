@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import './Cart.css'
-import { fetchCart, changeProductAmount } from '../../services/MyCartService'
-import { useDispatch, useSelector } from "react-redux";
-
+import {fetchCart, changeProductAmount} from '../../services/MyCartService'
+import {useDispatch, useSelector} from "react-redux";
 
 
 const UserCart = () => {
@@ -23,55 +22,62 @@ const UserCart = () => {
 
     if (cart?.length < 1)
         return (
-            <div className="mycart-container">
+            <div className='cart cart--noProducts content'>
                 <h1>Brak produktów w koszyku</h1>
             </div>
         );
     if (cart)
         return (
-            <div className="mycart-container">
-                <div className="mycart-cart">
-                    <div className="mycart-cart-title">
+            <div className="cart content">
+                <div className="cart__content">
+                    <div className="cart__header">
                         <h1>Twój koszyk</h1>
-                        <div class="mycart-cart-deleteAll" onClick={() => { deleteAll() }}>
-                            <img src='./icons/trash.svg' class="mycart-cart-icon" style={{ "marginLeft": "10px" }} />
+                        <div class="cart__deleteAll" onClick={() => {
+                            deleteAll()
+                        }}>
+                            <img src='./icons/trash.svg'/>
                             Wyczyść wszystko
                         </div>
                     </div>
                     {cart.map((product) => (
-                        <div className="mycart-product">
+                        <div className="cart__product">
                             <Link to={{
                                 pathname: '/product/' + product.productId
-                            }} className="mycart-product-link">
-                                <div class='cart-img-container'>
-                                    <img src={`./products/${product.titleImg}`} className='cart-img' />
+                            }}>
+                                <div class='cart__productImg'>
+                                    <img src={`./products/${product.titleImg}`}/>
                                 </div>
                                 {product.title}
                             </Link>
-                            <div className='mycart-price-label'>
-                                <h3> {product.price.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })} </h3>
-                                <div className='mycart-price-changeAmount'>
-                                    <img src='./icons/minus.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount - 1)) }} class="mycart-cart-icon" style={{ "margin-right": "3px", "margin-left": "3px" }} />
-                                    <label>
+                            <div className='cart__priceAmount'>
+                                <h3> {product.price.toLocaleString('pl-PL', {style: 'currency', currency: 'PLN'})} </h3>
+                                <div className='cart__changeAmount'>
+                                    <img src='./icons/minus.svg' onClick={() => {
+                                        dispatch(changeProductAmount(product.productId, product.productAmount - 1))
+                                    }} class="cart__icon" style={{"margin-right": "3px", "margin-left": "3px"}}/>
+                                    <span>
                                         {`Ilość:  ${product.productAmount}  `}
-                                    </label>
-                                    <img src='./icons/add.svg' onClick={() => { dispatch(changeProductAmount(product.productId, product.productAmount + 1)) }} class="mycart-cart-icon" style={{ "margin-left": "3px" }} />
+                                    </span>
+                                    <img src='./icons/add.svg' onClick={() => {
+                                        dispatch(changeProductAmount(product.productId, product.productAmount + 1))
+                                    }} class="cart__icon" style={{"margin-left": "3px"}}/>
                                 </div>
-                                <img src='./icons/trash.svg' onClick={() => { dispatch(changeProductAmount(product.productId, 0)) }} class="mycart-cart-icon" style={{ "margin-left": "10px" }} />
+                                <img src='./icons/trash.svg' onClick={() => {
+                                    dispatch(changeProductAmount(product.productId, 0))
+                                }} class="cart__icon" style={{"margin-left": "10px"}}/>
                             </div>
                         </div>
                     ))}
                 </div>
-                <div className="mycart-summary">
+                <div className="cart__summary">
                     <>
                         <span>
                             <h3> Całkowity koszt </h3>
-                            <h3> {totalAmount.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })} </h3>
+                            <h3> {totalAmount.toLocaleString('pl-PL', {style: 'currency', currency: 'PLN'})} </h3>
                         </span>
                         <Link to={'/orderform'}
-                            state={{ cart: cart, productsAmount: totalAmount }}
-                            class="mycart-summary-button"
-                        >
+                              state={{cart: cart, productsAmount: totalAmount}}
+                              class>
                             Przejdź do dostawy
                         </Link>
                     </>
@@ -81,7 +87,6 @@ const UserCart = () => {
     return <>Ladowanie...</>;
 
 }
-
 
 
 export default UserCart;

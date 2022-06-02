@@ -30,13 +30,17 @@ const Product = () => {
 
     if (productParameters && productDetails)
         return (
-            <div className="product-container">
-                <div className="section1">
-                    <div className="product-photos-section">
+            <div className="product content">
+                <div className="product__category">
+                    <Link to={`/`}> Media-Kom >  &nbsp;</Link>
+                    <Link to={`/search?category=${productDetails.categoryName}`}>  {productDetails.categoryName} </Link>
+                </div>
+                <div className="product__main">
+                    <div className="product__img">
                         <img src={`../products/${productDetails.titleImg}`} className={`product-img`}/>
                     </div>
-                    <div className="product-purchase">
-                        <div className="product-title">
+                    <div className="product__info">
+                        <div className="product__name">
                             <h1>{productDetails.title}</h1>
                             <h1>
                                 {productDetails.price.toLocaleString('pl-PL', {
@@ -46,8 +50,8 @@ const Product = () => {
                             </h1>
                         </div>
                         {msg && msg}
-                        <div className="product-buttons">
-                            <button className="product-button" id="product-cart-button" onClick={() => {
+                        <div className="product__purchase">
+                            <button className="product__button" onClick={() => {
                                 addToCart1(productId, 1)
                             }}>Dodaj do koszyka
                             </button>
@@ -64,27 +68,27 @@ const Product = () => {
                                       productsAmount: productDetails.price,
                                   }}
                             >
-                                <button className="product-button" id="product-cart-button">Kup Teraz</button>
+                                <button className="product__button">Kup Teraz</button>
                             </Link>
 
                         </div>
                     </div>
                 </div>
-                <div class='product-description'>
+                <div class='product__description'>
                     <h2>Opis</h2>
                     {productDetails.description}
                 </div>
                 {productParameters.length > 0 &&
-                    <div class='product-parameter-container'>
+                    <div class='product__parameter'>
                         <h2>Specyfikacja</h2>
                         {productParameters.map((parameter) => (
-                            <ul class='product-parameter'>
-                                <li class='product-parameter-parameter'>
+                            <ul>
+                                <li>
                                     <span>
                                         <h3>{parameter.name}</h3>
                                     </span>
                                 </li>
-                                <li class='product-parameter-parameter'>
+                                <li>
                                     <span>
                                         {parameter.description}
                                     </span>

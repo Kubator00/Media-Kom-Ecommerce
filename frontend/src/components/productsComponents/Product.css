@@ -1,45 +1,56 @@
 :root {
     --button-width: 300px;
-    --button-font: 25px;
+    --button-font: 1rem;
     --product-photo-height: 600px;
     --margin-purchase-section: 80px;
-    --product-title-font-size: 40px;
+    --product-title-font-size: 1.6rem;
 }
 
-
-.product-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 2000px;
-    margin: auto;
+.product {
     align-items: center;
-    width: 100%;
-    font-size: 1rem;
 }
 
-.product-title {
-    margin-top: 15px;
+.product__category {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: var(--margin-purchase-section);
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.product-title h1 {
+.product__category a {
+    color: #858383;
+    font-size: 0.7rem;
+}
+
+.product__main {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.product__name {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.product__name h1, .product__name h2 {
     font-size: var(--product-title-font-size);
 }
 
-.section1 {
+
+.product__info {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
 }
 
-.product-photos-section {
+.product__img {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -49,21 +60,21 @@
     user-select: none;
 }
 
-.product-img {
+.product__img img {
     max-width: 80%;
     max-height: 80%;
 }
 
-.product-purchase {
+.product__info {
     height: var(--product-photo-height);
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
 }
 
-.product-buttons {
+.product__purchase {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,27 +82,25 @@
     width: 100%;
 }
 
-.product-button {
+.product__button {
     display: flex;
     justify-content: center;
     width: var(--button-width);
     font-size: var(--button-font);
     margin-bottom: 30px;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 15px;
+    border-radius: 15px;
     border: none;
     cursor: pointer;
-    background-color: transparent;
     color: white;
     background-color: rgb(55, 179, 7);
-    border: 1px solid white;
 }
 
-.product-button:hover {
+.product__button:hover {
     background-color: rgb(10, 241, 126);
 }
 
-.product-description {
+.product__description {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -100,18 +109,19 @@
     justify-content: center;
 }
 
-.product-description h2 {
+.product__description h2 {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.product-parameter-container {
-    width: 80%;
+.product__parameter {
+    width: 100%;
     margin-bottom: 150px;
 }
 
-.product-parameter {
+
+.product__parameter ul {
     width: 100%;
     border-top: 2px solid #e8e8e8;
     border-bottom: 2px solid #e8e8e8;
@@ -120,43 +130,48 @@
     align-items: center;
 }
 
-.product-parameter {
+.product__parameter ul li {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.product-parameter-parameter {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.product-parameter-parameter span {
+.product ul li span {
     width: 50%;
+}
+
+@media (max-width: 1200px) {
+    :root {
+        --product-title-font-size: 1.3rem;
+        --button-font: 0.8rem;
+        --button-width: 200px;
+    }
+}
+
+@media (max-width: 1000px) {
+    :root {
+        --product-title-font-size: 1rem;
+        --button-font: 0.8rem;
+        --button-width: 200px;
+    }
 }
 
 @media (max-width: 700px) {
     :root {
-        --button-width: 150px;
-        --button-font: 15px;
+        --button-width: 130px;
+        --button-font: 0.6rem;
         --product-photo-height: 300px;
         --margin-purchase-section: 0px;
-        --product-title-font-size: 15px;
+        --product-title-font-size: 0.7rem;
     }
 
-    .product-container {
-        font-size: 0.8rem;
+    .product-category a {
+        font-size: 0.6rem;
     }
 
     .product-button {
         padding: 10px;
     }
 }
-@media (max-width: 500px) {
-    .product-container {
-        font-size: 0.6rem;
-    }
-}
+

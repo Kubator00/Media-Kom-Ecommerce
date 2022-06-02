@@ -5,34 +5,34 @@ function Footer() {
 
 
     return (
-        <div class="footer-container">
-            <div class="footer">
-                <div class='footer-socials'>
+        <div class='footer content'>
+            <div class="footer__info">
+                <div class='footer__socials'>
                     <h3>Znajdziesz nas na</h3>
-                    <div class='footer-socials-icon-container'>
-                        <img src="./icons/facebook.svg" class="footer-social-icons" />
-                        <img src="./icons/linkedin.svg" class="footer-social-icons" />
+                    <div>
+                        <img src="./icons/facebook.svg" class="footer__socialIcon" />
+                        <img src="./icons/linkedin.svg" class="footer__socialIcon" />
                     </div>
                 </div>
-                <div class='footer-contact'>
+                <div class='footer__contact'>
                     <h3>Kontakt</h3>
                     <span>
-                        <img src="./icons/address-book.svg" class="footer-contact-icons" /> 34 123 45 67
+                        <img src="./icons/address-book.svg" class="footer__contactIcon" /> 34 123 45 67
                     </span>
                     <span>
-                        <img src="./icons/location.svg" class="footer-contact-icons" />
+                        <img src="./icons/location.svg" class="footer__contactIcon" />
                         ul. Politechniczna 999a, Łódź
                     </span>
                     <span>
-                        <img src="./icons/envelope.svg" class="footer-contact-icons" />
+                        <img src="./icons/envelope.svg" class="footer__contactIcon" />
                         media-kom@media-kom.pl
                     </span>
                 </div>
             </div>
-            <div class="footer-author">
-                <label>&#xA9; Media-Kom 2022</label>
-                <label>Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a></label>
-                <label>Jakub Więcek</label>
+            <div class="footer__author">
+                <span>&#xA9; Media-Kom 2022</span>
+                <span>Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a></span>
+                <span>Jakub Więcek</span>
             </div>
         </div>
     )

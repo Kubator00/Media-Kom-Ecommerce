@@ -35,7 +35,7 @@ const AdminProductList = () => {
 
 
     return (
-        <div className='searchProducts-productContainer'>
+        <div className='searchProducts__list'>
             <div className='editProduct-list-searchProduct-container'>
                 <div class='editProduct-list-searchProduct'>
                     <label> Wyszukaj produktu:</label> <input type='text' onChange={keywordHandler}/>
@@ -44,7 +44,7 @@ const AdminProductList = () => {
             </div>
             {products?.length > 0 ?
                 products.map((product) => (
-                    <div class='searchProducts-product-container'>
+                    <div class='searchProducts__product'>
                         <div className='searchProducts-product-left'>
                             <img src={`./products/${product.titleImg}`} className='searchProducts-product-left-img'/>
                             <div className='searchProducts-product-left-label'>

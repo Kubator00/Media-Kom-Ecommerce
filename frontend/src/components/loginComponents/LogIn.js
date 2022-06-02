@@ -25,7 +25,7 @@ function LogIn() {
         return <div>Ładowanie...</div>;
 
     return (
-        <div className={'login-container page-content'}>
+        <div className={'login-container content'}>
             <div className="login-login-container">
                 <div className="login-login-content">
                     <h1>Zaloguj się</h1>

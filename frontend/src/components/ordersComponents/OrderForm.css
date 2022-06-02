@@ -1,50 +1,43 @@
 @import "../variable.css";
 
-.orderform-container {
+.orderForm {
     flex-direction: row;
     justify-content: center;
 }
 
-.orderform-form-container,.orderform-delivery, .orderform-form-details,.orderform-cart-cart,.orderform-cart-container{
+.orderForm form, .orderForm__delivery, .orderForm__details,.orderForm__productList,.orderForm__cart{
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.orderform-form-container {
-    justify-content: flex-start;
-    align-items: flex-start;
-}
 
-.orderform-delivery {
+.orderForm__delivery {
     justify-content: center;
 }
 
- .orderform-form-details{
+ .orderForm__details{
     justify-content: space-between;
 }
 
 
-.orderform-form-details input {
+.orderForm__details input {
     width: 80%;
     height: 30px;
     border-radius: 10px;
     border-color: #c2c1c1;
     border-style: solid;
 }
-.form-errorMsg{
+
+.orderForm__errorMsg{
     color:red;
     font-size: 0.8rem;
 }
 
-.orderform-form-button-details-button-container {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
 
-.orderform-form-details-button {
+
+.orderForm__button {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,23 +53,23 @@
     border: none;
 }
 
-.orderform-form-details-button:hover {
+.orderForm button:hover {
     transform: scale(102%);
     background-color: rgb(7, 153, 104);
 }
 
-.orderform-cart-container {
+.orderForm__cart {
     justify-content: space-between;
     align-items: center;
     border: 2px solid #c2c1c1;
     border-radius: 10px;
 }
 
-.orderform-cart-cart {
+.orderForm__productList {
     align-items: center;
 }
 
-.orderform-cart-product-link {
+.orderForm__product {
     display: inline-flex;
     width: 100%;
     flex-direction: row;
@@ -86,35 +79,39 @@
     padding-bottom: 30px;
     border-bottom: 2px solid #c2c1c1;
 }
-.orderform-cart-container-totalAmountLabel{
+.orderForm__totalAmount{
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.orderform-cart-product-link label {
+.orderForm__product label {
     width: 200px;
 }
 
-.orderform-img {
+.orderForm__productList img {
     height: 50px;
     width: 50px;
 }
 
-.orderform-placed-order{
+.orderForm__placedOrder{
     align-items: center;
     justify-content: flex-start;
 }
-.orderform-placed-order span{
+.orderForm__placedOrder span{
     margin-bottom: 40px;
 }
 
 
 @media (max-width: 850px) {
-    .orderform-container {
+    .orderForm {
         flex-direction: column;
     }
 
-    .orderform-cart-container {
+    .orderForm__cart {
         margin-top: 30px;
         width: 100%;
+    }
+    .orderForm__details input{
+        width: 100%;
+        height: 20px;
     }
 }

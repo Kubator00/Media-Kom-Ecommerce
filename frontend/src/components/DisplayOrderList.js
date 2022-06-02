@@ -23,7 +23,7 @@ const DisplayOrderList = (props) => {
         return <div> Ładowanie...</div>
 
     return (
-        <div className='page-content'>
+        <div className='content'>
             <ul className='userOrders-filter'>
                 <li className='userOrders-dropdownMenu-activeButton' onClick={filerStatusMenuHandler}>
                     <b>Filtruj</b>

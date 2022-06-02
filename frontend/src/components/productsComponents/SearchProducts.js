@@ -11,18 +11,18 @@ import prevState from "../../customHooks/prevState";
 
 const mobileFilterMenu = (setMobileFilterMenu, sortProducts, priceFilterHandler, priceFilter, filterPrice) => {
     return (
-        <div className="mobileFilter-container">
-            <ul className="mobileFilter-content">
+        <div className="mobileFilter">
+            <ul>
                 <li>
                     <span>
                         <h2>Filtry</h2>
-                        <img src="./icons/cross.svg" className="searchProducts-filterIcon"
+                        <img src="./icons/cross.svg" className="filter__img"
                              onClick={() => setMobileFilterMenu(false)}/>
                     </span>
                 </li>
                 <li>
                     <h3>Sortowanie</h3>
-                    <select className='nav-search-select' onChange={sortProducts}>
+                    <select className='filter__select' onChange={sortProducts}>
                         <option defaultValue value='default'>Domyślnie</option>
                         <option value='price asc'>Cena rosnąco</option>
                         <option value='price desc'>Cena malejąco</option>
@@ -31,14 +31,14 @@ const mobileFilterMenu = (setMobileFilterMenu, sortProducts, priceFilterHandler,
                 <li>
                     <h3>Cena</h3>
                     <span>
-                                Od <input type='number' className='searchProducts-filter-number' placeholder='Od'
+                                Od <input type='number' className='filter__inputNumber' placeholder='Od'
                                           onChange={priceFilterHandler} name="from" value={priceFilter.from}/>
-                                Do <input type='number' className='searchProducts-filter-number' placeholder='Do'
+                                Do <input type='number' className='filter__inputNumber' placeholder='Do'
                                           onChange={priceFilterHandler} name="to" value={priceFilter.to}/>
                             </span>
                 </li>
                 <li>
-                    <button onClick={filterPrice} className='searchProducts-filter-button'>Filtruj</button>
+                    <button onClick={filterPrice} className='filter__button'>Filtruj</button>
                 </li>
             </ul>
         </div>
@@ -47,27 +47,27 @@ const mobileFilterMenu = (setMobileFilterMenu, sortProducts, priceFilterHandler,
 
 const desktopFilterMenu = (sortProducts, priceFilterHandler, priceFilter, filterPrice) => {
     return (
-        <div className='searchProducts-filterContainer'>
-            <ul className='searchProducts-filters'>
-                <li className='searchProducts-filter'>
+        <div className='filter'>
+            <ul>
+                <li>
                     <h3>Sortowanie</h3>
-                    <select className='nav-search-select' onChange={sortProducts}>
+                    <select className='filter__select' onChange={sortProducts}>
                         <option defaultValue value='default'>Domyślnie</option>
                         <option value='price asc'>Cena rosnąco</option>
                         <option value='price desc'>Cena malejąco</option>
                     </select>
                 </li>
-                <li className='searchProducts-filter'>
+                <li>
                     <h3>Cena</h3>
                     <span>
-                                Od <input type='number' className='searchProducts-filter-number' placeholder='Od'
+                                Od <input type='number' className='filter__inputNumber' placeholder='Od'
                                           onChange={priceFilterHandler} name="from" value={priceFilter.from}/>
-                                Do <input type='number' className='searchProducts-filter-number' placeholder='Do'
+                                Do <input type='number' className='filter__inputNumber' placeholder='Do'
                                           onChange={priceFilterHandler} name="to" value={priceFilter.to}/>
-                            </span>
+                    </span>
                 </li>
-                <li className='searchProducts-filter'>
-                    <button onClick={filterPrice} className='searchProducts-filter-button'>Filtruj</button>
+                <li>
+                    <button onClick={filterPrice} className='filter__button'>Filtruj</button>
                 </li>
             </ul>
         </div>
@@ -166,29 +166,31 @@ const SearchProducts = () => {
 
     if (firstLoad === false || inProgress)
         return (
-            <div className='searchProducts-container'>
+            <div className='searchProducts'>
                 Ładowanie...
             </div>
         );
 
     if (!keyword && !category)
         return (
-            <div className='searchProducts-container'>
+            <div className='searchProducts'>
                 Brak wyników
             </div>
         );
 
     return (
-        <div className='searchProducts-container'>
+        <div className='searchProducts content'>
             {isActiveMobileFilterMenu && mobileFilterMenu(setIsActiveMobileFilterMenu, sortProducts, priceFilterHandler, priceFilter, filterPrice)}
 
             {!isMobileFilterMenu && desktopFilterMenu(sortProducts, priceFilterHandler, priceFilter, filterPrice)}
 
-            <div className='searchProducts-productContainer'>
-                <div className='searchProducts-nav'>
+            <div className='searchProducts__list'>
+                <div className='searchProducts__nav'>
                     {isMobileFilterMenu &&
-                        <div className='searchProducts-filterContainer' onClick={() => setIsActiveMobileFilterMenu(true)}>
-                            <span><img src="./icons/filter.svg" className="searchProducts-filterIcon"/>Filtry</span>
+                        <div className='filter' onClick={() => setIsActiveMobileFilterMenu(true)}>
+                            <span>
+                                <img src="./icons/filter.svg" className="filter__img"/>Filtry
+                            </span>
                         </div>
                     }
                     <h1>{keyword ? `Wyniki wyszukiwania dla "${keyword}":` : category.toUpperCase()}</h1>
@@ -196,17 +198,17 @@ const SearchProducts = () => {
 
                 {filteredProducts?.length > 0 ?
                     filteredProducts.map((product) => (
-                        <Link to={`/product/${product.productId}`} className='searchProducts-product-container'>
-                            <div className='searchProducts-product-left'>
-                                <img src={`./products/${product.titleImg}`} className='searchProducts-product-left-img'/>
-                                <div className='searchProducts-product-left-label'>
-                                    <label>{product.title}</label>
+                        <Link to={`/product/${product.productId}`} className='searchProducts__product'>
+                            <div className='searchProducts__productInfo'>
+                                <img src={`./products/${product.titleImg}`}/>
+                                <div>
+                                    <span>{product.title}</span>
                                     <h4>{product.price} zł</h4>
                                 </div>
                             </div>
-                            <div className='searchProducts-product-right'>
+                            <div className='searchProducts__purchase'>
                                 <Link to='/cart'>
-                                    <button className="searchProducts-button" onClick={() => {
+                                    <button className="searchProducts__button" onClick={() => {
                                         dispatch(addToCart(product.productId, 1))
                                     }}>Dodaj do koszyka
                                     </button>

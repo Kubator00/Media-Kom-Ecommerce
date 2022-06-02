@@ -1,105 +1,26 @@
+@import url("./variable.css");
 
-@import url("./variable.css"); 
-:root {
-    --height-slider: 400px;
-    --width-slider: 370px;
-    --font-size: 0.9rem;
+.home {
+    align-items: center;
+    justify-content: flex-start;
 }
 
-.home-container,.home-slider,.home-slider-product-img-container,.home-slider-product{
+.home h1 {
+    margin-left: 40px;
+    font-size: 1.5rem;
+}
+
+.home__banner{
+    width: 100%;
+    border-radius: 30px;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
-.home-container {
-    justify-content: flex-start;
+.home__banner img{
     width: 100%;
-    max-width: 2000px;
-    flex-direction: column;
-    margin-top: -20px;
-    min-height: 900px;
-    font-size: var(--font-size);
-}
-
-.home-container h1 {
-    margin-left: 40px;
-}
-
-.home-slider {
-    justify-content: space-between;
-    max-width: 2000px;
-    width: 100%;
-    user-select: none; 
-}
-
-.home-slider-product {
-    height: var(--height-slider);
-    flex-direction: column;
-    justify-content: flex-start;
-    text-align: center;
-    width: var(--width-slider);
-    margin: 5px;
-    padding: 10px;
-    border: 2px solid lightgray;
-    transition-duration: var(--transition-duration);
-}
-.home-slider-product:hover{
-    transform: scale(102%);
-}
-
-.home-slider-product-img-container1{
-    height: 70%;
-}
-
-.home-slider-product-img-container{
-    width: 100%;
-    height: 100%;
-}
-.home-slider-product-img {
-    max-width: 70%;
-    max-height: 70%;
-}
-
-.home-slider-product label{
-    height: 15%;
-}
-
-.home-slider-buttons {
-    max-width: 30px;
-    max-height: 30px;
-}
-.home-slider-buttons:hover{
-    transform: scale(110%);
-}
-
-
-@media (max-width: 1750px) {
-    :root {
-        --width-slider: 300px;
-    }
-}
-@media only screen and (max-width: 1500px) {
-    :root {
-        --width-slider: 250px;
-    }
-}
-@media only screen and (max-width: 1250px) {
-    :root {
-        --width-slider: 200px;
-        --font-size: 0.8rem;
-    }
-}
-@media only screen and (max-width: 1050px) {
-    :root {
-        --width-slider: 350px;
-    }
-}
-@media only screen and (max-width: 900px) {
-    :root {
-        --width-slider: 250px;
-        --font-size: 0.7rem;
-    }
+    border-radius: 30px;
+    margin: 0 0 20px 0;
 }
 
 

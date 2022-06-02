@@ -1,26 +1,21 @@
-.settings-container {
-    display: flex;
-    flex-direction: column;
+.settings {
     justify-content: space-around;
     align-items: center;
-    max-width: 2000px;
     min-height: 1300px;
-    width: 100%;
-    font-size: 1rem;
 }
 
-.settings-header {
+.settings__header {
     width: 60%;
 }
 
-.settings-accountData {
+.settings__accountData {
     width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-.settings-formContainer {
+.settings__form {
     border: 2px solid #c2c2c2;
     border-radius: 10px;
     display: flex;
@@ -31,30 +26,33 @@
     min-height: 400px;
 }
 
-.settings-form {
+.settings form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     min-height: 270px;
 }
+.settings__form--changePassword form{
+min-height: 400px;
+}
 
-.settings-form-control {
+.settings__formControl {
     display: flex;
     flex-direction: column;
 }
 
-label.settings-form-control {
+label.settings__formControl {
     font-size: 45px;
 }
 
-input.settings-form-control {
+input.settings__formControl {
     width: 300px;
     height: 30px;
     border: 2px solid #c2c2c2;
     border-radius: 10px;
 }
 
-.settings-button {
+.settings__button {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,11 +67,11 @@ input.settings-form-control {
     border: none;
 }
 
-.settings-button:hover {
+.settings__button:hover {
     background-color: #136eaa;
 }
 
-.settings-errorMsg {
+.settings__errorMsg {
     color: red;
     font-size: 0.7rem;
     margin-top: 5px;
@@ -82,22 +80,22 @@ input.settings-form-control {
 
 @media (max-width: 600px) {
 
-    .settings-header {
+    .settings__header {
         width: 100%;
     }
 
-    .settings-container {
+    .settings {
         font-size: 0.7rem;
     }
-    .settings-formContainer{
+    .settings__form{
         width: 90%;
     }
 
-    input.settings-form-control {
+    input.settings__formControl {
         width: 200px;
     }
 
-    .settings-button {
+    .settings__button {
         height: 40px;
         width: 200px;
     }

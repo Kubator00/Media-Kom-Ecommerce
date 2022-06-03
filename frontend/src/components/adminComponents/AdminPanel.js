@@ -2,28 +2,23 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import './AdminPanel.css'
 
-class AdminPanel extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+function AdminPanel() {
 
+    return (
+        <div className='adminPanel'>
+            <h1>Panel administracyjny</h1>
+            <Link to='/admin/allorders' className='adminPanel__link'>
+                Wszystkie zamówienia
+            </Link>
+            <Link to='/admin/addproduct' className='adminPanel__link'>
+                Dodaj nowy produkt
+            </Link>
+            <Link to='/admin/editproduct/list' className='adminPanel__link'>
+                Edytuj produkt
+            </Link>
+        </div>
+    );
 
-    render() {
-        return (
-            <div class='adminpanel-conatiner'>
-                <h1>Panel administracyjny</h1>
-                <Link to='/admin/allorders' class='adminpanel-link'>
-                    Wszystkie zamówienia
-                </Link>
-                <Link to='/admin/addproduct' class='adminpanel-link'>
-                    Dodaj nowy produkt
-                </Link>
-                <Link to='/admin/editproduct/list' class='adminpanel-link'>
-                    Edytuj produkt
-                </Link>
-            </div>
-        );
-    }
 }
 
 export default AdminPanel;

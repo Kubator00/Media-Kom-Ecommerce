@@ -1,59 +1,52 @@
 @import url("../variable.css");
 
-.login-container{
+.login{
     flex-direction: row;
     justify-content: space-around;
     align-items: flex-start;
+    min-width: 400px;
 }
 
-.login-container h1{
+.login h1{
     font-size: 35px;
 }
 
-.login-login-container, .login-login-content{
+.login__content{
     display: flex;
     flex-direction: column;
     width: 100%;
-}
-
-.login-login-container{
-    justify-content: space-around;
-}
-
-.login-login-content{
     justify-content: flex-start;
     align-items: center;
     border: 2px solid #c2c2c2;
     border-radius: 10px;
-    margin-left: 30px;
 }
 
-.login-login-form{
+.login__form{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 270px;
 }
 
-.login-login-form button{
+.login__form button{
     margin-bottom: 25px;
     margin-top: 25px;
 }
-.login-login-form-control{
+.login__formControl{
     display: flex;
     flex-direction: column;
 }
-label.login-login-form-control{
+label.login__formControl{
     font-size: 45px;
 }
-input.login-login-form-control{
+input.login__formControl{
     width: 300px;
     height: 30px;
     border: 2px solid #c2c2c2;
     border-radius: 10px;
 }
 
-.login-button{
+.login__button{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,18 +60,18 @@ input.login-login-form-control{
     border-radius: 10px;
     border: none;
 }
-.login-button:hover{
+.login__button:hover{
     background-color: #136eaa;
 }
 
-.login-errorMsg{
+.login__errorMsg{
     color: red;
     font-size: 0.7rem;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.login-register-container{
+.login__register{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -90,15 +83,15 @@ input.login-login-form-control{
 
 
 @media (max-width: 1150px) {
-    .login-container{
+    .login{
         flex-direction: column;
     }
-    .login-login-content{
+    .login__content{
         width: 100%;
         margin-left: 0;
         border:none;
     }
-    .login-register-container{
+    .login__register{
         margin-top: 30px;
     }
 

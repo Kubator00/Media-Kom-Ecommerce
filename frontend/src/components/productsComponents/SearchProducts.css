@@ -119,7 +119,7 @@
     height: 150px;
 }
 
-.searchProducts__productInfo img {
+.searchProducts__productImg{
     max-height: 80%;
     max-width: 80%;
 }

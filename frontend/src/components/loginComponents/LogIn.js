@@ -25,38 +25,36 @@ function LogIn() {
         return <div>Ładowanie...</div>;
 
     return (
-        <div className={'login-container content'}>
-            <div className="login-login-container">
-                <div className="login-login-content">
-                    <h1>Zaloguj się</h1>
-                    {msg && <h4 style={{"color": "green"}}>{msg}</h4>}<br/>
-                    {error && <h4 style={{"color": "red"}}>{error}</h4>}
-                    <Formik
-                        initialValues={{
-                            email: '',
-                            password: ''
-                        }}
-                        onSubmit={(values) => {
-                            logInHandler(values)
-                        }}
-                        validationSchema={validate}
-                    >
+        <div className='login content'>
+            <div className="login__content">
+                <h1>Zaloguj się</h1>
+                {msg && <h4 style={{"color": "green"}}>{msg}</h4>}<br/>
+                {error && <h4 style={{"color": "red"}}>{error}</h4>}
+                <Formik
+                    initialValues={{
+                        email: '',
+                        password: ''
+                    }}
+                    onSubmit={(values) => {
+                        logInHandler(values)
+                    }}
+                    validationSchema={validate}
+                >
 
-                        <Form className="login-login-form">
-                            <label htmlFor="email">Adres email</label>
-                            <ErrorMessage name='email' component="div" className='login-errorMsg'/>
-                            <Field name="email" className="login-login-form-control"/>
-                            <label htmlFor="username">Hasło</label>
-                            <ErrorMessage name='password' component="div" className='login-errorMsg'/>
-                            <Field type="password" name="password" className="login-login-form-control"/>
-                            <button type="submit" className="login-button">Zaloguj się</button>
-                        </Form>
-                    </Formik>
-                </div>
+                    <Form className="login__form">
+                        <label htmlFor="email">Adres email</label>
+                        <ErrorMessage name='email' component="div" className='login__errorMsg'/>
+                        <Field name="email" className="login__formControl"/>
+                        <label htmlFor="username">Hasło</label>
+                        <ErrorMessage name='password' component="div" className='login__errorMsg'/>
+                        <Field type="password" name="password" className="login__formControl"/>
+                        <button type="submit" className="login__button">Zaloguj się</button>
+                    </Form>
+                </Formik>
             </div>
-            <div className="login-register-container">
+            <div className="login__register">
                 <h1>Nie masz konta?</h1>
-                <Link to="/register" className="login-button">
+                <Link to="/register" className="login__button">
                     Zarejestruj się
                 </Link>
             </div>

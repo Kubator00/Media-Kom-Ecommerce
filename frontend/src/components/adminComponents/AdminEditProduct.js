@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
-import './AdminEditProduct.css'
 import {adminEditProduct} from '../../services/admin/adminEditProduct'
 import {adminDeleteProduct} from '../../services/admin/adminDeleteProduct'
 import {useDispatch, useSelector} from "react-redux";
 import EditProductDetailsPanel from "./EditProductDetailsPanel";
 import {productFetch} from "../../services/ProductService";
-import {Navigate, useParams} from "react-router-dom";
-import {adminEditProductReducer} from "../../reducers/adminProductReducer";
+import {Navigate ,useParams} from "react-router-dom";
 
 const AdminEditProduct = (props) => {
     const dispatch = useDispatch();
@@ -15,7 +13,6 @@ const AdminEditProduct = (props) => {
         dispatch(adminEditProduct(values));
     };
     const deleteProductHandler = () => {
-        console.log(productId)
         dispatch(adminDeleteProduct(productId));
         setNeedRedirect(true);
     };
@@ -53,7 +50,8 @@ const AdminEditProduct = (props) => {
     if (needRedirect)
         return <Navigate to={`/admin/editproduct/list`}/>
 
-    return (<div>
+    return (
+        <div>
             <h1>Edytuj produkt</h1>
             <button onClick={deleteProductHandler}>Usuń</button>
             <EditProductDetailsPanel initialValues={initialValues} err={err} msg={msg} productId={productId}

@@ -7,13 +7,12 @@ import categories from './productsComponents/categoryData';
 import {productRedirect} from '../actions/searchAction'
 import {setKeyword, setCategory} from '../actions/searchAction'
 import verifyToken from "../services/VerifyToken";
-import userAuthorizationReducer from "../reducers/userAuthorizationReducer";
-import userAuthenticationReducer from "../reducers/userAuthenticationReducer";
 
 const SearchInput = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+
         dispatch(productRedirect(true));
     }
     const dispatch = useDispatch();
@@ -24,17 +23,18 @@ const SearchInput = () => {
         dispatch(setCategory(event.target.value.toLowerCase()));
     }
     return (
-        <form class="nav-search-section" onSubmit={submitHandler}>
-            <input type="text" class="nav-search" placeholder='Wyszukaj...' onChange={textChangeHandler} name='search'/>
+        <form class="nav__search" onSubmit={submitHandler}>
+            <input type="text" class="nav__searchInput" placeholder='Wyszukaj...' onChange={textChangeHandler}
+                   name='search'/>
             <input type="submit" hidden/>
-            <select onChange={selectHandler} class='nav-search-select'>
+            <select onChange={selectHandler} class='nav__searchSelect'>
                 <option defaultValue value=''>Wszędzie</option>
                 {categories.map((category) => (
                     <option value={category.name}>{category.name}</option>
                 ))}
             </select>
             <button type='submit'>
-                <img src='./icons/search.svg' class='icons'/>
+                <img src='./icons/search.svg' class='nav__icon'/>
             </button>
         </form>
     );
@@ -51,53 +51,53 @@ const AccountMenu = () => {
     if (!inProgress && user.token)
         return (
             <>
-                <ul class="nav-dropdownMenu-container" onClick={() => {
+                <ul class="nav__dropdownMenu" onClick={() => {
                     clickHandler(!isClicked)
                 }} onMouseEnter={() => {
                     clickHandler(true)
                 }} onMouseLeave={() => {
                     clickHandler(false)
                 }}>
-                    <li class='nav-button' id="your-account" style={{"border-bottom": "none"}}>
-                        <img src='./icons/user.svg' class='icons'/>
+                    <li class='nav__link nav__link--account' style={{"border-bottom": "none"}}>
+                        <img src='./icons/user.svg' class='nav__icon'/>
                         Twoje konto
                     </li>
-                    <ul class={isClicked ? "nav-dropdownMenu-show" : 'nav-dropdownMenu'}
+                    <ul class={isClicked ? "nav__dropdownMenu--show" : 'nav__dropdownMenu--hidden'}
                         id={isClicked && "accountMenu"}>
                         <li>
                             <h4>{`Witaj, ${user.name}`}</h4>
                         </li>
-                        <Link to="/orderslist" className="nav-dropdownMenu-link">
-                            <img src='./icons/account/notebook.svg' class='nav-dropdownMenu-icon'/> Moje zamówienia
+                        <Link to="/orderslist" className="nav__dropdownMenuLink">
+                            <img src='./icons/account/notebook.svg' class='nav__dropdownMenuIcon'/> Moje zamówienia
                         </Link>
-                        <Link to="/account" className="nav-dropdownMenu-link">
-                            <img src='./icons/account/settings.svg' class='nav-dropdownMenu-icon'/> Ustawienia konta
+                        <Link to="/account" className="nav__dropdownMenuLink">
+                            <img src='./icons/account/settings.svg' class='nav__dropdownMenuIcon'/> Ustawienia konta
                         </Link>
                         {user.isAdmin === 1 &&
-                            <Link to="/admin/panel" className="nav-dropdownMenu-link">
-                                <img src='./icons//account/admin.svg' class='nav-dropdownMenu-icon'/> Admin
+                            <Link to="/admin/panel" className="nav__dropdownMenuLink">
+                                <img src='./icons//account/admin.svg' class='nav__dropdownMenuIcon'/> Admin
                             </Link>
                         }
                         <button onClick={() => {
                             dispatch(logOutUser())
-                        }} className="nav-dropdownMenu-link">
-                            <img src='./icons/account/logout.svg' class='nav-dropdownMenu-icon'
+                        }} className="nav__dropdownMenuLink">
+                            <img src='./icons/account/logout.svg' class='nav__dropdownMenuIcon'
                                  style={{"margin-left": "2px"}}/> Wyloguj się
                         </button>
                     </ul>
                 </ul>
 
 
-                <Link to="/cart" class='nav-button'>
-                    <img src='./icons/cart-shopping-solid.svg' class='icons'/>
+                <Link to="/cart" class='nav__link'>
+                    <img src='./icons/cart-shopping-solid.svg' class='nav__icon'/>
                     Koszyk
                 </Link>
             </>
         );
 
     return (
-        <Link to="/login" class='nav-button'>
-            <img src='./icons/user.svg' class='icons'/>
+        <Link to="/login" class='nav__link'>
+            <img src='./icons/user.svg' class='nav__icon'/>
             Zaloguj się
         </Link>
     );
@@ -130,20 +130,20 @@ const Categories = () => {
 
     if (isMobileActive)
         return (
-            <div class='nav-categories-container'>
-                <div class='nav-categoryButton' onMouseEnter={mobileCategoryHandler}
+            <div class='nav__categories'>
+                <div class='nav__categoryButton' onMouseEnter={mobileCategoryHandler}
                      onMouseLeave={mobileCategoryHandler}>
                     <span>
-                        {<img src="./icons/menu.svg" class='nav-category-icons'/>}
+                        {<img src="./icons/menu.svg" class='nav__categoryIcon'/>}
                         <label>Kategorie</label>
                     </span>
                     {categoryButtonIsActive &&
 
-                        <div class="nav-dropdownMenu-container">
-                            <div class={"nav-dropdownMenu-show"}>
+                        <div class="nav__dropdownMenu">
+                            <div class={"nav__dropdownMenu--show"}>
                                 {categories.map((category) => (
-                                    <Link to={`/search?category=${category.name}`} class='nav-category'>
-                                        {<img src={category.img} class='nav-category-icons'/>}
+                                    <Link to={`/search?category=${category.name}`} class='nav__categoryLink'>
+                                        {<img src={category.img} class='nav__categoryIcon'/>}
                                         <label>{category.name}</label>
                                     </Link>
                                 ))
@@ -156,11 +156,11 @@ const Categories = () => {
             </div>
         );
     return (
-        <div class='nav-categories-container'>
+        <div class='nav__categories'>
             {categories.map((category) => (
-                <Link to={`/search?category=${category.name}`} class='nav-category'>
-                    {<img src={category.img} class='nav-category-icons'/>}
-                    <label> {category.name} </label>
+                <Link to={`/search?category=${category.name}`} class='nav__categoryLink'>
+                    {<img src={category.img} class='nav__categoryIcon'/>}
+                    <span> {category.name} </span>
                 </Link>
             ))
             }
@@ -176,6 +176,9 @@ function Navbar() {
     const [mobileSearch, setMobileSearch] = useState(false);
 
     const navPositionFixed = () => {
+        if (!document.getElementById('nav'))
+            return;
+
         if (window.scrollY > document.getElementById('nav').clientHeight
             && window.innerHeight > document.getElementById('nav').clientHeight
             && window.innerWidth > 1350)
@@ -198,32 +201,35 @@ function Navbar() {
     }, [])
 
 
+    if (redirect)
+        return <Navigate
+            to={`/search?${searchValue && "keyword=" + searchValue}${(searchValue && searchCategory) && "&"}${searchCategory && "category=" + searchCategory}`}/>
+
+
     return (
-        <div class="nav-container">
-            <div class={positionFixed ? 'nav-fixed' : 'nav'}>
-                <div id='nav' className='nav-main'>
-                    <div className='nav-up'>
-                        <div class="nav-left">
-                            <Link to='/' class='nav-logo'>
+        <div class='nav'>
+            <div id='nav' className={positionFixed ? 'nav--fixed' : 'nav--static'}>
+                <div className='nav__content'>
+                    <div className='nav__topBar'>
+                        <div class="nav__main">
+                            <Link to='/' class='nav__logo'>
                                 <img src='logo.png'/>
                             </Link>
                             {!mobileSearch && <SearchInput/>}
                         </div>
-                        <div class="nav-right">
-                            <Link to="#" class='nav-button'>
-                                <img src='./icons/headset.svg' class='icons'/>
+                        <div class="nav__linksSection">
+                            <Link to="#" class='nav__link'>
+                                <img src='./icons/headset.svg' class='nav__icon'/>
                                 Kontakt
                             </Link>
                             <AccountMenu/>
                         </div>
                     </div>
-                    <div className='nav-down'>
+                    <div className='nav__bottomBar'>
                         <Categories/>
                         {mobileSearch && <SearchInput/>}
-                        {(redirect) &&
-                            <Navigate to=
-                                          {`/search?${searchValue && "keyword=" + searchValue}${(searchValue&&searchCategory) && "&"}${searchCategory && "category=" + searchCategory}`}/>}
                     </div>
+
                 </div>
             </div>
         </div>

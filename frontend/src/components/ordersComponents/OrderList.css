@@ -5,23 +5,25 @@ a {
     color: black;
 }
 
-.userOrders-filter {
+.orders__filter {
     width: 290px;
 }
 
-.userOrders-dropdownMenu {
+.orders__dropdownMenu--hidden {
     display: none;
 }
 
-.userOrders-dropdownMenu-activeButton,
-.userOrders-order,
-.userOrders-order-products-product,
+.orders__dropdownMenu,
+.orders__order,
+.orders__img,
 .userOrders-order-products-img-container {
     display: flex;
     flex-direction: row;
 }
-
-.userOrders-dropdownMenu-activeButton span {
+.orders__dropdownMenu{
+    cursor: pointer;
+}
+.orders__dropdownMenu span {
     margin-left: 10px;
     padding-left: 10px;
     border: 2px solid #e8e8e8;
@@ -29,7 +31,7 @@ a {
     width: 200px;
 }
 
-.userOrders-filter-button {
+.orders__filterButton {
     padding: 10px;
     background-color: #1975b4;
     color: white;
@@ -39,7 +41,7 @@ a {
     margin-top: 15px;
 }
 
-.userOrders-order {
+.orders__order {
     width: 100%;
     margin-bottom: 30px;
     border-style: solid;
@@ -47,11 +49,11 @@ a {
     border-color: var(--border-color);
 }
 
-.userOrders-order:hover {
+.orders__order:hover {
     box-shadow: 1px 1px 5px #cacaca;
 }
 
-.userOrders-order-details {
+.orders__orderDetails {
     background-color: rgb(227, 227, 227);
     width: 100%;
     display: flex;
@@ -63,18 +65,18 @@ a {
     flex-wrap: wrap;
 }
 
-.userOrders-order-details span {
+.orders__orderDetails span {
     margin-bottom: 15px;
 }
 
-.userOrders-order-products {
+.orders__images {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.userOrders-order-products-product {
+.orders__img {
     width: 100%;
     justify-content: flex-start;
     align-items: center;
@@ -82,33 +84,28 @@ a {
     margin-bottom: 7px;
 }
 
-.userOrders-order-products-img-container {
+ .orders__img img{
     height: 100px;
     width: 100px;
     align-items: center;
     justify-content: center;
 }
 
-.userOrders-order-products-img {
+.orders__img img {
     max-width: 100px;
     max-height: 100px;
 }
 
 @media (max-width: 750px) {
-    .userOrders-order-products-img {
+    .orders__img img {
         max-width: 80px;
         max-height: 80px;
     }
 }
 
 @media (max-width: 500px) {
-    .userOrders-order-products-img {
+    .orders__img img {
         max-width: 60px;
         max-height: 60px;
-    }
-
-    .userOrders-order-products-img-container {
-        height: 60px;
-        width: 60px;
     }
 }

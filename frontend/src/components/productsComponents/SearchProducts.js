@@ -111,11 +111,14 @@ const SearchProducts = () => {
     }, [keyword, category])
 
     useEffect(() => {
-        dispatch(productRedirect(false));
         dispatch(productsSearch(details));
         setFirstLoad(true);
     }, [details])
 
+
+    useEffect(() => {
+        dispatch(productRedirect(false));
+    }, [queryParams])
 
     useEffect(() => {
         setFilteredProducts(products);
@@ -200,7 +203,7 @@ const SearchProducts = () => {
                     filteredProducts.map((product) => (
                         <Link to={`/product/${product.productId}`} className='searchProducts__product'>
                             <div className='searchProducts__productInfo'>
-                                <img src={`./products/${product.titleImg}`}/>
+                                <img  className='searchProducts__productImg' src={`./products/${product.titleImg}`}/>
                                 <div>
                                     <span>{product.title}</span>
                                     <h4>{product.price} zł</h4>

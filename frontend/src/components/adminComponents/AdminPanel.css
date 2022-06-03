@@ -1,4 +1,4 @@
-.adminpanel-conatiner{
+.adminPanel {
     max-width: 2000px;
     width: 100%;
     display: flex;
@@ -7,7 +7,8 @@
     align-items: center;
     min-height: 800px;
 }
-.adminpanel-link{
+
+.adminPanel__link {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,8 +22,8 @@
 }
 
 @media (max-width: 800px) {
-    .adminpanel-link{
-    width: 100%;
+    .adminPanel__link {
+        width: 100%;
     }
 
 }

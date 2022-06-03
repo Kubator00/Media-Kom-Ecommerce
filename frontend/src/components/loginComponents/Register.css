@@ -1,6 +1,6 @@
 @import url("../variable.css");
 
-.register-container-complete{
+.registerComplete{
     display: flex;
     flex-direction: column;
     align-items: center;

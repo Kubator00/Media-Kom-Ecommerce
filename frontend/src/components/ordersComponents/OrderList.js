@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import './OrderList.css'
 import {useDispatch, useSelector} from "react-redux";
 import DisplayOrderList from '../DisplayOrderList'
 import {userOrders} from '../../services/OrderService'

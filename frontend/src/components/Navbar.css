@@ -1,135 +1,116 @@
 @import url("./variable.css");
 
-
-.nav-container, .nav-container1, .nav-main, .nav-up, .nav-down, .nav-main-fixed,
-.nav-left, .nav-logo, .nav-search-section, .nav-search-button,
-.nav-right, .nav-cart, .nav-button,
-.nav-dropdownMenu-link, .nav-categories-container, .nav-categoryButton-container,
-.nav-categoryButton, .nav-categoryButton span {
+.nav-main, .nav__topBar, .nav__bottomBar, .nav-main-fixed,
+.nav__main, .nav__logo, .nav__search, .nav__search button,
+.nav__linksSection, .nav__link,
+.nav__dropdownMenuLink, .nav__categories,
+.nav__categoryButton, .nav__categoryButton span {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.nav-container {
+.nav{
     width: 100%;
+    background-color: var(--background-color);
+    max-width: var(--max-width);
+    font-size: 0.8rem;
+    padding-bottom: 5px;
     user-select: none;
     margin-bottom: 30px;
     border-bottom: 2px solid var(--border-color);
     z-index: 99;
-    font-size: 0.8rem;
-    right: none;
-    left: none;
-    background-color: var(--background-color);
-    padding-bottom: 5px;
 }
 
-
-.nav {
+.nav--static {
     width: 100%;
-    height: 100%;
+    background-color: var(--background-color);
     max-width: var(--max-width);
 }
 
 
-
-.nav-fixed {
+.nav--fixed {
     background-color: var(--background-color);
     position: fixed;
     right: 80px;
     left: 80px;
-    top: 0px;
+    top: 0;
 }
-
-
-.nav-main {
-    width: 100%;
-    flex-direction: column;
-    justify-content: space-between;
+.nav__content{
     height: 160px;
 }
 
-.nav-up {
+
+.nav__topBar {
     width: 100%;
     height: 65%;
 }
 
-.nav-down {
+.nav__bottomBar {
     width: 100%;
     height: 35%;
     justify-content: space-between;
 }
 
-.nav-left {
+.nav__main {
     width: 100%;
     height: 100%;
     justify-content: space-between;
 }
 
-.nav-logo {
+.nav__logo {
     max-width: 400px;
     height: 100%;
 }
 
-.nav-logo img {
+.nav__logo img {
     width: 100%;
     height: 100%;
 }
 
 
-.nav-search-section {
+.nav__search {
     margin-left: 15px;
     width: 100%;
     border: 2px solid var(--border-color);
     border-radius: 10px;
 }
 
-.nav-search, .nav-search-select, .nav-search-section button {
+.nav__searchInput, .nav__searchSelect, .nav__search button {
     border: none;
     background-color: var(--background-color);
     border-radius: 10px;
     outline: 0;
 }
 
-.nav-search {
+.nav__searchInput {
     width: 100%;
     height: 30px;
 }
 
-.nav-search-select {
+.nav__searchSelect {
     width: 30%;
     height: 35px;
 }
 
-.nav-search-section button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav-search-section img {
+.nav__search img {
     margin-top: 5px;
     width: 15px;
     height: 15px;
 }
 
-
-
-.nav-right {
+.nav__linksSection {
     width: 40%;
     height: 100%;
     justify-content: space-around;
 }
 
-
-.nav-dropdownMenu-container {
+.nav__dropdownMenu {
     position: relative;
     display: inline-block;
     height: 80%;
 }
 
-.nav-button {
+.nav__link {
     background-color: var(--background-color);
     flex-direction: column;
     width: 120px;
@@ -141,18 +122,18 @@
     transition-property: transform;
 }
 
-.nav-button:hover {
+.nav__link:hover {
     transform: scale(101%);
     border: 2px solid var(--border-color);
 }
 
-#your-account {
+.nav__link--account{
     height: 100%;
 }
 
 
 
-@keyframes dropdownmenuappear {
+@keyframes dropdownMenuAppear {
     from {
         opacity: 0;
     }
@@ -162,7 +143,7 @@
     }
 }
 
-.nav-dropdownMenu-show {
+.nav__dropdownMenu--show {
     border-radius: 10px;
     border: 3px solid var(--border-color);
     flex-direction: column;
@@ -171,15 +152,15 @@
     width: 250px;
     min-width: 150px;
     margin-bottom: 60px;
-    animation-name: dropdownmenuappear;
+    animation-name: dropdownMenuAppear;
     animation-duration: var(--transition-duration);
     background-color: white;
 }
-.nav-dropdownMenu-show h4{
+.nav__dropdownMenu--show h4{
     margin: 13px 0 13px 10px;
 }
 
-.nav-dropdownMenu-link {
+.nav__dropdownMenuLink {
     width: 100%;
     justify-content: flex-start;
     height: 40px;
@@ -189,13 +170,13 @@
     background-color: var(--background-color);
 }
 
-.nav-dropdownMenu-link:hover {
+.nav__dropdownMenuLink:hover {
     transform: scale(102%);
     background-color: var(--border-color);
 }
 
 
-.nav-dropdownMenu-icon {
+.nav__dropdownMenuIcon {
     width: 20px;
     height: 20px;
     margin-bottom: 5px;
@@ -203,17 +184,17 @@
     margin-right: 7px;
 }
 
-.nav-dropdownMenu {
+.nav__dropdownMenu--hidden {
     display: none;
 }
 
-.icons {
+.nav__icon {
     width: 20px;
     height: 20px;
     margin-bottom: 5px;
 }
 
-.nav-categories-container {
+.nav__categories {
     width: 100%;
     height: 100%;
     justify-content: flex-start;
@@ -226,25 +207,25 @@
     align-items: flex-start;
 }
 
-.nav-categoryButton {
+.nav__categoryButton {
     height: 60px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     border: none;
-    margin-left: 0px;
+    margin-left: 0;
     background-color: var(--background-color);
 }
 
-.nav-categoryButton span {
+.nav__categoryButton span {
     height: 100%;
 }
 
-.nav-categoryButton label {
+.nav__categoryButton label {
     height: 20px;
 }
 
-.nav-category {
+.nav__categoryLink {
     background-color: var(--background-color);
     display: flex;
     flex-direction: row;
@@ -256,36 +237,36 @@
 
 }
 
-.nav-category label {
+.nav__categoryLink span {
     height: 20px;
 }
 
-.nav-category-icons {
+.nav__categoryIcon {
     width: 20px;
     height: 20px;
     margin-bottom: 5px;
     margin-right: 5px;
 }
 
-.nav-category:hover {
+.nav__categoryLink:hover {
     transform: scale(102%);
     background-color: rgb(245, 245, 245);
 }
 
 
 @media all and (max-width: 1350px) {
-    .nav-logo {
+    .nav__logo {
         max-width: 300px;
     }
 
-    .nav-right {
+    .nav__linksSection {
         justify-content: space-between;
     }
 
-    .nav-dropdownMenu-show {
+    .nav__dropdownMenu--show {
         left: 0;
     }
-    .nav-dropdownMenu-link{
+    .nav__dropdownMenuLink{
         font-size: inherit;
     }
 
@@ -293,19 +274,18 @@
         flex-direction: column;
     }
 
-    .nav-categories-container {
+    .nav__categories {
         width: 100px;
         height: 100%;
     }
 
-    .nav-categoryButton {
+    .nav__categoryButton {
         width: 100px;
     }
 
-    .nav-category {
+    .nav__categoryLink {
         height: 50px;
         width: 100%;
-        justify-content: center;
         align-items: center;
         justify-content: flex-start;
     }
@@ -313,42 +293,44 @@
 }
 
 @media (max-width: 650px) {
-    .nav-container {
+    .nav {
         border: none;
         font-size: 0.6rem;
     }
+    .nav__content{
+        height: 120px;
+    }
 
-    .nav-down {
+
+    .nav__bottomBar {
         justify-content: flex-start;
-        height: 30%;
+        height: 40%;
         margin-top: 10px;
         margin-bottom: 10px;
     }
 
-    .nav-categories-container {
+    .nav__categories {
         align-items: center;
     }
 
-
-
-    .nav-search-section {
+    .nav__search {
         width: 100%;
         height: 100%;
         justify-content: flex-start;
     }
 
-    .nav-search {
+    .nav__searchInput {
         width: 100%;
         height: 90%;
-        margin: 0px;
+        margin: 0;
     }
 
-    .nav-search-select {
+    .nav__searchSelect {
         width: 30%;
         height: 100%;
     }
 
-    .nav-search-section button {
+    .nav__search button {
         width: 20%;
         height: 100%;
     }
@@ -358,36 +340,37 @@
         height: 120px;
     }
 
-    .nav-up {
+    .nav__topBar {
         justify-content: space-between;
-        height: 70%;
+        height: 60%;
     }
 
-    .nav-left {
+    .nav__main {
         width: auto;
         height: 100%;
         justify-content: space-between;
     }
 
-    .nav-right {
+    .nav__linksSection {
         width: auto;
         min-width: 250px;
     }
 
-    .nav-logo {
+    .nav__logo {
         max-width: 200px;
+        max-height: 80px;
     }
 
 
-    .nav-button {
+    .nav__link {
         width: 90px;
         height: 100%;
-        border-radius: 0px;
+        border-radius: 0;
         transition: none;
-        margin: 0px;
+        margin: 0   ;
     }
 
-    .nav-button:hover {
+    .nav__link:hover {
         border: none;
     }
 
@@ -397,7 +380,7 @@
     }
 
 
-    .nav-dropdownMenu-show {
+    .nav__dropdownMenu--show {
         width: 100px;
     }
 

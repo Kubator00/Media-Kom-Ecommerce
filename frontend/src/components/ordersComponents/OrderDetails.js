@@ -21,8 +21,8 @@ const OrderDetails = () => {
 
     if (order && !inProgress)
         return (
-            <div className='content'>
-                <div className='orderdetails-details'>
+            <div className='orderDetails content'>
+                <div className='orderDetails_info'>
                     <h1>Zamówienie nr {order.orderId}</h1>
                     <span>złożone {`${order.date.slice(8, 10)}.${order.date.slice(5, 7)}.${order.date.slice(0, 4)}`}</span>
                     <h2>Dostawa</h2>
@@ -33,22 +33,22 @@ const OrderDetails = () => {
                     <span>{order.postalCode} {order.town} </span>
                     <span>{order.phone}</span>
                 </div>
-                <div className='orderdetails-products'>
+                <div className='orderDetails__productList'>
                     <h2>Zamówienie</h2>
                     {order.products.map((product) => (
-                        <div className='orderdetails-products-product'>
-                            <Link to={`/product/${product.productId}`} className='orderdetails-products-product-left'>
-                                <img src={`products/${product.titleImg}`} className='orderdetails-products-product-img' />
+                        <div className='orderDetails__product'>
+                            <Link to={`/product/${product.productId}`} className='orderDetails_productName'>
+                                <img src={`products/${product.titleImg}`}/>
                                 <span>{product.title}</span>
                             </Link>
-                            <div className='orderdetails-products-product-right'>
+                            <div className='orderDetails_productPriceAmount'>
                                 <span>{product.productAmount} szt.</span>
                                 <span> {product.productPrice.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</span>
                             </div>
                         </div>
                     ))}
                 </div>
-                <ul className='orderdetails-amount'>
+                <ul className='orderDetails__amount'>
                     <li>
                         <ul>Wartość koszyka:</ul> <ul>{order.cartAmount.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN' })}</ul>
                     </li>

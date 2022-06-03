@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import PageButtons from "./PageButtons";
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import './ordersComponents/OrderList.css'
 
 const DisplayOrderList = (props) => {
     const dispatch = useDispatch();
@@ -23,13 +24,13 @@ const DisplayOrderList = (props) => {
         return <div> Ładowanie...</div>
 
     return (
-        <div className='content'>
-            <ul className='userOrders-filter'>
-                <li className='userOrders-dropdownMenu-activeButton' onClick={filerStatusMenuHandler}>
+        <div className='orders content'>
+            <ul className='orders__filter'>
+                <li className='orders__dropdownMenu' onClick={filerStatusMenuHandler}>
                     <b>Filtruj</b>
                     <span>Pokaż wszystkie</span>
                 </li>
-                <ul className={filterStatusMenu ? 'userOrders-dropdownMenu-show' : 'userOrders-dropdownMenu'}>
+                <ul className={filterStatusMenu ? 'userOrders__dropdownMenu-show' : 'orders__dropdownMenu--hidden'}>
                     <b>Status:</b>
                     {orderStatus?.map((status) =>
                         <li>
@@ -42,28 +43,27 @@ const DisplayOrderList = (props) => {
                         filerStatusMenuHandler();
                         setDetails({...details, limit: {...details.limit, beginning: 0}});
                         dispatch(reducerFunction({...details, limit: {...details.limit, beginning: 0}}))
-                    }} className='userOrders-filter-button'>
+                    }} className='orders__filterButton'>
                         Gotowe
                     </button>
                 </ul>
             </ul>
             {orders.length < 1 ?
-                <div className="userOrders-orderList">Brak wyników</div> :
-                <div className="userOrders-orderList">{
+                <div className="orders__list">Brak wyników</div> :
+                <div className="orders__list">{
                     orders.map((order) => (
-                        <Link to={`${orderLink}/${order.orderId}`} className='userOrders-order'>
-                            <div className='userOrders-order-details'>
+                        <Link to={`${orderLink}/${order.orderId}`} className='orders__order'>
+                            <div className='orders__orderDetails'>
                                 <span>Status: <b>{order.status}</b></span>
                                 <span>Data zamówienia: {`${order.date.slice(8, 10)}.${order.date.slice(5, 7)}.${order.date.slice(0, 4)}`}</span>
                                 <span>Nr zamówienia: {order.orderId}</span>
                                 <span>Łączna kwota: {order.totalAmount}zł</span>
                             </div>
 
-                            <div className='userOrders-order-products'>
+                            <div className='orders__images'>
                                 {order.products.map((product) => (
-                                    <div className='userOrders-order-products-product'>
-                                        <img src={`products/${product.titleImg}`}
-                                             className='userOrders-order-products-img'/>
+                                    <div className='orders__img'>
+                                        <img src={`products/${product.titleImg}`}/>
                                         {product.title}
                                     </div>
                                 ))}

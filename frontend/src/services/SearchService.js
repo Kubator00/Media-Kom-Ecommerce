@@ -21,7 +21,6 @@ export const productsSearch = (props) => {
             }
         })
             .then((res) => {
-                console.log(res.request);
                 dispatch(productsSearchSuccess(res.data));
                 return res.data;
             })

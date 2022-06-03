@@ -1,5 +1,4 @@
 import React from "react";
-import './AdminEditProduct.css'
 import {adminAddProduct} from '../../services/admin/adminAddProduct'
 import {useDispatch, useSelector} from "react-redux";
 import EditProductDetailsPanel from "./EditProductDetailsPanel";
@@ -23,11 +22,13 @@ const AdminAddProduct = () => {
         price: 0
     };
 
-    return <div>
-        <h1>Dodaj produkt</h1>
-        <EditProductDetailsPanel initialValues={initialValues} err={err} msg={msg} productId={productId}
-                                 onClickFunction={addProductHandler}/>
-    </div>
+    return (
+        <div>
+            <h1>Dodaj produkt</h1>
+            <EditProductDetailsPanel initialValues={initialValues} err={err} msg={msg} productId={productId}
+                                     onClickFunction={addProductHandler}/>
+        </div>
+    );
 }
 
 export default AdminAddProduct;

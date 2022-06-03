@@ -1,27 +1,27 @@
-.editProduct-container{
+.editProduct{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
-.editProduct-form-container{
+.editProduct__form{
     display: flex;
     flex-direction: column;
 }
-.editProduct-parameter-container{
+.editProduct__parameter{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-top: 10px;
 }
-.editProduct-parameter-container label, input{
+.editProduct__parameter label, input{
     margin-right: 10px;
 }
 
-.editProduct-parameter{
+.editProduct__parameterForm{
     display: flex;
     flex-direction: row;
 }
-.editProduct-deleteParameter-button{
+.editProduct__deleteParameterBtn{
     padding: 5px;
     width: 130px;
     border: none;
@@ -30,7 +30,7 @@
     background-color: red;
     cursor: pointer;
 }
-.editProduct-addParameter-button{
+.editProduct__addParameterBtn{
     height: 50px;
     margin: 20px 0 20px 0;
     width: 130px;
@@ -40,7 +40,7 @@
     background-color: #29aa3a;
     cursor: pointer;
 }
-.editProduct-button{
+.editProduct__addBtn{
     background-color: #1285d1;
     color: white;
     width: 300px;
@@ -50,11 +50,11 @@
     border-radius: 10px;
     border: none;
 }
-.editProduct-form-select{
+.editProduct__formSelect{
     width: 150px;
     padding: 10px;
 }
-.editProduct-form-control{
+.editProduct__formControl{
     width: 300px;
     height: 30px;
     border: 2px solid #c2c2c2;

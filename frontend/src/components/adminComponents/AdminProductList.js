@@ -1,7 +1,5 @@
-import {Formik, Form, Field, ErrorMessage, FieldArray} from "formik";
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
-import {addToCart} from "../../services/MyCartService";
 import PageButtons from "../PageButtons";
 import {productsSearch} from "../../services/SearchService";
 import {useDispatch, useSelector} from "react-redux";
@@ -35,24 +33,22 @@ const AdminProductList = () => {
 
 
     return (
-        <div className='searchProducts__list'>
-            <div className='editProduct-list-searchProduct-container'>
-                <div class='editProduct-list-searchProduct'>
+        <div className='searchProducts__list content'>
+                <div class='editProduct__searchProduct'>
                     <label> Wyszukaj produktu:</label> <input type='text' onChange={keywordHandler}/>
                     <button onClick={searchHandler}>Wyszukaj</button>
                 </div>
-            </div>
             {products?.length > 0 ?
                 products.map((product) => (
                     <div class='searchProducts__product'>
-                        <div className='searchProducts-product-left'>
-                            <img src={`./products/${product.titleImg}`} className='searchProducts-product-left-img'/>
-                            <div className='searchProducts-product-left-label'>
+                        <div className='searchProducts__productInfo'>
+                            <img src={`./products/${product.titleImg}`} className='searchProducts__productImg'/>
+                            <div>
                                 <label>{product.title}</label>
                                 <h4>{product.price} zł</h4>
                             </div>
                         </div>
-                        <div className='searchProducts-product-right'>
+                        <div className='searchProducts__purchase'>
                             <Link to={`/admin/editproduct/${product.productId}`}>
                                 Edytuj
                             </Link>

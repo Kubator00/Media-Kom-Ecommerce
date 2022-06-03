@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import '../ordersComponents/OrderList.css'
 import {useDispatch, useSelector} from "react-redux";
 import {adminAllOrders} from '../../services/admin/adminAllOrders'
 import {adminOrdersReset} from '../../actions/adminOrderAction'

@@ -1,12 +1,4 @@
-.editProduct-list-searchProduct-container{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: flex-start;
-    margin-bottom: 50px;
-    margin-left: 20%;
-}
-.editProduct-list-searchProduct{
+.editProduct__searchProduct{
     display: flex;
     flex-direction: row;
     width: 500px;

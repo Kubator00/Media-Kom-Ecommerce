@@ -25,16 +25,16 @@ const Register = () => {
         return <div>Ładowanie...</div>
     if (msg)
         return (
-            <div class="register-container-complete">
+            <div class="registerComplete">
                 {msg}
-                <Link to="/login" class="login-button">
+                <Link to="/login" class="login__button">
                     Zaloguj się
                 </Link>
             </div>
         );
     return (
-        <div class="login-container">
-            <div class="login-login-content">
+        <div class="login">
+            <div class="login__content">
                 <h3> Zarejestruj się </h3>
                 {error && <h4 style={{"color":"red"}}>{error}</h4>}
                 <Formik
@@ -48,28 +48,28 @@ const Register = () => {
                     onSubmit={(values) => { registerHandler(values) }}
                     validationSchema={validate}
                 >
-                    <Form class="login-login-form" >
+                    <Form class="login__form" >
                         <label htmlFor="email">Adres email</label>
-                        <ErrorMessage name='email' component="div" class='login-errorMsg' />
-                        <Field name="email" class="login-login-form-control" autocomplete='off' />
+                        <ErrorMessage name='email' component="div" class='login__errorMsg' />
+                        <Field name="email" class="login__formControl" autocomplete='off' />
 
                         <label htmlFor="name">Imię</label>
-                        <ErrorMessage name='name' component="div" class='login-errorMsg' />
-                        <Field name="name" class="login-login-form-control" autocomplete='off' />
+                        <ErrorMessage name='name' component="div" class='login__errorMsg' />
+                        <Field name="name" class="login__formControl" autocomplete='off' />
 
                         <label htmlFor="surname">Nazwisko</label>
-                        <ErrorMessage name='surname' component="div" class='login-errorMsg' />
-                        <Field name="surname" class="login-login-form-control" autocomplete='off' />
+                        <ErrorMessage name='surname' component="div" class='login__errorMsg' />
+                        <Field name="surname" class="login__formControl" autocomplete='off' />
 
                         <label htmlFor="password">Hasło</label>
-                        <ErrorMessage name='password' component="div" class='login-errorMsg' />
-                        <Field type='password' name="password" class="login-login-form-control" autocomplete='off' />
+                        <ErrorMessage name='password' component="div" class='login__errorMsg' />
+                        <Field type='password' name="password" class="login__formControl" autocomplete='off' />
 
                         <label htmlFor="passwordConfirmation">Powtórz hasło</label>
-                        <ErrorMessage name='passwordConfirmation' component="div" class='login-errorMsg' />
-                        <Field type='password' name="passwordConfirmation" class="login-login-form-control" autocomplete='off' />
+                        <ErrorMessage name='passwordConfirmation' component="div" class='login__errorMsg' />
+                        <Field type='password' name="passwordConfirmation" class="login__formControl" autocomplete='off' />
 
-                        <button type="submit" class="login-button">Zarejestruj się</button>
+                        <button type="submit" class="login__button">Zarejestruj się</button>
                     </Form>
                 </Formik>
 

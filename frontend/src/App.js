@@ -35,52 +35,46 @@ const Wrapper = ({children}) => {
 }
 
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+function App() {
+    return (
+        <>
+            <BrowserRouter>
+                <Wrapper>
+                    <Navbar/>
+                    <Routes>
+                        <Route path='/' element={<Home/>}/>
+                        <Route path='/login' element={<LogIn/>}/>
+                        <Route path='/register' element={<Register/>}/>
 
-    render() {
-        return (
-            <>
-                <BrowserRouter>
-                    <Wrapper>
-                        <Navbar/>
-                        <Routes>
-                            <Route path='/' element={<Home/>}/>
-                            <Route path='/login' element={<LogIn/>}/>
-                            <Route path='/register' element={<Register/>}/>
+                        <Route element={<ProdectedRoute/>}>
+                            <Route path='cart' element={<UserCart/>}/>
+                            <Route path='account' element={<UserAccount/>}/>
+                            <Route path='ordersList' element={<OrderList/>}/>
+                            <Route path='orderform' element={<OrderForm/>}/>
+                            <Route path='orderslist/order/:id' element={<OrderDetails/>}/>
+                        </Route>
+                        <Route path='/product/:productId' exact element={<Product/>}/>
 
-                            <Route element={<ProdectedRoute/>}>
-                                <Route path='cart' element={<UserCart/>}/>
-                                <Route path='account' element={<UserAccount/>}/>
-                                <Route path='ordersList' element={<OrderList/>}/>
-                                <Route path='orderform' element={<OrderForm/>}/>
-                                <Route path='orderslist/order/:id' element={<OrderDetails/>}/>
-                            </Route>
-                            <Route path='/product/:productId' exact element={<Product/>}/>
+                        <Route path='search' element={<SearchProducts/>}/>
 
-                            <Route path='search' element={<SearchProducts/>}/>
+                        <Route element={<AdminRoute/>}>
+                            <Route path='admin/panel' element={<AdminPanel/>}/>
+                            <Route path='admin/allorders' element={<AdminAllOrdersList/>}/>
+                            <Route path='admin/addproduct' element={<AdminAddProduct/>}/>
+                            <Route path='admin/editproduct/list' element={<AdminProductList/>}/>
+                            <Route path='admin/editproduct/:productId' element={<AdminEditProduct/>}/>
+                            <Route path='admin/order/:id' element={<AdminOrderDetails/>}/>
+                        </Route>
 
-                            <Route element={<AdminRoute/>}>
-                                <Route path='admin/panel' element={<AdminPanel/>}/>
-                                <Route path='admin/allorders' element={<AdminAllOrdersList/>}/>
-                                <Route path='admin/addproduct' element={<AdminAddProduct/>}/>
-                                <Route path='admin/editproduct/list' element={<AdminProductList/>}/>
-                                <Route path='admin/editproduct/:productId' element={<AdminEditProduct/>}/>
-                                <Route path='admin/order/:id' element={<AdminOrderDetails/>}/>
-                            </Route>
+                        <Route path="*" element={<NotFound/>}/>
 
-                            <Route path="*" element={<NotFound/>} />
+                    </Routes>
+                    <Footer/>
+                </Wrapper>
+            </BrowserRouter>
 
-                        </Routes>
-                        <Footer/>
-                    </Wrapper>
-                </BrowserRouter>
-
-            </>
-        );
-    }
+        </>
+    );
 
 }
 

@@ -1,7 +1,6 @@
 import {
     USER_LOGIN_IN_PROGRSS,
     USER_LOGIN_SUCESS,
-    USER_LOGIN_FAILURE,
     USER_LOGIN_ERROR,
     USER_LOGOUT,
     USER_REGISTER_IN_PROGRSS,
@@ -31,8 +30,6 @@ const userAuthenticationReducer = (state = initialState, action) => {
             return { ...state, inprogress: true };
         case USER_LOGIN_SUCESS:
             return { ...state, user: action.user, inprogress: false, error: null };
-        case USER_LOGIN_FAILURE:
-            return { ...state, inprogress: false, error: action.error };
         case USER_LOGIN_ERROR:
             return { ...state, inprogress: false, error: action.error };
         case USER_REGISTER_IN_PROGRSS:

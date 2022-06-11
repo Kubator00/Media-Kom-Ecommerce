@@ -97,7 +97,7 @@ const SearchProducts = () => {
     })
 
     const dispatch = useDispatch()
-    useEffect(async () => {
+    useEffect(() => {
         window.addEventListener('resize', showFilterButtonF);
         showFilterButtonF();
     }, [])
@@ -114,12 +114,12 @@ const SearchProducts = () => {
     useEffect(() => {
         dispatch(productsSearch(details));
         setFirstLoad(true);
-    }, [details])
+    }, [details, dispatch])
 
 
     useEffect(() => {
         dispatch(productRedirect(false));
-    }, [queryParams])
+    }, [queryParams, dispatch])
 
     useEffect(() => {
         setFilteredProducts(products);

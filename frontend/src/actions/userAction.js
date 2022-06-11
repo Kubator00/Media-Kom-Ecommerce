@@ -2,11 +2,9 @@ import {
     USER_LOGOUT,
     USER_LOGIN_IN_PROGRSS,
     USER_LOGIN_SUCESS,
-    USER_LOGIN_FAILURE,
     USER_LOGIN_ERROR,
     VERIFY_TOKEN_IN_PROGRESS,
     VERIFY_TOKEN_SUCESS,
-    VERIFY_TOKEN_FAILURE,
     VERIFY_TOKEN_ERROR,
     USER_REGISTER_IN_PROGRSS,
     USER_REGISTER_SUCESS,
@@ -41,12 +39,7 @@ export const loginSuccess = (user) => {
         user: user
     };
 }
-export const loginFailure = (msg) => {
-    return {
-        type: USER_LOGIN_FAILURE,
-        error: msg
-    };
-}
+
 
 export const loginError = (error) => {
     return {

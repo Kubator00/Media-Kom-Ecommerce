@@ -15,7 +15,7 @@ const AdminRoute = (props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(verifyToken());
-    }, [])
+    }, [dispatch])
 
     const prevIsLoaded = usePrevious(isLoaded);
     const prevInProgress = usePrevious(inProgress);
@@ -25,9 +25,9 @@ const AdminRoute = (props) => {
             if (inProgress === false && prevInProgress === true) {
                 setIsLoaded(false);
             }
-    })
+    }, [prevIsLoaded, inProgress, prevInProgress])
     
-    if (isLoaded == true)
+    if (isLoaded === true)
         return <>Ładowanie...</>;
 
     if (!user.token || !user.isAdmin)

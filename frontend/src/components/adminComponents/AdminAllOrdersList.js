@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {adminAllOrders} from '../../services/admin/adminAllOrders'
 import {adminOrdersReset} from '../../actions/adminOrderAction'
@@ -19,10 +19,11 @@ const AdminAllOrdersList = () => {
     useEffect(() => {
         dispatch(adminOrdersReset());
         dispatch(adminAllOrders(details));
-    }, [])
+    }, [dispatch, details])
 
 
-    return <DisplayOrderList orders={orders} rowsFound={rowsFound} details={details} reducerFunction={adminAllOrders} orderLink={'/admin/order'}/>
+    return <DisplayOrderList orders={orders} rowsFound={rowsFound} details={details} reducerFunction={adminAllOrders}
+                             orderLink={'/admin/order'}/>
 
 
 }

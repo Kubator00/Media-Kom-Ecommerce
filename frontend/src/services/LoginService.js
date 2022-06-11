@@ -2,7 +2,6 @@ import routes from "./api"
 import {
     loginInProgress,
     loginSuccess,
-    loginFailure,
     loginError
 } from "../actions/userAction"
 import Axios from "axios"
@@ -23,9 +22,9 @@ const logInUser = (props) => {
                     localStorage.setItem('isAdmin', res.data.isAdmin);
                     dispatch(loginSuccess(res.data));
                 }
-                else {
-                    dispatch(loginFailure(res.data));
-                }
+                else
+                    dispatch(loginError(res.data));
+
                 return res.data;
             })
             .catch(err => {

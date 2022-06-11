@@ -19,7 +19,7 @@ const AdminAllOrdersList = () => {
     useEffect(() => {
         dispatch(adminOrdersReset());
         dispatch(adminAllOrders(details));
-    }, [dispatch, details])
+    }, [dispatch])
 
 
     return <DisplayOrderList orders={orders} rowsFound={rowsFound} details={details} reducerFunction={adminAllOrders}

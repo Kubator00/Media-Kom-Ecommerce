@@ -55,13 +55,13 @@ router.post('/status', async (req, res) => {
 
 
 router.post('/details', async (req, res) => {
-    let user, orders, products;
+    let orders, products;
     try {
-        user = (await selectQuery(`SELECT email FROM users where userId=${req.headers.userId};`))[0];
         orders = (await selectQuery(
-            `SELECT o.orderId, o.userId, o.date, o.status, o.name, o.surname, o.town, o.postalCode, o.street,
+            `SELECT o.orderId, o.userId, u.email, o.date, o.status, o.name, o.surname, o.town, o.postalCode, o.street,
             o.phone, d.name as deliveryName, d.price as deliveryPrice  FROM orders as o join 
-            delivery_types as d on o.deliveryId=d.deliveryId where o.orderId=${req.body.orderId}`))[0];
+            delivery_types as d on o.deliveryId=d.deliveryId join users as u on o.userId=u.userId 
+            where o.orderId=${req.body.orderId}`))[0];
         products = await selectQuery(
             `SELECT o.productId as id, o.productAmount, o.productPrice, p.title ,p.titleImg
         FROM orders_product as o join products as p on p.productId=o.productId where orderId=${req.body.orderId}`);
@@ -70,7 +70,6 @@ router.post('/details', async (req, res) => {
     }
     let orderDetails = {
         ...orders,
-        userEmail: user.email,
         products: products
     }
     res.send(orderDetails);

@@ -32,10 +32,9 @@ const AdminOrderDetails = () => {
                     <h2>Dane do wysyłki</h2>
                     <span>{order.name} {order.surname} </span>
                     <span>ul. {order.street} </span>
-                    <span>{order.postal_code} {order.town} </span>
+                    <span>{order.postalCode} {order.town} </span>
                     <h2>Kontakt</h2>
-                    <span>Nazwa użytkownika: {order.username}</span>
-                    <span>Email: {order.userEmail}</span>
+                    <span>Email: {order.email}</span>
                     <span>Telefon: {order.phone}</span>
                 </div>
                 <div className='orderDetails__changeStatus'>

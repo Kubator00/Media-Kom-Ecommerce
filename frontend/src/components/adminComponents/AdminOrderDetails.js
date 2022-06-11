@@ -1,15 +1,15 @@
-import React, { useEffect,useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import '../ordersComponents/OrderDetails.css'
-import { Link, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux";
+import {Link, useParams} from 'react-router-dom'
+import {useDispatch, useSelector} from "react-redux";
 import orderStatus from "../orderStatus";
 
-import { adminOrderDetails, changeOrderStatus } from '../../services/admin/adminOrderDetailsService'
+import {adminOrderDetails, changeOrderStatus} from '../../services/admin/adminOrderDetailsService'
 
 
 const AdminOrderDetails = () => {
 
-    const { id } = useParams();
+    const {id} = useParams();
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -18,7 +18,7 @@ const AdminOrderDetails = () => {
 
     const order = useSelector(state => state.adminOrderDetailsReducer.order);
     const inProgress = useSelector(state => state.adminOrderDetailsReducer.inprogress);
-    
+
     if (order && !inProgress)
         return (
             <div className='orderDetails content'>
@@ -40,8 +40,10 @@ const AdminOrderDetails = () => {
                 </div>
                 <div className='orderDetails__changeStatus'>
                     <h2>Zmiana statusu</h2>
-                    {orderStatus.map((status)=>
-                        <button onClick={() => { dispatch(changeOrderStatus(id, status)) }}>{status} </button>
+                    {orderStatus.map((status) =>
+                        <button onClick={() => {
+                            dispatch(changeOrderStatus(id, status))
+                        }}>{status} </button>
                     )}
                 </div>
                 <div className='orderDetails__productList'>
@@ -49,7 +51,7 @@ const AdminOrderDetails = () => {
                     {order.products.map((product) => (
                         <div className='orderDetails__product'>
                             <Link to={`/product/${product.id}`} className='orderDetails_productName'>
-                                <img src={`products/${product.titleImg}`} />
+                                <img src={`products/${product.titleImg}`} alt={`zdjęcie ${product.title}`}/>
                                 <span>{product.title}</span>
                             </Link>
                             <div className='orderDetails_productPriceAmount'>
@@ -64,12 +66,11 @@ const AdminOrderDetails = () => {
                     <span>Koszt dostawy: {order.deliveryPrice} zł</span>
                     <span>Razem: {order.totalAmount} zł</span>
                 </div>
-            </div >
+            </div>
         );
     return <div>Ładowanie...</div>
 
 }
-
 
 
 export default AdminOrderDetails;

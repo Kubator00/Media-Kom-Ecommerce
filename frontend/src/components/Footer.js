@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 import "./Footer.css";
 
 function Footer() {
@@ -10,21 +10,21 @@ function Footer() {
                 <div class='footer__socials'>
                     <h3>Znajdziesz nas na</h3>
                     <div>
-                        <img src="./icons/facebook.svg" class="footer__socialIcon" />
-                        <img src="./icons/linkedin.svg" class="footer__socialIcon" />
+                        <img src="./icons/facebook.svg" class="footer__socialIcon" alt='facebook'/>
+                        <img src="./icons/linkedin.svg" class="footer__socialIcon" alt='linkedin'/>
                     </div>
                 </div>
                 <div class='footer__contact'>
                     <h3>Kontakt</h3>
                     <span>
-                        <img src="./icons/address-book.svg" class="footer__contactIcon" /> 34 123 45 67
+                        <img src="./icons/address-book.svg" class="footer__contactIcon" alt='telefon'/> 34 123 45 67
                     </span>
                     <span>
-                        <img src="./icons/location.svg" class="footer__contactIcon" />
+                        <img src="./icons/location.svg" class="footer__contactIcon" alt='lokalizacja'/>
                         ul. Politechniczna 999a, Łódź
                     </span>
                     <span>
-                        <img src="./icons/envelope.svg" class="footer__contactIcon" />
+                        <img src="./icons/envelope.svg" class="footer__contactIcon" alt='mail'/>
                         media-kom@media-kom.pl
                     </span>
                 </div>

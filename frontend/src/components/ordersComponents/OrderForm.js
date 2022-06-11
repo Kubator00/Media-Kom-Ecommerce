@@ -118,7 +118,7 @@ const OrderForm = () => {
                         <Link to={{
                             pathname: '/product/' + product.productId
                         }} className="orderForm__product">
-                            <img src={`products/${product.titleImg}`}/>
+                            <img src={`products/${product.titleImg}`} alt={`zdjęcie ${product.title}`}/>
                             <label>{product.title}</label><br/>
                             {product.productAmount}szt
                         </Link>

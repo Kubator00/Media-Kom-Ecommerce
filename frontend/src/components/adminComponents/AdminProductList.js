@@ -42,7 +42,7 @@ const AdminProductList = () => {
                 products.map((product) => (
                     <div class='searchProducts__product'>
                         <div className='searchProducts__productInfo'>
-                            <img src={`./products/${product.titleImg}`} className='searchProducts__productImg'/>
+                            <img src={`./products/${product.titleImg}`} className='searchProducts__productImg' alt={`zdjęcie ${product.title}`}/>
                             <div>
                                 <label>{product.title}</label>
                                 <h4>{product.price} zł</h4>

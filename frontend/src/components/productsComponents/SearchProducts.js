@@ -17,6 +17,7 @@ const mobileFilterMenu = (setMobileFilterMenu, sortProducts, priceFilterHandler,
                     <span>
                         <h2>Filtry</h2>
                         <img src="./icons/cross.svg" className="filter__img"
+                             alt='krzyżyk'
                              onClick={() => setMobileFilterMenu(false)}/>
                     </span>
                 </li>
@@ -192,7 +193,7 @@ const SearchProducts = () => {
                     {isMobileFilterMenu &&
                         <div className='filter' onClick={() => setIsActiveMobileFilterMenu(true)}>
                             <span>
-                                <img src="./icons/filter.svg" className="filter__img"/>Filtry
+                                <img src="./icons/filter.svg" className="filter__img" alt='filtry'/>Filtry
                             </span>
                         </div>
                     }
@@ -203,7 +204,8 @@ const SearchProducts = () => {
                     filteredProducts.map((product) => (
                         <Link to={`/product/${product.productId}`} className='searchProducts__product'>
                             <div className='searchProducts__productInfo'>
-                                <img  className='searchProducts__productImg' src={`./products/${product.titleImg}`}/>
+                                <img className='searchProducts__productImg' src={`./products/${product.titleImg}`}
+                                     alt={`${product.title}`}/>
                                 <div>
                                     <span>{product.title}</span>
                                     <h4>{product.price} zł</h4>

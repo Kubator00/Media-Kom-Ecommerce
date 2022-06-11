@@ -35,7 +35,7 @@ const UserCart = () => {
                         <div class="cart__deleteAll" onClick={() => {
                             deleteAll()
                         }}>
-                            <img src='./icons/trash.svg'/>
+                            <img src='./icons/trash.svg' alt='kosz'/>
                             Wyczyść wszystko
                         </div>
                     </div>
@@ -45,24 +45,24 @@ const UserCart = () => {
                                 pathname: '/product/' + product.productId
                             }}>
                                 <div class='cart__productImg'>
-                                    <img src={`./products/${product.titleImg}`}/>
+                                    <img src={`./products/${product.titleImg}`} alt={`${product.title}`}/>
                                 </div>
                                 {product.title}
                             </Link>
                             <div className='cart__priceAmount'>
                                 <h3> {product.price.toLocaleString('pl-PL', {style: 'currency', currency: 'PLN'})} </h3>
                                 <div className='cart__changeAmount'>
-                                    <img src='./icons/minus.svg' onClick={() => {
+                                    <img src='./icons/minus.svg' alt='minus' onClick={() => {
                                         dispatch(changeProductAmount(product.productId, product.productAmount - 1))
                                     }} class="cart__icon" style={{"margin-right": "3px", "margin-left": "3px"}}/>
                                     <span>
                                         {`Ilość:  ${product.productAmount}  `}
                                     </span>
-                                    <img src='./icons/add.svg' onClick={() => {
+                                    <img src='./icons/add.svg' alt='plus' onClick={() => {
                                         dispatch(changeProductAmount(product.productId, product.productAmount + 1))
                                     }} class="cart__icon" style={{"margin-left": "3px"}}/>
                                 </div>
-                                <img src='./icons/trash.svg' onClick={() => {
+                                <img src='./icons/trash.svg' alt='kosz' onClick={() => {
                                     dispatch(changeProductAmount(product.productId, 0))
                                 }} class="cart__icon" style={{"margin-left": "10px"}}/>
                             </div>

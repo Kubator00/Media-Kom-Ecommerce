@@ -34,7 +34,7 @@ const SearchInput = () => {
                 ))}
             </select>
             <button type='submit'>
-                <img src='./icons/search.svg' class='nav__icon'/>
+                <img src='./icons/search.svg' class='nav__icon' alt='ikona wyszukiwania'/>
             </button>
         </form>
     );
@@ -59,7 +59,7 @@ const AccountMenu = () => {
                     clickHandler(false)
                 }}>
                     <li class='nav__link nav__link--account' style={{"border-bottom": "none"}}>
-                        <img src='./icons/user.svg' class='nav__icon'/>
+                        <img src='./icons/user.svg' class='nav__icon' alt='użytkownik'/>
                         Twoje konto
                     </li>
                     <ul class={isClicked ? "nav__dropdownMenu--show" : 'nav__dropdownMenu--hidden'}
@@ -68,20 +68,20 @@ const AccountMenu = () => {
                             <h4>{`Witaj, ${user.name}`}</h4>
                         </li>
                         <Link to="/orderslist" className="nav__dropdownMenuLink">
-                            <img src='./icons/account/notebook.svg' class='nav__dropdownMenuIcon'/> Moje zamówienia
+                            <img src='./icons/account/notebook.svg' class='nav__dropdownMenuIcon' alt='moje zamówienia'/> Moje zamówienia
                         </Link>
                         <Link to="/account" className="nav__dropdownMenuLink">
-                            <img src='./icons/account/settings.svg' class='nav__dropdownMenuIcon'/> Ustawienia konta
+                            <img src='./icons/account/settings.svg' class='nav__dropdownMenuIcon' alt='ustawienia konta'/> Ustawienia konta
                         </Link>
                         {user.isAdmin === 1 &&
                             <Link to="/admin/panel" className="nav__dropdownMenuLink">
-                                <img src='./icons//account/admin.svg' class='nav__dropdownMenuIcon'/> Admin
+                                <img src='./icons//account/admin.svg' class='nav__dropdownMenuIcon' alt='administrator'/> Admin
                             </Link>
                         }
                         <button onClick={() => {
                             dispatch(logOutUser())
                         }} className="nav__dropdownMenuLink">
-                            <img src='./icons/account/logout.svg' class='nav__dropdownMenuIcon'
+                            <img src='./icons/account/logout.svg' class='nav__dropdownMenuIcon' alt='wylogowania się'
                                  style={{"margin-left": "2px"}}/> Wyloguj się
                         </button>
                     </ul>
@@ -89,7 +89,7 @@ const AccountMenu = () => {
 
 
                 <Link to="/cart" class='nav__link'>
-                    <img src='./icons/cart-shopping-solid.svg' class='nav__icon'/>
+                    <img src='./icons/cart-shopping-solid.svg' class='nav__icon' alt='koszyk'/>
                     Koszyk
                 </Link>
             </>
@@ -97,7 +97,7 @@ const AccountMenu = () => {
 
     return (
         <Link to="/login" class='nav__link'>
-            <img src='./icons/user.svg' class='nav__icon'/>
+            <img src='./icons/user.svg' class='nav__icon' alt='zaloguj się'/>
             Zaloguj się
         </Link>
     );
@@ -134,7 +134,7 @@ const Categories = () => {
                 <div class='nav__categoryButton' onMouseEnter={mobileCategoryHandler}
                      onMouseLeave={mobileCategoryHandler}>
                     <span>
-                        {<img src="./icons/menu.svg" class='nav__categoryIcon'/>}
+                        {<img src="./icons/menu.svg" class='nav__categoryIcon' alt='wyświetl kategorie'/>}
                         <label>Kategorie</label>
                     </span>
                     {categoryButtonIsActive &&
@@ -143,7 +143,7 @@ const Categories = () => {
                             <div class={"nav__dropdownMenu--show"}>
                                 {categories.map((category) => (
                                     <Link to={`/search?category=${category.name}`} class='nav__categoryLink'>
-                                        {<img src={category.img} class='nav__categoryIcon'/>}
+                                        {<img src={category.img} class='nav__categoryIcon'  alt={`kategoria ${category.name}`}/>}
                                         <label>{category.name}</label>
                                     </Link>
                                 ))
@@ -159,7 +159,7 @@ const Categories = () => {
         <div class='nav__categories'>
             {categories.map((category) => (
                 <Link to={`/search?category=${category.name}`} class='nav__categoryLink'>
-                    {<img src={category.img} class='nav__categoryIcon'/>}
+                    {<img src={category.img} class='nav__categoryIcon' alt={`kategoria ${category.name}`} />}
                     <span> {category.name} </span>
                 </Link>
             ))
@@ -213,13 +213,13 @@ function Navbar() {
                     <div className='nav__topBar'>
                         <div class="nav__main">
                             <Link to='/' class='nav__logo'>
-                                <img src='logo.png'/>
+                                <img src='logo.png' alt='logo sklepu'/>
                             </Link>
                             {!mobileSearch && <SearchInput/>}
                         </div>
                         <div class="nav__linksSection">
                             <Link to="#" class='nav__link'>
-                                <img src='./icons/headset.svg' class='nav__icon'/>
+                                <img src='./icons/headset.svg' class='nav__icon' alt='kontakt'/>
                                 Kontakt
                             </Link>
                             <AccountMenu/>

@@ -9,7 +9,7 @@ const Cart = (props) => {
         <Link to={`/product/${id}`} class='card'>
             <div class="card__img">
                 <div>
-                    <img src={`./products/${img}`} alt='produkt'/>
+                    <img src={`./products/${img}`} alt={`produkt ${title}`}/>
                 </div>
             </div>
             <span>{title}</span>
@@ -115,6 +115,7 @@ export const Slider = () => {
                     <div className="slider__arrow">
                         <img
                             style={index[0] === 0 ? {display: 'none'} : {display: 'inherit'}}
+                            alt='strzałka w lewo'
                             onClick={prevSlide}
                             src='./icons/angle-left.svg'
                         />
@@ -126,6 +127,7 @@ export const Slider = () => {
                     <div className="slider__arrow">
                         <img
                             style={(index.filter(element => element >= products.length - 1).length > 0) ? {display: 'none'} : {display: 'inherit'}}
+                            alt='strzałka w prawo'
                             onClick={nextSlide}
                             src='./icons/angle-right.svg'
                         />

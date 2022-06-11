@@ -37,7 +37,7 @@ const Product = () => {
                 </div>
                 <div className="product__main">
                     <div className="product__img">
-                        <img src={`../products/${productDetails.titleImg}`} className={`product-img`}/>
+                        <img src={`../products/${productDetails.titleImg}`} className={`product-img`} alt={`zdjęcie ${productDetails.title}`}/>
                     </div>
                     <div className="product__info">
                         <div className="product__name">

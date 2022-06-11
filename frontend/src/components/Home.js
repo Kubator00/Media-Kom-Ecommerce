@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <div class="home content">
             <Link className="home__banner" to={`search?category=Podzespoły komputerowe`}>
-                <img src="./baner.png"/>
+                <img src="./baner.png" alt='baner'/>
             </Link>
             <Slider />
         </div>

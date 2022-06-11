@@ -63,7 +63,7 @@ const DisplayOrderList = (props) => {
                             <div className='orders__images'>
                                 {order.products.map((product) => (
                                     <div className='orders__img'>
-                                        <img src={`products/${product.titleImg}`}/>
+                                        <img src={`products/${product.titleImg}`} alt={`zdjęcie ${product.title}`}/>
                                         {product.title}
                                     </div>
                                 ))}

@@ -11,7 +11,7 @@ export const adminEditProduct = (props) => {
     return async dispatch => {
         dispatch(adminEditProductInProgress());
         await Axios({
-            method: 'post',
+            method: 'put',
             url: routes.server + routes.admin.editProduct,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),

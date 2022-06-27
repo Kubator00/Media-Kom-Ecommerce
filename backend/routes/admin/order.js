@@ -34,7 +34,7 @@ router.post('/all', async (req, res) => {
 })
 
 
-router.post('/status', async (req, res) => {
+router.put('/status', async (req, res) => {
     try {
         poolConnection.getConnection(async (err, connection) => {
             if (err) throw err;

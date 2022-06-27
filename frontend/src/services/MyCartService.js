@@ -66,7 +66,7 @@ export const changeProductAmount = (productId, productAmount) => {
     return async dispatch => {
         dispatch(cartInProgress());
         await Axios({
-            method: 'post',
+            method: 'put',
             url: routes.server + routes.cart.changeAmount,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),

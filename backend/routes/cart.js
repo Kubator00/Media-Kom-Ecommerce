@@ -25,7 +25,7 @@ router.post('/add', async (req, res) => {
 })
 
 
-router.post('/edit', async (req, res) => {
+router.put('/edit', async (req, res) => {
     let query = `UPDATE user_cart SET productAmount=${req.body.productAmount} where userId=${req.headers.userId} AND productId=${req.body.productId}`;
     if (req.body.productAmount < 1)
         query = `DELETE FROM user_cart where userId=${req.headers.userId} AND productId=${req.body.productId}`;

@@ -9,7 +9,7 @@ export const userChangePasswordService = (newPassword, oldPassword) => {
     return async dispatch => {
         dispatch(userChangePasswordInProgress());
         await Axios({
-            method: 'post',
+            method: 'put',
             url: routes.server + routes.users.change.password,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),

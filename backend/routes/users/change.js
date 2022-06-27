@@ -7,7 +7,7 @@ const changeEmailSchema = require("../../components/validationSchemas/users/chan
 const changePasswordSchema = require("../../components/validationSchemas/users/changePasswordSchema");
 
 
-router.post('/email', async (req, res) => {
+router.put('/email', async (req, res) => {
     const schemaValidate = changeEmailSchema.validate(
         {password: req.body.password, newEmail: req.body.newEmail}
     );
@@ -32,7 +32,7 @@ router.post('/email', async (req, res) => {
     });
 })
 
-router.post('/password', async (req, res) => {
+router.put('/password', async (req, res) => {
     const schemaValidate = changePasswordSchema.validate(
         {password: req.body.password, newPassword: req.body.newPassword}
     );

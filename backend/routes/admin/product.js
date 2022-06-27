@@ -29,7 +29,7 @@ router.post('/add', async (req, res) => {
     res.send({msg: "Produkt dodano pomyślnie", 'productId': productId})
 })
 
-router.post('/edit', async (req, res) => {
+router.put('/edit', async (req, res) => {
     const schemaValidate = addProductSchema.validate({
         categoryName: req.body.categoryName,
         name: req.body.name,
@@ -50,7 +50,7 @@ router.post('/edit', async (req, res) => {
     res.send({msg: "Produkt dodano pomyślnie"})
 })
 
-router.post('/delete', async (req, res) => {
+router.delete('/delete', async (req, res) => {
     try {
         await deleteProduct(req.body.productId);
     } catch (err) {

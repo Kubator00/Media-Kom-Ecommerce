@@ -11,7 +11,7 @@ export const adminDeleteProduct = (productId) => {
     return async dispatch => {
         dispatch(adminEditProductInProgress());
         await Axios({
-            method: 'post',
+            method: 'delete',
             url: routes.server + routes.admin.deleteProduct,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),

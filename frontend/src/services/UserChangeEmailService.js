@@ -11,7 +11,7 @@ export const userChangeEmailService = (newEmail, password) => {
     return async dispatch => {
         dispatch(userChangeEmailInProgress());
         await Axios({
-            method: 'post',
+            method: 'put',
             url: routes.server + routes.users.change.email,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),

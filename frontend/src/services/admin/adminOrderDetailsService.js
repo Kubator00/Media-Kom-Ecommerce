@@ -37,7 +37,7 @@ export const changeOrderStatus = (orderId, newStatus) => {
     return async dispatch => {
         dispatch(adminOrderDetailsInProgress());
         await Axios({
-            method: 'post',
+            method: 'put',
             url: routes.server + routes.admin.newStatus,
             headers: {
                 "X-USER-TOKEN": localStorage.getItem('token'),

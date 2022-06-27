@@ -3,14 +3,14 @@
 📋 My simple e-commerce system.
 
 
-<h2> 🔲 Frontend technologies: </h2>
+<h2> 🔲 Frontend: </h2>
 <ul>
 <li>React</li>
 <li>Redux Thunk</li>
 <li>Formik with Yup</li>
 </ul>
 
-<h2> 🔨 Backend technologies: </h2>
+<h2> 🔨 Backend: </h2>
 <ul>
 <li>Express.js</li>
 <li>MySQL</li>
@@ -18,7 +18,7 @@
 <li>Bcrypt</li>
 <li>Joi Validation</li>
 </ul>
-<h2>🎥 Demo </h2>
+<h2>🎥 Demo (click image to display video) </h2>
 <a href="https://youtu.be/CefU2K1GtHI" title="Media-Kom ecommerce">
   <p align="center">
     <img width="75%" src="https://img.youtube.com/vi/CefU2K1GtHI/maxresdefault.jpg" alt="Media-Kom Thumbnail"/>

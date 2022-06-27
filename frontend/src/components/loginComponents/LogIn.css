@@ -5,6 +5,12 @@
     justify-content: space-around;
     align-items: flex-start;
     min-width: 400px;
+    max-width: 100%;
+}
+
+.login--register{
+    justify-content: flex-start;
+    max-width: 600px;
 }
 
 .login h1{

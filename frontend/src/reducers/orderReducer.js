@@ -8,7 +8,7 @@ import {
     USER_ORDER_DETAILS_IN_PROGRESS,
     USER_ORDER_DETAILS_SUCCESS,
     USER_ORDER_DETAILS_ERROR, USER_ORDERS_FILTER,
-} from "../actions/orderActionType";
+} from "../actions/types/orderActionType";
 
 
 export const newOrderReducer = (state = {inprogress: false, error: null, msg: ''}, action) => {

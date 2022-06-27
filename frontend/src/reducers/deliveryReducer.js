@@ -2,7 +2,7 @@ import {
     DELIVERY_TYPES_IN_PROGRESS,
     DELIVERY_TYPES_SUCESS,
     DELIVERY_TYPES_ERROR
-} from '../actions/deliveryActionType';
+} from '../actions/types/deliveryActionType';
 
 
 export const deliveryTypesReducer = (state = { inprogress: false, error: null, deliveryTypes: [] }, action) => {

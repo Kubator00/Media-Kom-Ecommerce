@@ -4,7 +4,7 @@ import {
     adminOrderDetailsInProgress,
     adminOrderDetailsSuccess,
     adminOrderDetailsError,
-} from "../../actions/adminOrderAction"
+} from "../../actions/admin/adminOrderAction"
 
 
 export const adminOrderDetails = (orderId) => {

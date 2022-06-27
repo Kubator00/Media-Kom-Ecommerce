@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {adminAllOrders} from '../../services/admin/adminAllOrders'
-import {adminOrdersReset} from '../../actions/adminOrderAction'
+import {adminOrdersReset} from '../../actions/admin/adminOrderAction'
 import DisplayOrderList from "../DisplayOrderList"
 
 const AdminAllOrdersList = () => {

@@ -5,7 +5,7 @@ import {
     USER_CHANGE_EMAIL_IN_PROGRESS,
     USER_CHANGE_EMAIL_SUCCESS,
     USER_CHANGE_EMAIL_ERROR, USER_CHANGE_PASSWORD_IN_PROGRESS, USER_CHANGE_PASSWORD_SUCCESS, USER_CHANGE_PASSWORD_ERROR
-} from "../actions/usersActionType";
+} from "../actions/types/usersActionType";
 
 export const userAccountDetailsReducer = (state = {
     inprogress: false,

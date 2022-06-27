@@ -18,7 +18,7 @@ import {
     USER_CHANGE_PASSWORD_ERROR,
     USER_CHANGE_PASSWORD_SUCCESS,
     USER_CHANGE_PASSWORD_IN_PROGRESS
-} from "./usersActionType";
+} from "./types/usersActionType";
 
 export const logOutUser = () => {
     return {

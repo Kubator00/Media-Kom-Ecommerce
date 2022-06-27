@@ -2,7 +2,7 @@ import {
     VERIFY_TOKEN_IN_PROGRESS,
     VERIFY_TOKEN_SUCESS,
     VERIFY_TOKEN_ERROR,
-} from "../actions/usersActionType";
+} from "../actions/types/usersActionType";
 
 
 const userAuthorizationReducer = (state = {

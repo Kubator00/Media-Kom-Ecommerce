@@ -4,7 +4,7 @@ import {
     adminOrdersInProgress,
     adminOrdersSuccess,
     adminOrdersError,
-} from '../../actions/adminOrderAction'
+} from '../../actions/admin/adminOrderAction'
 
 
 export const adminAllOrders = (props) => {

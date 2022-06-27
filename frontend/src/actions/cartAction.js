@@ -5,7 +5,7 @@ import {
     ADD_TO_CART_IN_PROGRESS,
     ADD_TO_CART_SUCCESS,
     ADD_TO_CART_ERROR
-} from './cartActionType';
+} from './types/cartActionType';
 
 
 export const cartInProgress = () => {

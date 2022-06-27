@@ -4,6 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import verifyToken from "./services/VerifyToken";
 import usePrevious from "./customHooks/prevState";
+import Loading from "./components/Loading";
 
 
 const AdminRoute = (props) => {
@@ -26,9 +27,10 @@ const AdminRoute = (props) => {
                 setIsLoaded(false);
             }
     }, [prevIsLoaded, inProgress, prevInProgress])
-    
-    if (isLoaded === true)
-        return <>Ładowanie...</>;
+
+    if (inProgress)
+        return Loading();
+
 
     if (!user.token || !user.isAdmin)
         return <Navigate to={{

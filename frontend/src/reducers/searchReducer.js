@@ -5,7 +5,7 @@ import {
     PRODUCTS_SEARCH_REDIRECT,
     KEYWORD_SET,
     CATEGORY_SET,
-} from "../actions/searchActionType";
+} from "../actions/types/searchActionType";
 
 export const searchProductsReducer = (state = {
     inprogress: false,
@@ -20,7 +20,7 @@ export const searchProductsReducer = (state = {
         case PRODUCTS_SEARCH_IN_PROGRESS:
             return {...state, inprogress: true};
         case PRODUCTS_SEARCH_SUCCESS:
-            return {...state, inprogress: false, products: action.products, rowsFound: action.rowsFound};
+            return {...state, inprogress: false, products: action.products, rowsFound: action.rowsFound, category: ''};
         case PRODUCTS_SEARCH_ERROR:
             return {...state, inprogress: false, error: action.error};
         case PRODUCTS_SEARCH_REDIRECT:

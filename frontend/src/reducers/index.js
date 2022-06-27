@@ -9,6 +9,7 @@ import { productReducer } from "./productReducer";
 import {adminAddProductReducer, adminEditProductReducer} from "./adminProductReducer";
 import {userAccountDetailsReducer, userChangeEmailReducer,userChangePasswordReducer} from "./userAccountDetailsReducer";
 import userAuthorizationReducer from "./userAuthorizationReducer";
+import {recommendedProductsReducer} from "./recommendedProductsReducer";
 
 export default combineReducers({
     userAuthenticationReducer,
@@ -26,5 +27,6 @@ export default combineReducers({
     adminEditProductReducer,
     userAccountDetailsReducer,
     userChangeEmailReducer,
-    userChangePasswordReducer
+    userChangePasswordReducer,
+    recommendedProductsReducer
 })

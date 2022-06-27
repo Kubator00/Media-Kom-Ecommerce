@@ -42,7 +42,6 @@ module.exports = (req) => {
                                                 reject(err);
                                             });
                                         }
-                                        console.log(res);
                                     })
 
                         })

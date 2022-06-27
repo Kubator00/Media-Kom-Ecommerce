@@ -4,6 +4,7 @@ import PageButtons from "./PageButtons";
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import './ordersComponents/OrderList.css'
+import Loading from "./Loading";
 
 const DisplayOrderList = (props) => {
     const dispatch = useDispatch();

@@ -6,7 +6,7 @@ import {
     ADMIN_ORDER_DETAILS_IN_PROGRESS,
     ADMIN_ORDER_DETAILS_SUCCESS,
     ADMIN_ORDER_DETAILS_ERROR, ADMIN_ORDER_FILTER,
-} from "../actions/adminOrderActionTypes";
+} from "../actions/types/admin/adminOrderActionTypes";
 
 
 export const adminAllOrdersReducer = (state = {

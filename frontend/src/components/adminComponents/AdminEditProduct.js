@@ -4,7 +4,8 @@ import {adminDeleteProduct} from '../../services/admin/adminDeleteProduct'
 import {useDispatch, useSelector} from "react-redux";
 import EditProductDetailsPanel from "./EditProductDetailsPanel";
 import {productFetch} from "../../services/ProductService";
-import {Navigate ,useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
+import Loading from "../Loading";
 
 const AdminEditProduct = (props) => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const AdminEditProduct = (props) => {
         setNeedRedirect(true);
     };
     const msg = useSelector((state) => state.adminEditProductReducer.msg);
+    const inProgress = useSelector((state) => state.adminEditProductReducer.inprogress);
     const err = useSelector((state) => state.adminEditProductReducer.error);
     const [initialValues, setInitialValues] = useState({
         productId: null,
@@ -49,7 +51,8 @@ const AdminEditProduct = (props) => {
     }, [productDetails, productParameters])
     if (needRedirect)
         return <Navigate to={`/admin/editproduct/list`}/>
-
+    if (inProgress)
+        return Loading();
     return (
         <div>
             <h1>Edytuj produkt</h1>

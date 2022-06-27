@@ -3,11 +3,13 @@ import {Link} from 'react-router-dom'
 import './Cart.css'
 import {fetchCart, changeProductAmount} from '../../services/MyCartService'
 import {useDispatch, useSelector} from "react-redux";
+import Loading from "../Loading";
 
 
 const UserCart = () => {
     const cart = useSelector(state => state.cartReducer.cart);
     const totalAmount = useSelector(state => state.cartReducer.totalAmount);
+    const inProgress = useSelector(state => state.cartReducer.inprogress);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -19,6 +21,9 @@ const UserCart = () => {
             dispatch(changeProductAmount(element.productId, 0));
         });
     };
+
+    if (inProgress)
+        return Loading();
 
     if (cart?.length < 1)
         return (

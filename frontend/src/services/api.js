@@ -34,7 +34,8 @@ export default {
         types: 'delivery/types',
     },
     products: {
-        details: 'products/details'
+        details: 'products/details',
+        recommended: 'products/recommended'
     }
 
 }

@@ -8,6 +8,7 @@ import {addToCart} from '../../services/MyCartService'
 import {productRedirect} from '../../actions/searchAction'
 import PageButtons from "../PageButtons";
 import prevState from "../../customHooks/prevState";
+import Loading from "../Loading";
 
 const mobileFilterMenu = (setMobileFilterMenu, sortProducts, priceFilterHandler, priceFilter, filterPrice) => {
     return (
@@ -167,13 +168,8 @@ const SearchProducts = () => {
             ));
     }
 
-
-    if (firstLoad === false || inProgress)
-        return (
-            <div className='searchProducts'>
-                Ładowanie...
-            </div>
-        );
+    if (!firstLoad  || inProgress)
+        return Loading();
 
     if (!keyword && !category)
         return (

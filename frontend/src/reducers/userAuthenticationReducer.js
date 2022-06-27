@@ -6,7 +6,7 @@ import {
     USER_REGISTER_IN_PROGRSS,
     USER_REGISTER_SUCESS,
     USER_REGISTER_ERROR
-} from "../actions/usersActionType";
+} from "../actions/types/usersActionType";
 
 const initialState = {
     inprogress: false,

@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import orderStatus from "../orderStatus";
 
 import {adminOrderDetails, changeOrderStatus} from '../../services/admin/adminOrderDetailsService'
+import Loading from "../Loading";
 
 
 const AdminOrderDetails = () => {
@@ -19,7 +20,10 @@ const AdminOrderDetails = () => {
     const order = useSelector(state => state.adminOrderDetailsReducer.order);
     const inProgress = useSelector(state => state.adminOrderDetailsReducer.inprogress);
 
-    if (order && !inProgress)
+    if (inProgress)
+        return Loading();
+
+    if (order)
         return (
             <div className='orderDetails content'>
                 <div className='orderDetails_info'>

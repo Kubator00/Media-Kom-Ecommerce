@@ -2,6 +2,9 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import "./Slider.css"
+import recommendedProductsService from "../services/RecommendedProductsService";
+import {useDispatch, useSelector} from "react-redux";
+import Loading from "./Loading";
 
 const Cart = (props) => {
     const {id, img, title, price} = props;
@@ -24,22 +27,18 @@ export const Slider = () => {
     const [elementOnScreen, setElementOnScreen] = useState(5);
     const [index, setIndex] = useState(Array.from(Array(elementOnScreen).keys()));
 
-    const [products, setProducts] = useState([]);
+    const inProgress = useSelector(state => state.recommendedProductsReducer.inprogress);
+    const products = useSelector(state => state.recommendedProductsReducer.products);
     const [displayProducts, setDisplayProducts] = useState([]);
 
-
-    async function read() {
-        await axios.get(`http://localhost:3010/products/recommended`)
-            .then(result => {
-                setProducts(result.data?.products);
-            })
-            .catch(err => console.log(err));
-    }
-
+    const dispatch = useDispatch();
     useEffect(async () => {
+        dispatch(recommendedProductsService());
+    }, [])
+
+    useEffect(() => {
         window.addEventListener('resize', resizeHandler);
         resizeHandler();
-        await read();
         return () => {
             window.removeEventListener('resize', resizeHandler);
         }
@@ -98,6 +97,8 @@ export const Slider = () => {
     }, [elementOnScreen])
 
     useEffect(() => {
+        if (!products)
+            return;
         let tmpProducts = [];
         index.forEach(element => {
             products[element] &&
@@ -106,6 +107,8 @@ export const Slider = () => {
         setDisplayProducts(tmpProducts);
     }, [products, index])
 
+    if (inProgress)
+        return Loading();
 
     if (displayProducts?.length > 0)
         return (

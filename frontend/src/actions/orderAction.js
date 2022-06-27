@@ -9,7 +9,7 @@ import {
     USER_ORDER_DETAILS_IN_PROGRESS,
     USER_ORDER_DETAILS_SUCCESS,
     USER_ORDER_DETAILS_ERROR,
-} from './orderActionType';
+} from './types/orderActionType';
 
 
 export const newOrderInProgress = () => {

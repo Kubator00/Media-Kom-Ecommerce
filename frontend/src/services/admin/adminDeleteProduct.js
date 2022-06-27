@@ -4,7 +4,7 @@ import {
     adminEditProductInProgress,
     adminEditProductSuccess,
     adminEditProductError,
-} from '../../actions/adminProduct'
+} from '../../actions/admin/adminProduct'
 
 
 export const adminDeleteProduct = (productId) => {

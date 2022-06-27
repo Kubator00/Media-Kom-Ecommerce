@@ -2,7 +2,7 @@ import {
     PRODUCT_FETCH_IN_PROGRESS,
     PRODUCT_FETCH_SUCCESS,
     PRODUCT_FETCH_ERROR
-} from '../actions/productActionTypes'
+} from '../actions/types/productActionType'
 
 
 export const productReducer = (state = { inprogress: true, error: null, productDetails: {}, productParameters: [] }, action) => {

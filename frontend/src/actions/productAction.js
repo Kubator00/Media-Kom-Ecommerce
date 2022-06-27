@@ -2,7 +2,7 @@ import{
     PRODUCT_FETCH_SUCCESS,
     PRODUCT_FETCH_IN_PROGRESS,
     PRODUCT_FETCH_ERROR,
-} from './productActionTypes'
+} from './types/productActionType'
 
 export const productFetchInProgress = () => {
     return {

@@ -5,7 +5,7 @@ import {
     PRODUCTS_SEARCH_REDIRECT,
     KEYWORD_SET,
     CATEGORY_SET,
-} from './searchActionType'
+} from './types/searchActionType'
 
 export const productsSearchInProgress = () => {
     return {

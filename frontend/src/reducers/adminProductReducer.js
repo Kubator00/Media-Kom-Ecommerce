@@ -5,7 +5,7 @@ import {
     ADMIN_EDIT_PRODUCT_IN_PROGRESS,
     ADMIN_EDIT_PRODUCT_SUCCESS,
     ADMIN_EDIT_PRODUCT_ERROR
-} from "../actions/adminProductType";
+} from "../actions/types/admin/adminProductType";
 
 export const adminAddProductReducer = (state = {
     inprogress: false,

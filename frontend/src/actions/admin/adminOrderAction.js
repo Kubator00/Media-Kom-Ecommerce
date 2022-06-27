@@ -7,7 +7,7 @@ import {
     ADMIN_ORDER_DETAILS_ERROR,
     ADMIN_ORDERS_RESET,
     ADMIN_ORDER_FILTER
-} from './adminOrderActionTypes'
+} from '../types/admin/adminOrderActionTypes'
 
 
 export const adminOrdersInProgress = () => {

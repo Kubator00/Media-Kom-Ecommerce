@@ -5,7 +5,7 @@ import {
     ADMIN_EDIT_PRODUCT_IN_PROGRESS,
     ADMIN_EDIT_PRODUCT_SUCCESS,
     ADMIN_EDIT_PRODUCT_ERROR
-} from "./adminProductType";
+} from "../types/admin/adminProductType";
 
 
 export const adminAddProductInProgress = () => {

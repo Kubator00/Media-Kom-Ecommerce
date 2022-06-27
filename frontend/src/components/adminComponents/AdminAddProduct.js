@@ -3,6 +3,7 @@ import {adminAddProduct} from '../../services/admin/adminAddProduct'
 import {useDispatch, useSelector} from "react-redux";
 import EditProductDetailsPanel from "./EditProductDetailsPanel";
 import CategoryData from "../productsComponents/categoryData";
+import Loading from "../Loading";
 
 
 const AdminAddProduct = () => {
@@ -12,6 +13,7 @@ const AdminAddProduct = () => {
     };
     const msg = useSelector((state) => state.adminAddProductReducer.msg);
     const productId = useSelector((state) => state.adminAddProductReducer.productId);
+    const inProgress = useSelector((state) => state.adminAddProductReducer.inprogress);
     const err = useSelector((state) => state.adminAddProductReducer.error);
     const initialValues = {
         name: '',
@@ -21,6 +23,9 @@ const AdminAddProduct = () => {
         categoryName: CategoryData[0].name,
         price: 0
     };
+
+    if (inProgress)
+        return Loading();
 
     return (
         <div>

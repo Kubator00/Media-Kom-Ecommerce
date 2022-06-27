@@ -6,10 +6,12 @@ import {Formik, Form, Field, ErrorMessage} from "formik";
 import * as yup from "yup";
 import {userChangeEmailService} from "../../services/UserChangeEmailService"
 import {userChangePasswordService} from "../../services/UserChangePasswordService"
+import Loading from "../Loading";
 
 
 const UserAccount = () => {
     const accountDetails = useSelector(state => (state.userAccountDetailsReducer.data));
+    const inProgress = useSelector(state => (state.userAccountDetailsReducer.inprogress));
     const changeEmail = {
         error: useSelector(state => state.userChangeEmailReducer.error),
     }
@@ -22,6 +24,8 @@ const UserAccount = () => {
         dispatch(userAccountDetailsService());
     }, [])
 
+    if (inProgress)
+        return Loading();
 
     return (
         <div className="settings content">

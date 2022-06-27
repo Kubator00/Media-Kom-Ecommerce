@@ -33,9 +33,9 @@ const Register = () => {
             </div>
         );
     return (
-        <div class="login">
+        <div class="login content login--register">
             <div class="login__content">
-                <h3> Zarejestruj się </h3>
+                <h1> Zarejestruj się </h1>
                 {error && <h4 style={{"color":"red"}}>{error}</h4>}
                 <Formik
                     initialValues={{

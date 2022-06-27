@@ -5,7 +5,7 @@ import './Product.css'
 import {useSelector, useDispatch} from 'react-redux'
 import {addToCart} from '../../services/MyCartService'
 import {productFetch} from '../../services/ProductService'
-
+import Loading from "../Loading";
 
 const Product = () => {
     const {productId} = useParams();
@@ -21,12 +21,13 @@ const Product = () => {
 
     const productDetails = useSelector(state => state.productReducer.productDetails);
     const productParameters = useSelector(state => state.productReducer.productParameters);
+    // const inProgress = true;
     const inProgress = useSelector(state => state.productReducer.inprogress);
     const msg = useSelector(state => state.cartReducer.msg);
 
-    if (inProgress) {
-        return <div>Ładowanie...</div>
-    }
+    if (inProgress)
+        return Loading();
+
 
     if (productParameters && productDetails)
         return (
@@ -37,7 +38,8 @@ const Product = () => {
                 </div>
                 <div className="product__main">
                     <div className="product__img">
-                        <img src={`../products/${productDetails.titleImg}`} className={`product-img`} alt={`zdjęcie ${productDetails.title}`}/>
+                        <img src={`../products/${productDetails.titleImg}`} className={`product-img`}
+                             alt={`zdjęcie ${productDetails.title}`}/>
                     </div>
                     <div className="product__info">
                         <div className="product__name">

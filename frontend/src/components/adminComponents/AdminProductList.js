@@ -5,6 +5,7 @@ import {productsSearch} from "../../services/SearchService";
 import {useDispatch, useSelector} from "react-redux";
 import '../productsComponents/SearchProducts.css'
 import './AdminEditProductList.css'
+import Loading from "../Loading";
 
 
 const AdminProductList = () => {
@@ -31,7 +32,9 @@ const AdminProductList = () => {
         dispatch(productsSearch(details));
     }
 
-
+    if (inProgress)
+        return Loading();
+    
     return (
         <div className='searchProducts__list content'>
                 <div class='editProduct__searchProduct'>
